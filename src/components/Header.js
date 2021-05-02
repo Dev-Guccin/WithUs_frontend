@@ -1,57 +1,76 @@
-import React, { useEffect, useState } from 'react'; // import 로 useState 를 불러온다!
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Toolbar from '@material-ui/core/Toolbar';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import axios from 'axios';
+import Toolbar from '@material-ui/core/Toolbar';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import SearchIcon from '@material-ui/icons/Search';
+import Typography from '@material-ui/core/Typography';
+import { Link } from "react-router-dom"
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
+  toolbar: {
+    borderBottom: `1px solid ${theme.palette.divider}`,
   },
   toolbarTitle: {
     flex: 1,
   },
-  toolbar: {
-    borderBottom: `1px solid`,
+  toolbarSecondary: {
+    justifyContent: 'space-between',
+    overflowX: 'auto',
+  },
+  toolbarLink: {
+    padding: theme.spacing(1),
+    flexShrink: 0,
   },
 }));
 
-function App() {
+export default function Header(props) {
   const classes = useStyles();
+  const { sections, title } = props;
 
   return (
-    <div>
-      <Toolbar>
-        <Grid container spacing={1}>
-          <Grid item xs>
-            <Paper className={classes.paper}>로고</Paper>
-          </Grid>
-          <Grid item xs>
-            <div align="center">
-              WITH US
-            </div>
-          </Grid>
-          <Grid item xs>
-            <Paper className={classes.paper}>로그인 및 회원가입</Paper>
-          </Grid>
-        </Grid>
-        
+    <React.Fragment>
+      <Toolbar className={classes.toolbar}>
+        <Button size="small">Subscribe</Button>
+        <Typography
+          component="h2"
+          variant="h5"
+          color="inherit"
+          align="center"
+          noWrap
+          className={classes.toolbarTitle}
+        >
+          {title}
+        </Typography>
+        <IconButton>
+          <SearchIcon />
+        </IconButton>
+        <Button variant="outlined" size="small">
+          Sign up
+        </Button>
+        <Button variant="outlined" size="small">
+          Sign in
+        </Button>
       </Toolbar>
-      <Grid container spacing={0}>
-          <Grid item xs>공모전</Grid>
-          <Grid item xs>팀원모집</Grid>
-          <Grid item xs>추천</Grid>
-      </Grid>
-        
-    </div>
-
+      <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
+        {sections.map((section) => (
+          <Link
+            color="inherit"
+            noWrap
+            key={section.title}
+            variant="body2"
+            to={section.url}
+            className={classes.toolbarLink}
+          >
+            {section.title}
+          </Link>
+        ))}
+      </Toolbar>
+    </React.Fragment>
   );
 }
-
-export default App;
+Header.propTypes = {
+  sections: PropTypes.array,
+  title: PropTypes.string,
+};
