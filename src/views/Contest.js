@@ -1,4 +1,4 @@
-export default function Home() {
+export default function Contest() {
     return (
       <div className="">
        Contest

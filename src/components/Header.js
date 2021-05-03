@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import Typography from '@material-ui/core/Typography';
-import { Link } from "react-router-dom"
+import { BrowserRouter as  Router, Route, Switch, Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -29,6 +29,7 @@ export default function Header(props) {
   const classes = useStyles();
   const { sections, title } = props;
 
+
   return (
     <React.Fragment>
       <Toolbar className={classes.toolbar}>
@@ -46,18 +47,22 @@ export default function Header(props) {
         <IconButton>
           <SearchIcon />
         </IconButton>
-        <Button variant="outlined" size="small">
-          Sign up
-        </Button>
-        <Button variant="outlined" size="small">
-          Sign in
-        </Button>
+          <Button variant="outlined" size="small">
+          <Link to='/SignUp'>
+            SignUp
+          </Link>
+          </Button>
+          <Button variant="outlined" size="small">
+          <Link to='/Login'>
+              Sign in
+          </Link>    
+          </Button>
       </Toolbar>
       <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
         {sections.map((section) => (
           <Link
             color="inherit"
-            noWrap
+            
             key={section.title}
             variant="body2"
             to={section.url}
