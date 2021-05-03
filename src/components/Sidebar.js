@@ -1,10 +1,11 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react'; // import 로 useState 를 불러온다!
 import Paper from '@material-ui/core/Paper';
 import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import axios from 'axios';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -17,17 +18,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const sections = [
-  { title: '전체', url: '#' },
-  { title: '기획/아이디어', url: '#' },
-  { title: '광고/마케팅', url: '#' },
-  { title: '논문/리포트', url: '#' },
-  { title: '영상/UCC/사진', url: '#' },
-  { title: '디자인/캐릭터/웹툰', url: '#' },
-  { title: '웹/모바일/플래시', url: '#' },
-  { title: '게임/소프트웨어', url: '#' },
-  { title: '과학/공학', url: '#' },
-  { title: '문학/글/시나리오', url: '#' },
+  { title: '사진/영상/UCC', url: '#' },
+  { title: '콘텐츠/웹툰', url: '#' },
+  { title: '아이디어/기획', url: '#' },
+  { title: '취업/창업', url: '#' },
+  { title: '디자인/미술', url: '#' },
+  { title: '과학/공학/IT', url: '#' },
+  { title: '음악/예술', url: '#' },
+  { title: '금융/경제/경영', url: '#' },
+  { title: '환경/에너지', url: '#' },
+  { title: '네이밍/슬로건', url: '#' },
+  { title: '문화/영화/문학', url: '#' },
+  { title: '연구/학술/논문', url: '#' },
 ];
+
 export default function Sidebar(props) {
   const classes = useStyles();
 
