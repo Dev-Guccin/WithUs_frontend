@@ -39,6 +39,7 @@ function App() {
       }
     }).then(response => {
       console.log(response)
+      console.log(test)
       settest(response.data)
     });
   });

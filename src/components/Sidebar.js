@@ -35,18 +35,17 @@ export default function Sidebar(props) {
     <Paper className={classes.paper}>
       <MenuList>
         {sections.map((section) => (
-          <MenuItem>
           <Link
-            color="inherit"
-            noWrap
-            key={section.title}
-            variant="body2"
-            to={section.url}
-            className={classes.toolbarLink}
-            >
+          color="inherit"
+          noWrap
+          key={section.title}
+          variant="body2"
+          to={section.url}
+          >
+          <MenuItem>
             {section.title}
-          </Link>
           </MenuItem>
+          </Link>
         ))}
       </MenuList>
     </Paper>
