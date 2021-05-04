@@ -13,6 +13,7 @@ import Teammate from './views/Teammate'
 import Contest from './views/Contest'
 import SignIn from './views/SignIn';
 import SignUp from './views/SignUp';
+import TmSidebar from './components/TmSidebar';
 
 const sections = [
   { title: 'Home', url: '/home' },
@@ -50,7 +51,11 @@ function App(){
         <Header title="WithUs" sections={sections} />
         <Grid container spacing={1}>
           <Grid item xs={2}>
-            <Sidebar/>
+            <Route path="/home" component={Sidebar} />
+            <Route path="/contest" component={Sidebar} />
+            <Route path="/teammate" component={TmSidebar}/>
+            <Route path="/Login" component={Sidebar} />
+            <Route path="/SignUp" component={Sidebar} />
           </Grid>
           <Grid item xs={10}>
             <main>
