@@ -28,20 +28,6 @@ const sections = [
 ];
 
 function App(){
-  const [test, settest] = useState();
-
-  useEffect(() => {
-    // 브라우저 API를 이용하여 문서 타이틀을 업데이트합니다.
-    axios.get('http://localhost:3001/test', {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(response => {
-      console.log(response)
-      console.log(test)
-      settest(response.data)
-    });
-  });
   return (
     <React.Fragment>
       <CssBaseline />
