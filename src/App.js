@@ -10,14 +10,14 @@ import Header from './components/Header'
 import Sidebar from './components/Sidebar';
 import Home from './views/Home'
 import Teammate from './views/Teammate'
-import Contest from './views/Contest'
+import Contestdetail from './views/Contestdetail'
 import SignIn from './views/SignIn';
 import SignUp from './views/SignUp';
 import TmSidebar from './components/TmSidebar';
 
 const sections = [
   { title: 'Home', url: '/home' },
-  { title: 'Contest', url: '/contest' },
+  { title: 'Contest', url: '/home' },
   { title: 'Teammate', url: '/teammate' },
   { title: 'Business', url: '#' },
   { title: 'Politics', url: '#' },
@@ -47,7 +47,7 @@ function App(){
             <main>
             {/* <h2>여기서부터는 메인페이지</h2> */}
             <Route path="/home" component={Home} />
-            <Route path="/contest" component={Contest} />
+            <Route path="/Contestdetail/:CB_code" component={Contestdetail} />
             <Route path="/teammate" component={Teammate} />
             <Route path="/Login" component={SignIn} />
             <Route path="/SignUp" component={SignUp} />

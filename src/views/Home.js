@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'; // import 로 useState 를 불러온다!
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
+import { BrowserRouter as  Router, Route, Switch, Link } from 'react-router-dom';
 
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -56,34 +57,39 @@ export default function Home() {
         <Grid container>
           <Grid item xs={4}>
             <Paper variant="outlined">
-              <img className={classes.img} alt="complex"
-                src={represent_sections[0] === undefined ? "" : represent_sections[0].CB_photo} />
-            </Paper>
+              <Link to={represent_sections[0] === undefined ? "" : "Contestdetail/" + String(represent_sections[0].CB_code)}>
+                <img className={classes.img} alt="complex"
+                  src={represent_sections[0] === undefined ? "" : represent_sections[0].CB_photo} />
+              </Link></Paper>
           </Grid>
           <Grid item xs={4}>
             <Paper>
-              <img className={classes.img} alt="complex"
-                src={represent_sections[1] === undefined ? "" : represent_sections[1].CB_photo} />
-            </Paper>
+              <Link to={represent_sections[1] === undefined ? "" : "Contestdetail/" + String(represent_sections[1].CB_code)}>
+                <img className={classes.img} alt="complex"
+                  src={represent_sections[1] === undefined ? "" : represent_sections[1].CB_photo}
+                />
+              </Link></Paper>
           </Grid>
           <Grid item xs={4}>
             <Paper>
-              <img className={classes.img} alt="complex"
-                src={represent_sections[2] === undefined ? "" : represent_sections[2].CB_photo} />
-            </Paper>
+              <Link to={represent_sections[2] === undefined ? "" : "Contestdetail/" + String(represent_sections[2].CB_code)}>
+                <img className={classes.img} alt="complex"
+                  src={represent_sections[2] === undefined ? "" : represent_sections[2].CB_photo} />
+              </Link></Paper>
           </Grid>
         </Grid>
       </Grid>
       <Grid item xs={12}>
         {sections.map((section) => (
-          <Homelist section={section}></Homelist>
-        ))}
+          <Link to={section === undefined ? "" : "Contestdetail/" + String(section.CB_code)}>
+            <Homelist section={section}></Homelist>
+          </Link>))}
       </Grid>
       <Grid item>
-        <Pagination 
-          bottompage={bottompage} 
-          setbottompage={setbottompage} 
-          setpage={setpage}/>
+        <Pagination
+          bottompage={bottompage}
+          setbottompage={setbottompage}
+          setpage={setpage} />
       </Grid>
     </Grid>
   );
