@@ -47,6 +47,16 @@ export default function Header(props) {
           <SearchIcon />
         </IconButton>
         <Button variant="outlined" size="small">
+          <Link to='/MyPage'>
+          UserMyPage
+          </Link>
+        </Button>
+        <Button variant="outlined" size="small">
+          <Link to='/OnlyMyPage'>
+          OnlyMyPage
+          </Link>
+        </Button>
+        <Button variant="outlined" size="small">
           <Link to='/SignUp'>
           SignUp
           </Link>
