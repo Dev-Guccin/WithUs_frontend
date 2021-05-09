@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useState, Component} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import axios from 'axios';
 
 function Copyright() {
   return (
@@ -46,8 +47,45 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+export default function SignIn(props) {
+  axios.defaults.withCredentials = true;
+  const header = {
+      "Content-Type": "application/json"
+  }
   const classes = useStyles();
+
+  const [User_id, setUser_id] = useState("");
+  const [User_password, setUser_password] = useState("");
+
+  const onIdHandler = (event) => {
+
+    setUser_id(event.currentTarget.value);
+  }
+
+  const onPasswordHandler = (event) => {
+
+    setUser_password(event.currentTarget.value);
+  }
+
+  const onSubmitHandler = (event) => {
+    event.preventDefault();
+
+    var body = {
+      User_id : User_id,
+      User_password : User_password
+    }
+
+    axios.post('http://localhost:3001/passport/', body, {header})
+    .then(response => {
+      if(response.data.loginSuccess) {
+        alert("Hello! " + response.data.User_id);
+        console.log(response.data.user);
+        props.history.push('/');
+      } else{
+        alert("login failed");
+      }
+    })
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -59,28 +97,32 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={onSubmitHandler}>
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="User_id"
+            label="User_id"
+            name="User_id"
+            autoComplete="User_id"
             autoFocus
+            value = {User_id}
+            onChange = {onIdHandler}
           />
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            name="password"
-            label="Password"
+            name="User_password"
+            label="User_password"
             type="password"
-            id="password"
+            id="User_password"
             autoComplete="current-password"
+            value = {User_password}
+            onChange = {onPasswordHandler}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -102,7 +144,7 @@ export default function SignIn() {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="SignUp" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

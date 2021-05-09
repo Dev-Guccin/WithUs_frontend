@@ -31,7 +31,9 @@ const useStyles = makeStyles((theme) => ({
 const fieldname = ["환경/에너지", "콘텐츠/웹툰", "취업/창업", "음악/예술", "연구/학술/논문", "아이디어/기획",
   "사진/영상/UCC", "문화/영화/문학", "디자인/미술", "네이밍/슬로건", "금융/경제/경영", "과학/공학/IT"]
 const targetname = ["누구나지원", "청소년", "대학(원)생", "취준생", "직장인"]
-export default function Home() {
+
+
+export default function Home(props) {
   const [represent_sections, setrepresent_sections] = useState([]);
   const [sections, setsections] = useState([]);
   const [page, setpage] = useState(1);//실제 보여질 페이지
@@ -73,8 +75,24 @@ export default function Home() {
       headers: {
         'Content-Type': 'application/json'
       }
+    }).catch(function (error) {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+      }
+      console.log(error.config);
     }).then(response => {
-      console.log(response);
       setrepresent_sections(response.data.slice(0, 3));
       setsections(response.data.slice(3));
     })

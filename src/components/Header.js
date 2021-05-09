@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -29,7 +29,6 @@ export default function Header(props) {
   const classes = useStyles();
   const { sections, title } = props;
 
-
   return (
     <React.Fragment>
       <Toolbar className={classes.toolbar}>
@@ -47,16 +46,16 @@ export default function Header(props) {
         <IconButton>
           <SearchIcon />
         </IconButton>
-          <Button variant="outlined" size="small">
+        <Button variant="outlined" size="small">
           <Link to='/SignUp'>
-            SignUp
+          SignUp
           </Link>
-          </Button>
-          <Button variant="outlined" size="small">
+        </Button>
+        <Button variant="outlined" size="small">
           <Link to='/Login'>
-              Sign in
+          Sign in
           </Link>    
-          </Button>
+        </Button>
       </Toolbar>
       <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
         {sections.map((section) => (

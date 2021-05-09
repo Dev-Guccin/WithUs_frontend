@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 export default function Homelist(props) {
   const section = props.section
   useEffect(() => {
-    console.log(section);
+    // console.log(section);
   }, []);
   return (
     <div className="">
