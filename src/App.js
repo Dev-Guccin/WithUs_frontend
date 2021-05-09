@@ -6,7 +6,7 @@ import './App.css';
 import axios from 'axios';
 import { Route, BrowserRouter as Router } from "react-router-dom";
 // import Routes from './components/Routes'
-import Header from './components/Header'
+import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import Home from './views/Home'
 import Teammate from './views/Teammate'
@@ -29,14 +29,17 @@ const sections = [
 ];
 
 function App(){
+
   return (
     <React.Fragment>
       <CssBaseline />
       <Router>
       <Container maxWidth="lg">
-        <Header title="WithUs" sections={sections} />
+        <Header title="WithUs" sections={sections}>
+        </Header>
         <Grid container spacing={1}>
           <Grid item xs={2}>
+            <Route path="/" exact={true} component={Sidebar} />
             <Route path="/home" component={Sidebar} />
             <Route path="/contest" component={Sidebar} />
             <Route path="/teammate" component={TmSidebar}/>
@@ -45,12 +48,13 @@ function App(){
           </Grid>
           <Grid item xs={10}>
             <main>
-            {/* <h2>여기서부터는 메인페이지</h2> */}
-            <Route path="/home" component={Home} />
-            <Route path="/Contestdetail/:CB_code" component={Contestdetail} />
+            <Route path="/" exact={true} component={Home} />
+            <Route path="/home" exact={true} component={Home} />
+            <Route path="/Contestdetail/:CB_code" exact = {true} component={Contestdetail} />
             <Route path="/teammate" component={Teammate} />
-            <Route path="/Login" component={SignIn} />
-            <Route path="/SignUp" component={SignUp} />
+            <Route path="/teammate" exact={true} component={Teammate} />
+            <Route path="/Login" exact={true} component={SignIn} />
+            <Route path="/SignUp" exact={true} component={SignUp} />
             </main>
           </Grid>
         </Grid>
