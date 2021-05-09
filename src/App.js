@@ -14,6 +14,9 @@ import Contestdetail from './views/Contestdetail'
 import SignIn from './views/SignIn';
 import SignUp from './views/SignUp';
 import TmSidebar from './components/TmSidebar';
+import OnlyMyPage from './views/OnlyMyPage';
+import Mypage from './views/MyPage';
+import MyPageSideBar from './components/MyPageSideBar';
 
 const sections = [
   { title: 'Home', url: '/home' },
@@ -45,6 +48,8 @@ function App(){
             <Route path="/teammate" component={TmSidebar}/>
             <Route path="/Login" component={Sidebar} />
             <Route path="/SignUp" component={Sidebar} />
+            <Route path="/OnlyMyPage" component={MyPageSideBar} /> {/* 본인 마이페이지 수정 */}
+            <Route path="/MyPage" component={Sidebar} /> {/* 유저들 마이페이지 조회 */}
           </Grid>
           <Grid item xs={10}>
             <main>
@@ -55,6 +60,8 @@ function App(){
             <Route path="/teammate" exact={true} component={Teammate} />
             <Route path="/Login" exact={true} component={SignIn} />
             <Route path="/SignUp" exact={true} component={SignUp} />
+            <Route path="/OnlyMyPage" exact={true} component={OnlyMyPage} /> {/* 본인 마이페이지 수정 */}
+            <Route path="/MyPage" exact={true} component={Mypage} /> {/* 유저들 마이페이지 조회 */}
             </main>
           </Grid>
         </Grid>
