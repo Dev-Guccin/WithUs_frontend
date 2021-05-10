@@ -77,10 +77,19 @@ export default function SignIn(props) {
 
     axios.post('http://localhost:3001/passport/', body, {header})
     .then(response => {
+      console.log("@@@@@@@@@@@@@@",response)
       if(response.data.loginSuccess) {
-        alert("Hello! " + response.data.User_id);
+        alert("Hello! " + response.data.user.User_id);
         console.log(response.data.user);
-        props.history.push('/');
+        console.log("ETSETSETSETST",props)
+        try {
+          localStorage.setItem('login_check', response.data.loginSuccess)
+          localStorage.setItem('user', JSON.stringify(response.data.user));
+          document.location.href = "/"        
+          //props.setlogin_check(response.data.loginSuccess)
+        } catch (e) {
+          console.log("localStorage is not working");
+        }
       } else{
         alert("login failed");
       }
