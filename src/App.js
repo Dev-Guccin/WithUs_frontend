@@ -34,13 +34,16 @@ const sections = [
 ];
 
 function App(){
-
+  const [logincheck, setlogincheck] = useState(localStorage.login_check)
+  useEffect(()=>{
+    console.log("####logint state changed: ",logincheck);
+  },[logincheck])
   return (
     <React.Fragment>
       <CssBaseline />
       <Router>
       <Container maxWidth="lg">
-        <Header title="WithUs" sections={sections}>
+      <Header title="WithUs" sections={sections} logincheck={logincheck} setlogincheck={setlogincheck}>
         </Header>
         <Grid container spacing={1}>
           <Grid item xs={2}>
@@ -59,7 +62,7 @@ function App(){
             <Route path="/home" exact={true} component={Home} />
             <Route path="/Contestdetail/:CB_code" exact = {true} component={Contestdetail} />
             <Route path="/teammate" exact={true} component={Teammate} />
-            <Route path="/Login" exact={true} component={SignIn} />
+            <Route path='/Login' exact={true} render={() => <SignIn logincheck={logincheck}/>}/>
             <Route path="/SignUp" exact={true} component={SignUp} />
             <Route path="/OnlyMyPage" exact={true} component={OnlyMyPage} /> {/* 본인 마이페이지 수정 */}
             <Route path="/MyPage" exact={true} component={Mypage} /> {/* 유저들 마이페이지 조회 */}

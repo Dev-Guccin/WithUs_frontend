@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Contestdetail({ match }) {
+export default function Contestdetail( {match }) {
   const classes = useStyles();
   const [section, setsection] = useState([]);
 
