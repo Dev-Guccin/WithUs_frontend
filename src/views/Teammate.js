@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import IconButton from '@material-ui/core/IconButton';
 import Card from '@material-ui/core/Card';
@@ -15,7 +15,8 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import {red } from '@material-ui/core/colors';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
-import {category, bookmarks, cardsinfo } from '../../src/testDB';
+import {category, bookmarks,categoryImage } from '../../src/testDB';
+import axios from 'axios';
 
 
 
@@ -62,6 +63,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'none',
   },
 
+  test:{
+    
+  }
+
 }));
 
 
@@ -72,6 +77,19 @@ export default function Album() {
   const classes = useStyles();
 
   const [bk, setBookmark] = useState(bookmarks[1]);
+  const [teamBoardLists, setTeamBoardLists] = useState([]);
+
+  const getTeamBoardLists = async () => {
+      await axios.get("http://localhost:3001/teamboard")
+      .then(res => {
+        setTeamBoardLists(res.data);
+      })
+  }
+
+  useEffect( async () =>{
+    getTeamBoardLists();
+
+  }, []);
 
 
   // 북마크 토글
@@ -98,23 +116,23 @@ export default function Album() {
       <CssBaseline />
       <main>
         <Container className={classes.cardGrid} maxWidth="lg">
-          <Grid container spacing={2}>
-            {cardsinfo.map((card) => (
-              imgsrc = `https://source.unsplash.com/collection/${card.User_code}`,
-              <Grid item key={card} xs={12} sm={6} md={6}>
-                <Card className={classes.card.User_code}>
+          <Grid container spacing={3}>
+            {teamBoardLists.map((teamBoard) => (
+              imgsrc = `https://source.unsplash.com/collection/${teamBoard.User_code}`,
+              <Grid item key={teamBoard.TB_code} xs={12} sm={4} md={6}>
+                <Card >
                   <CardMedia
                     className={classes.cardMedia}
-                    image= {imgsrc}
+                    image= {categoryImage[teamBoard.CT_code]}
                     title="Image title"
                   />
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2" noWrap>
-                      {card.TB_title}
+                      {teamBoard.TB_title}
                     </Typography>
                     <CardActions className={classes.root} >
                       <Typography className={classes.writer} >
-                      작성자: 테스트{card.User_code}
+                      작성자: {teamBoard.User_nickname}
                       </Typography>                     
                       <Typography >
                         <VisibilityIcon style={{ fontSize: 18 }}/>&nbsp;108
@@ -124,29 +142,31 @@ export default function Album() {
                       </Typography>                      
                     </CardActions>  
 
-                    <Typography>
-                      {card.TB_content}
-                    </Typography>        
+                    <div dangerouslySetInnerHTML={{__html: teamBoard.TB_content} }>
+                    </div>        
                   </CardContent>
                   <CardContent>
-                  <Typography>
-                      카테고리 : {category[card.CT_code]}
+                    <Typography>
+                      종류 : {teamBoard.TB_contestOrProject === 'project' ? '프로젝트' : '공모전'}
                     </Typography>
                     <Typography>
-                      팀원 현황: {card.TB_recruitNumber}&nbsp;&nbsp;/&nbsp;&nbsp;{card.TB_finalNumber}
+                      카테고리 : {category[teamBoard.CT_code]}
+                    </Typography>
+                    <Typography>
+                      팀원 현황: {teamBoard.TB_recruitNumber}&nbsp;&nbsp;/&nbsp;&nbsp;{teamBoard.TB_finalNumber}
                     </Typography>     
                   </CardContent>                  
                   <CardActions disableSpacing>
                     <Typography variant="overline">
-                      {card.TB_createDate} ~&nbsp;
+                      {new Date(teamBoard.TB_createDate).toJSON().substring(0,10)} ~&nbsp;
                     </Typography>
                     <Typography variant="overline">
-                      {card.TB_finalDate}
+                      {new Date(teamBoard.TB_finalDate).toJSON().substring(0,10)}
                     </Typography>
-                      <IconButton size="small" style={{ color: red[800] }} className={classes.cardbookmark} onClick={() => {toggleBookmark(card.TB_code)}}>
+                      {/* <IconButton size="small" style={{ color: red[800] }} className={classes.cardbookmark} onClick={() => {toggleBookmark(card.TB_code)}}>
                         <FavoriteBorderIcon className={clsx(IsBookmarked(card.TB_code) && classes.menuButtonHidden)}/>
                         <FavoriteIcon className={clsx(!IsBookmarked(card.TB_code) && classes.menuButtonHidden)} />
-                      </IconButton>
+                      </IconButton> */}
                   </CardActions>
                 </Card>
               </Grid>
