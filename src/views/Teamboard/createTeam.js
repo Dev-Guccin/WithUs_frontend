@@ -15,6 +15,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import Editor from './teamboardEditor';
 import axios from 'axios';
+import {useHistory} from 'react-router-dom'
 
 
 function Copyright() {
@@ -138,6 +139,11 @@ export default function Teamboard() {
   const [finalDate,setFinalDate] = useState(new Date());
   const [content, setContent] = useState('');
 
+  const logincheck = localStorage.login_check;
+
+
+  const history = useHistory();
+
   const onTypeChange = (e) => {
     setContestOrProject(e.target.value);
   };
@@ -160,6 +166,11 @@ export default function Teamboard() {
   
   async function onClickComplete() {
 
+    if( logincheck === undefined || JSON.parse(logincheck) === false){
+      alert("로그인한 사용자만 팀원 모집글을 작성할수 있습니다.");
+      history.push('/teammate');
+    }
+
     if(title.trim() === '') {
       alert('제목을 입력해주세요'); return;
     }
@@ -167,12 +178,13 @@ export default function Teamboard() {
       alert('내용을 입력해주세요'); return;
     }
     if( (new Date(finalDate).getTime() - new Date().getTime()) < 0 ) {
-      alert('마감 날짜를 하루 이상으로 설정해주세요');
+      alert('마감 날짜를 하루 이상으로 설정해주세요'); return;
     }
     //console.log(contestOrProject, title,recruit,category, finalDate, content);
+    const userInfo = JSON.parse(localStorage.user);
 
     const body = {
-      User_code: 13,
+      User_code: userInfo["User_code"],
       CT_code: category,
       TB_title: title,
       TB_finalNumber: recruit,
@@ -184,6 +196,7 @@ export default function Teamboard() {
     await axios.post('http://localhost:3001/teamboard', body)
     .then(res => {
       console.log("res", res.data);
+      history.push('/teammate');
     })
 
   }
@@ -268,7 +281,6 @@ export default function Teamboard() {
                 color="grey[500]"
                 className={classes.button}
                 onClick={onClickComplete}
-                href='/teammate'
                 ><strong>완료</strong></Button>
               </Grid>
             </Grid>

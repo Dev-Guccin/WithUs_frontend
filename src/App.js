@@ -61,7 +61,7 @@ function App(){
             <Route path="/" exact={true} component={Home} />
             <Route path="/home" exact={true} component={Home} />
             <Route path="/Contestdetail/:CB_code" exact = {true} component={Contestdetail} />
-            <Route path="/teammate" exact={true} component={Teammate} />
+            <Route path="/teammate" exact={true} render={() => <Teammate logincheck={logincheck}/>} />
             <Route path='/Login' exact={true} render={() => <SignIn logincheck={logincheck}/>}/>
             <Route path="/SignUp" exact={true} component={SignUp} />
             <Route path="/OnlyMyPage" exact={true} component={OnlyMyPage} /> {/* 본인 마이페이지 수정 */}

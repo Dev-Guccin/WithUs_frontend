@@ -19,7 +19,6 @@ import {category, bookmarks,categoryImage } from '../../src/testDB';
 import axios from 'axios';
 
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -72,12 +71,42 @@ const useStyles = makeStyles((theme) => ({
 
 
 let imgsrc = '';
+let userInfo
+let user
 
-export default function Album() {
+export default function Teammate(props) {
   const classes = useStyles();
 
-  const [bk, setBookmark] = useState(bookmarks[1]);
+  const [bk, setBookmark] = useState([]);
   const [teamBoardLists, setTeamBoardLists] = useState([]);
+
+
+  // DB에서 로그인유저 북마크 정보만 가져와서 담기
+  const getMyBookmarkTB = async () => {
+    await axios.get("http://localhost:3001/bookmarkTB/" + user)
+    .then( res => {
+      const bk_list = (res.data).map(item => item.TB_code);
+      setBookmark(bk_list);
+    })
+  };
+
+  const deleteBookmarkTB = async (tableID) => {
+    console.log("user:", user, "TB_code:", tableID);
+    await axios.post("http://localhost:3001/bookmarkTB/delete/" + user, {
+      User_code: user,
+      TB_code : tableID
+    }).then( res => {
+      console.log("res:", res.data);
+    })
+  }
+  const addBookmarkTB = async (tableID) => {
+    await axios.post("http://localhost:3001/bookmarkTB/add/" + user, {
+      User_code: user,
+      TB_code : tableID
+    }). then(res => {
+      console.log("res:", res.data);
+    })
+  }
 
   const getTeamBoardLists = async () => {
       await axios.get("http://localhost:3001/teamboard")
@@ -86,19 +115,34 @@ export default function Album() {
       })
   }
 
-  useEffect( async () =>{
+  // 팀 모집 게시판 출력
+  useEffect( () =>{
     getTeamBoardLists();
-
   }, []);
+
+  // 로그인 상태일 경우 실행
+  useEffect( () =>{
+    if(localStorage.user !== undefined){
+       userInfo = JSON.parse(localStorage.user);
+       user = userInfo["User_code"]
+      getMyBookmarkTB();
+    }
+  }, [])
+
+
 
 
   // 북마크 토글
   const toggleBookmark = (tableID) =>{
+
     if(bk.includes(tableID)){
       setBookmark(bk.filter((el) => el !== tableID));
+      if(user!==undefined) deleteBookmarkTB(tableID);
+
     }
     else{
       setBookmark([...bk, tableID]);
+      if(user!==undefined) addBookmarkTB(tableID);
     }
   };
 
@@ -163,10 +207,10 @@ export default function Album() {
                     <Typography variant="overline">
                       {new Date(teamBoard.TB_finalDate).toJSON().substring(0,10)}
                     </Typography>
-                      {/* <IconButton size="small" style={{ color: red[800] }} className={classes.cardbookmark} onClick={() => {toggleBookmark(card.TB_code)}}>
-                        <FavoriteBorderIcon className={clsx(IsBookmarked(card.TB_code) && classes.menuButtonHidden)}/>
-                        <FavoriteIcon className={clsx(!IsBookmarked(card.TB_code) && classes.menuButtonHidden)} />
-                      </IconButton> */}
+                      <IconButton size="small" style={{ color: red[800] }} className={classes.cardbookmark} onClick={() => {toggleBookmark(teamBoard.TB_code)}}>
+                        <FavoriteBorderIcon className={clsx(IsBookmarked(teamBoard.TB_code) && classes.menuButtonHidden)}/>
+                        <FavoriteIcon className={clsx(!IsBookmarked(teamBoard.TB_code) && classes.menuButtonHidden )} />
+                      </IconButton>
                   </CardActions>
                 </Card>
               </Grid>
