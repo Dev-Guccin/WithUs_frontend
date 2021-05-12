@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn(props) {
   axios.defaults.withCredentials = true;
+
   const header = {
       "Content-Type": "application/json"
   }
@@ -83,9 +84,10 @@ export default function SignIn(props) {
         console.log(response.data.user);
         console.log("ETSETSETSETST",props)
         try {
-          localStorage.setItem('login_check', response.data.loginSuccess)
+          localStorage.setItem('login_check', response.data.loginSuccess);
           localStorage.setItem('user', JSON.stringify(response.data.user));
-          document.location.href = "/"        
+          document.location.href = "/";
+          // props.history.push('/');
           //props.setlogin_check(response.data.loginSuccess)
         } catch (e) {
           console.log("localStorage is not working");

@@ -3,7 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -11,15 +10,12 @@ import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
 import axios from 'axios';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Header from '../components/Header';
 
 function Copyright() {
   return (
@@ -68,17 +64,21 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp(props) {
   const classes = useStyles();
+  const user = JSON.parse(localStorage.getItem('user'));
+  axios.defaults.withCredentials = true;
   const [expanded, setExpanded] = React.useState(false);
   // const [value, setValue] = React.useState('female');
-  const [User_name, setUser_name] = useState("");
-  const [User_phone, setUser_phone] = useState("");
-  const [User_university, setUser_university] = useState("");
-  const [User_nickname, setUser_nickname] = useState("");
-  const [User_area, setUser_area] = useState("");
-  const [User_major, setUser_major] = useState("");
-  const [User_certificate, setUser_certificate] = useState("");
-  const [User_introduction, setUser_introduction] = useState("");
-
+  const [User_name, setUser_name] = useState(user.User_name);
+  const [User_phone, setUser_phone] = useState(user.User_phone);
+  const [User_university, setUser_university] = useState(user.User_university);
+  const [User_nickname, setUser_nickname] = useState(user.User_nickname);
+  const [User_area, setUser_area] = useState(user.User_area);
+  const [User_major, setUser_major] = useState(user.User_major);
+  const [User_certificate, setUser_certificate] = useState(user.User_certificate);
+  const [User_introduction, setUser_introduction] = useState(user.User_introduction);
+  const header = {
+    "Content-Type": "application/json"
+  }
   // const handleChange = (event) => {setValue(event.target.value);};
 
   const onNameHandler = (event) => {setUser_name(event.currentTarget.value);}
@@ -93,10 +93,12 @@ export default function SignUp(props) {
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
+
   const onSubmitHandler = (event) => {
     event.preventDefault();
 
     var body = {
+      User_code : user.User_code,
       User_name : User_name,
       User_phone : User_phone,
       User_university : User_university,
@@ -107,13 +109,28 @@ export default function SignUp(props) {
       User_introduction : User_introduction
     }
 
-    axios.post('http://localhost:3001/users/modify', body)
+    axios.post('http://localhost:3001/users/modify', body, {header})
     .then(response => {
-      if(response.data.SignUp) {
-        alert("SignUp finished");
-        props.history.push('/Login');
+
+      if(response.data.modify) {
+        alert(response.data.message);
+
+        var modifyuser = {
+          User_code : response.data.modifyuser.User_code,
+          User_name : response.data.modifyuser.User_name,
+          User_phone : response.data.modifyuser.User_phone,
+          User_university : response.data.modifyuser.User_university,
+          User_nickname : response.data.modifyuser.User_nickname,
+          User_area : response.data.modifyuser.User_area,
+          User_major : response.data.modifyuser.User_major,
+          User_certificate : response.data.modifyuser.User_certificate,
+          User_introduction : response.data.modifyuser.User_introduction
+        }
+
+        localStorage.setItem("user", JSON.stringify(modifyuser));
+
       } else {
-        alert("Signup Error " + response.data.message);
+        alert("modify Error " + response.data.message);
       }
     })
   }
@@ -148,7 +165,7 @@ export default function SignUp(props) {
                                 required
                                 fullWidth
                                 id="User_name"
-                                label="User_name"
+                                // label="User_name"
                                 name="User_name"
                                 autoComplete="User_name"
                                 placeholder="수정할 텍스트"
