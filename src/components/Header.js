@@ -66,7 +66,7 @@ export default function Header(props) {
           <SearchIcon />
         </IconButton>
 
-        {JSON.parse(props.logincheck) === false ? <div>
+        {props.logincheck === undefined || JSON.parse(props.logincheck) === false ? <div>
           <Button variant="outlined" size="small">
             <Link to='/SignUp'>
               SignUp
