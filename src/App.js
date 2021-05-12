@@ -17,6 +17,7 @@ import TmSidebar from './components/TmSidebar';
 import OnlyMyPage from './views/OnlyMyPage';
 import Mypage from './views/MyPage';
 import MyPageSideBar from './components/MyPageSideBar';
+import Interest from './views/Interest';
 
 const headers = [
   { title: 'Home', url: '/home' },
@@ -113,6 +114,7 @@ function App() {
                 <Route path="/teammate" exact={true} component={Teammate} />
                 <Route path='/Login' exact={true} render={() => <SignIn logincheck={logincheck} />} />
                 <Route path="/SignUp" exact={true} component={SignUp} />
+                <Route path="/Interest" exact={true} component={Interest} /> {/* 관심사 추가 페이지 */}
                 <Route path="/OnlyMyPage" exact={true} component={OnlyMyPage} /> {/* 본인 마이페이지 수정 */}
                 <Route path="/MyPage" exact={true} component={Mypage} /> {/* 유저들 마이페이지 조회 */}
               </main>
