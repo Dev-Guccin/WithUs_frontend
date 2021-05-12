@@ -9,8 +9,10 @@ import { Route, BrowserRouter as Router } from "react-router-dom";
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import Home from './views/Home'
+import Admin from './views/Admin'
 import Teammate from './views/Teammate'
 import Contestdetail from './views/Contestdetail'
+import Teammatedetail from './views/Teammatedetail'
 import SignIn from './views/SignIn';
 import SignUp from './views/SignUp';
 import TmSidebar from './components/TmSidebar';
@@ -65,6 +67,8 @@ function App(){
             <Route path="/SignUp" exact={true} component={SignUp} />
             <Route path="/OnlyMyPage" exact={true} component={OnlyMyPage} /> {/* 본인 마이페이지 수정 */}
             <Route path="/MyPage" exact={true} component={Mypage} /> {/* 유저들 마이페이지 조회 */}
+            <Route path="/Admin" exact={true} component={Admin} />
+            <Route path="/Teammatedetail/:TB_code" exact = {true} component={Teammatedetail} />
             </main>
           </Grid>
         </Grid>
