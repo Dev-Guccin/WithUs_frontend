@@ -10,6 +10,7 @@ import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import axios from 'axios';
+import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -64,27 +65,61 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp(props) {
     const classes = useStyles();
-    const [state, setState] = React.useState({
-        ScienceEnginnering: true,
-        ContentsWebtoon: false,
-        EnvironmentEnergy: false,
-        Employment: false,
-        Art: false,
-        Academic : false,
-        Idea : false,
-        UCC : false,
-        culture : false,
-        Design : false,
-        Slogan : false,
-        Economy : false
-    });
+    const [ScienceEnginnering, setScienceEnginnering] = useState(false);
+    const [ContentsWebtoon, setContentsWebtoon] = useState(false);
+    const [EnvironmentEnergy, setEnvironmentEnergy] = useState(false);
+    const [Employment, setEmployment] = useState(false);
+    const [Art, setArt] = useState(false);
+    const [Academic, setAcademic] = useState(false);
+    const [Idea, setIdea] = useState(false);
+    const [UCC, setUCC] = useState(false);
+    const [culture, setculture] = useState(false);
+    const [Design, setDesign] = useState(false);
+    const [Slogan, setSlogan] = useState(false);
+    const [Economy, setEconomy] = useState(false);
+
+    const OnScienceEnginneringChange = (event) => {setScienceEnginnering(event.target.checked)};
+    const OnsetContentsWebtoonChange = (event) => {setContentsWebtoon(event.target.checked);};
+    const OnsetEnvironmentEnergyChange = (event) => {setEnvironmentEnergy(event.target.checked)};
+    const OnsetEmploymentChange = (event) => {setEmployment(event.target.checked)};
+    const OnsetArtChange = (event) => {setArt(event.target.checked)};
+    const OnsetAcademicChange = (event) => {setAcademic(event.target.checked)};
+    const OnsetIdeaChange = (event) => {setIdea(event.target.checked)};
+    const OnsetUCCChange = (event) => {setUCC(event.target.checked)};
+    const OnsetcultureChange = (event) => {setculture(event.target.checked)};
+    const OnsetDesignChange = (event) => {setDesign(event.target.checked)};
+    const OnsetSloganChange = (event) => {setSlogan(event.target.checked)};
+    const OnsetEconomyChange = (event) => {setEconomy(event.target.checked)};
+
+    const onSubmitHandler = (event) => {
+      event.preventDefault();
   
-    const handleChange = (event) => {
-      setState({ ...state, [event.target.name]: event.target.checked });
-    };
+      var body = {
+        User_code : JSON.parse(localStorage.getItem('user')).User_code,
+        ScienceEnginnering : ScienceEnginnering,
+        ContentsWebtoon : ContentsWebtoon,
+        EnvironmentEnergy : EnvironmentEnergy,
+        Employment : Employment,
+        Art : Art,
+        Academic : Academic,
+        Idea : Idea,
+        UCC : UCC,
+        culture : culture,
+        Design : Design,
+        Slogan : Slogan,
+        Economy : Economy
+      }
   
-    const { ScienceEnginnering, ContentsWebtoon, EnvironmentEnergy, Employment, Art, Academic, Idea, UCC, culture, Design, Slogan, Economy} = state;
-    // const error = [gilad, jason, antoine].filter((v) => v).length !== 2;
+      axios.post('http://localhost:3001/users/Interest', body)
+      .then(response => {
+        if(response.data.Interest) {
+          alert("관심사 추가가 완료되었습니다.");
+          document.location.href = "/";
+        } else {
+          alert("관심사 등록에 실패하였습니다.");
+        }
+      })
+    }
 
   return (
     <Container component="main">
@@ -98,68 +133,78 @@ export default function SignUp(props) {
         </Typography>
           {/* 관심사 추가 */}
           {/* <div className={classes.root}> */}
+          <form className={classes.formControl} noValidate onSubmit={onSubmitHandler}>
             <FormControl component="fieldset" className={classes.formControl}>
-                <FormLabel component="legend">Assign responsibility</FormLabel>
+                <FormLabel component="legend">관심사를 골라주십시오</FormLabel>
                 <FormGroup>
                 <Grid item direction="column">
                 <FormControlLabel
-                    control={<Checkbox checked={ScienceEnginnering} onChange={handleChange} name="ScienceEnginnering" />}
+                    control={<Checkbox checked={ScienceEnginnering} onChange={OnScienceEnginneringChange} name="ScienceEnginnering" />}
                     label="ScienceEnginnering"
                 />
                 <FormControlLabel
-                    control={<Checkbox checked={ContentsWebtoon} onChange={handleChange} name="ContentsWebtoon" />}
+                    control={<Checkbox checked={ContentsWebtoon} onChange={OnsetContentsWebtoonChange} name="ContentsWebtoon" />}
                     label="ContentsWebtoon"
                 />
                 <FormControlLabel
-                    control={<Checkbox checked={EnvironmentEnergy} onChange={handleChange} name="EnvironmentEnergy" />}
+                    control={<Checkbox checked={EnvironmentEnergy} onChange={OnsetEnvironmentEnergyChange} name="EnvironmentEnergy" />}
                     label="EnvironmentEnergy"
                 />
                 </Grid>
                 <Grid item direction="column">
                 <FormControlLabel
-                    control={<Checkbox checked={Employment} onChange={handleChange} name="Employment"/>}
+                    control={<Checkbox checked={Employment} onChange={OnsetEmploymentChange} name="Employment"/>}
                     label="Employment"
                 />
                 <FormControlLabel
-                    control={<Checkbox checked={Art} onChange={handleChange} name="Art" />}
+                    control={<Checkbox checked={Art} onChange={OnsetArtChange} name="Art" />}
                     label="Art"
                 />
                 <FormControlLabel
-                    control={<Checkbox checked={Academic} onChange={handleChange} name="Academic" />}
+                    control={<Checkbox checked={Academic} onChange={OnsetAcademicChange} name="Academic" />}
                     label="Academic"
                 />
                 </Grid>
                 <div>
                 <FormControlLabel
-                    control={<Checkbox checked={Idea} onChange={handleChange} name="Idea" />}
+                    control={<Checkbox checked={Idea} onChange={OnsetIdeaChange} name="Idea" />}
                     label="Idea"
                 />
                 <FormControlLabel
-                    control={<Checkbox checked={UCC} onChange={handleChange} name="UCC" />}
+                    control={<Checkbox checked={UCC} onChange={OnsetUCCChange} name="UCC" />}
                     label="UCC"
                 />
                 <FormControlLabel
-                    control={<Checkbox checked={culture} onChange={handleChange} name="culture" />}
+                    control={<Checkbox checked={culture} onChange={OnsetcultureChange} name="culture" />}
                     label="culture"
                 />
                 </div>
                 <div>
                 <FormControlLabel
-                    control={<Checkbox checked={Design} onChange={handleChange} name="Design" />}
+                    control={<Checkbox checked={Design} onChange={OnsetDesignChange} name="Design" />}
                     label="Design"
                 />
                 <FormControlLabel
-                    control={<Checkbox checked={Slogan} onChange={handleChange} name="Slogan" />}
+                    control={<Checkbox checked={Slogan} onChange={OnsetSloganChange} name="Slogan" />}
                     label="Slogan"
                 />
                 <FormControlLabel
-                    control={<Checkbox checked={Economy} onChange={handleChange} name="Economy" />}
+                    control={<Checkbox checked={Economy} onChange={OnsetEconomyChange} name="Economy" />}
                     label="Economy"
                 />
                 </div>
                 </FormGroup>
-                <FormHelperText>최대 3개까지 골라주십시오</FormHelperText>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Interest Add
+                </Button>
             </FormControl>
+            </form>
     {/* </div> */}
           {/* 관심사 추가 end */}
           <Grid container justify="flex-end">

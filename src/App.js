@@ -96,6 +96,7 @@ function App() {
               <Route path="/OnlyMyPage" component={MyPageSideBar} /> {/* 본인 마이페이지 수정 */}
               <Route path='/MyPage' exact={true} render={() => 
                 <Sidebar field={field} setfield={setfield} target={target} settarget={settarget}/>} />
+              <Route path='/Interest' component={MyPageSideBar} />
             </Grid>
             <Grid item xs={10}>
               <main>
