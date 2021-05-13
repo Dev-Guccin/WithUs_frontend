@@ -123,11 +123,12 @@ const categories = [
 export default function UpdateTeamboard(props) {
   const classes = useStyles();  //props.Tbinfo
   const TBinfo = props.TBinfo
+  const timezoneOffset = new Date().getTimezoneOffset() * 60000;
   const [contestOrProject, setContestOrProject] = useState(TBinfo.TB_contestOrProject);
   const [title, setTitle] = useState(TBinfo.TB_title);
   const [recruit, setRecruit] = useState(TBinfo.TB_finalNumber);
   const [category, setCategory] = useState(TBinfo.CT_code);
-  const [finalDate,setFinalDate] = useState(TBinfo.TB_finalDate);
+  const [finalDate,setFinalDate] = useState(new Date(new Date(TBinfo.TB_finalDate) - timezoneOffset).toJSON().substring(0,10));
   const [content, setContent] = useState(TBinfo.TB_content);
   const history = useHistory();
 
@@ -182,6 +183,7 @@ export default function UpdateTeamboard(props) {
       TB_contestOrProject: contestOrProject,
       TB_code: TBinfo.TB_code
     }
+
 
     await axios.post("http://localhost:3001/teamboard/update", body)
     .then(res => {
@@ -259,7 +261,7 @@ export default function UpdateTeamboard(props) {
                   fullWidth
                   type="date"
                   variant="outlined"
-                  value={finalDate.slice(0,10)}
+                  value={finalDate}
                   onChange ={onFinalDateChange}
                   InputLabelProps={{
                     shrink: true,
