@@ -99,7 +99,7 @@ export default function SignUp(props) {
     axios.post('http://localhost:3001/users/join', body)
     .then(response => {
       if(response.data.SignUp) {
-        alert("관심사 등록 페이지로 이동합니다.");
+        alert("로그인 페이지로 이동합니다..");
         props.history.push('/Login');
       } else {
         alert("Signup Error " + response.data.message);
