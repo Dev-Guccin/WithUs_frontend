@@ -81,7 +81,8 @@ export default function Teammate(props) {
 
   const [bk, setBookmark] = useState([]);
   const [teamBoardLists, setTeamBoardLists] = useState([]);
-  const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
+  const timezoneOffset = new Date().getTimezoneOffset() * 60000;
+
 
 
   // DB에서 로그인유저 북마크 정보만 가져와서 담기
@@ -210,10 +211,10 @@ export default function Teammate(props) {
                   </CardContent>                  
                   <CardActions disableSpacing>
                     <Typography variant="overline">
-                      {new Date(teamBoard.TB_createDate+KR_TIME_DIFF).toJSON().substring(0,10)} ~&nbsp;
+                      {new Date(new Date(teamBoard.TB_createDate) - timezoneOffset).toJSON().substring(0,10)} ~&nbsp;
                     </Typography>
                     <Typography variant="overline">
-                      {new Date(teamBoard.TB_finalDate+KR_TIME_DIFF).toJSON().substring(0,10)}
+                      {new Date(new Date(teamBoard.TB_finalDate) - timezoneOffset).toJSON().substring(0,10)}
                     </Typography>
                       <IconButton size="small" style={{ color: red[800] }} className={classes.cardbookmark} onClick={() => {toggleBookmark(teamBoard.TB_code)}}>
                         <FavoriteBorderIcon className={clsx(IsBookmarked(teamBoard.TB_code) && classes.menuButtonHidden)}/>
