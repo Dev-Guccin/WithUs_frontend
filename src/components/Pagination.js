@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'; // import 로 useState 를 �
 
 export default function Pagination(props) {
   const [pagearray, setpagearray] = useState([]);//실제 보여질 페이지
-
   useEffect(() => {
     setArray()
   }, [props.bottompage]);

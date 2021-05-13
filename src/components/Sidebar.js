@@ -13,44 +13,100 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   paper: {
-    marginRight: theme.spacing(2),
+    //marginRight: theme.spacing(2),
+
   },
 }));
 
-const sections = [
-  { title: '사진/영상/UCC', url: '#' },
-  { title: '콘텐츠/웹툰', url: '#' },
-  { title: '아이디어/기획', url: '#' },
-  { title: '취업/창업', url: '#' },
-  { title: '디자인/미술', url: '#' },
-  { title: '과학/공학/IT', url: '#' },
-  { title: '음악/예술', url: '#' },
-  { title: '금융/경제/경영', url: '#' },
-  { title: '환경/에너지', url: '#' },
-  { title: '네이밍/슬로건', url: '#' },
-  { title: '문화/영화/문학', url: '#' },
-  { title: '연구/학술/논문', url: '#' },
-];
-
 export default function Sidebar(props) {
   const classes = useStyles();
-
+  function handleFieldChange(event) {
+    console.log(event)
+    const index = event.target.value;
+    //const value = target.type === 'checkbox' ? target.checked : target.value;
+    console.log(index)
+    let newArr = { ...props.field }; // copying the old datas array
+    newArr[index] = props.field[index] === true ? false : true
+    props.setfield(newArr)
+  }
+  function handleTargetChange(event) {
+    console.log(event)
+    const index = event.target.value;
+    //const value = target.type === 'checkbox' ? target.checked : target.value;
+    console.log(index)
+    let newArr = { ...props.target }; // copying the old datas array
+    newArr[index] = props.target[index] === true ? false : true
+    props.settarget(newArr)
+  }
   return (
     <Paper className={classes.paper}>
       <MenuList>
-        {sections.map((section) => (
-          <Link
-          color="inherit"
-          noWrap
-          key={section.title}
-          variant="body2"
-          to={section.url}
-          >
-          <MenuItem>
-            {section.title}
-          </MenuItem>
-          </Link>
-        ))}
+        <table>
+          <tr>
+            <td>분야</td>
+            <td>
+              <table>
+                <tr>
+                  <td><input type="checkbox" value={0} checked={props.field[0]} onChange={(event) => handleFieldChange(event)} />환경/에너지</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" value={1} checked={props.field[1]} onChange={(event) => handleFieldChange(event)} />콘텐츠/웹툰</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" value={2} checked={props.field[2]} onChange={(event) => handleFieldChange(event)} />취업/창업</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" value={3} checked={props.field[3]} onChange={(event) => handleFieldChange(event)} />음악/예술</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" value={4} checked={props.field[4]} onChange={(event) => handleFieldChange(event)} />연구/학술/논문</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" value={5} checked={props.field[5]} onChange={(event) => handleFieldChange(event)} />아이디어/기획</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" value={6} checked={props.field[6]} onChange={(event) => handleFieldChange(event)} />사진/영상/UCC</td>
+                </tr>
+                <tr><td><input type="checkbox" value={7} checked={props.field[7]} onChange={(event) => handleFieldChange(event)} />문화/영화/문학</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" value={8} checked={props.field[8]} onChange={(event) => handleFieldChange(event)} />디자인/미술</td>
+                </tr>
+                <tr><td><input type="checkbox" value={9} checked={props.field[9]} onChange={(event) => handleFieldChange(event)} />네이밍/슬로건</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" value={10} checked={props.field[10]} onChange={(event) => handleFieldChange(event)} />금융/경제/경영</td>
+                </tr>
+                <tr><td><input type="checkbox" value={11} checked={props.field[11]} onChange={(event) => handleFieldChange(event)} />과학/공학/IT</td>
+                </tr>
+                <tr>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td>대상</td>
+            <td>
+              <table>
+                <tr>
+                  <td><input type="checkbox" value={0} checked={props.target[0]} onChange={(event) => handleTargetChange(event)} />누구나지원</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" value={1} checked={props.target[1]} onChange={(event) => handleTargetChange(event)} />청소년</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" value={2} checked={props.target[2]} onChange={(event) => handleTargetChange(event)} />대학(원)생</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" value={3} checked={props.target[3]} onChange={(event) => handleTargetChange(event)} />취준생</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" value={4} checked={props.target[4]} onChange={(event) => handleTargetChange(event)} />직장인</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
       </MenuList>
     </Paper>
   );

@@ -51,7 +51,12 @@ export default function Header(props) {
   return (
     <React.Fragment>
       <Toolbar className={classes.toolbar}>
-        <Button size="small">Subscribe</Button>
+        {props.logincheck === undefined || JSON.parse(props.logincheck) === false ? <div></div> :<div>
+          <Button variant="outlined" size="small">
+              <Link to='/OnlyMyPage'>
+                OnlyMyPage
+          </Link>
+            </Button></div>}
         <Typography
           component="h2"
           variant="h5"
@@ -65,7 +70,6 @@ export default function Header(props) {
         <IconButton>
           <SearchIcon />
         </IconButton>
-
         {props.logincheck === undefined || JSON.parse(props.logincheck) === false ? <div>
           <Button variant="outlined" size="small">
             <Link to='/SignUp'>
@@ -84,11 +88,7 @@ export default function Header(props) {
                 UserMyPage
           </Link>
             </Button>
-            <Button variant="outlined" size="small">
-              <Link to='/OnlyMyPage'>
-                OnlyMyPage
-          </Link>
-            </Button>
+            
             <Button variant="outlined" size="small" onClick={() => logout()}>
               Log out
           </Button>

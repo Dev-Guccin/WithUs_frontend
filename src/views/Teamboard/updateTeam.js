@@ -120,19 +120,19 @@ const categories = [
   },
 ];
 
-export default function Teamboard() {
-  const classes = useStyles();
-  const [contestOrProject, setContestOrProject] = useState('contest');
-  const [title, setTitle] = useState('');
-  const [recruit, setRecruit] = useState(4);
-  const [category, setCategory] = useState(1);
-  const [finalDate,setFinalDate] = useState(new Date());
-  const [content, setContent] = useState('');
+export default function UpdateTeamboard(props) {
+  const classes = useStyles();  //props.Tbinfo
+  const TBinfo = props.TBinfo
+  const [contestOrProject, setContestOrProject] = useState(TBinfo.TB_contestOrProject);
+  const [title, setTitle] = useState(TBinfo.TB_title);
+  const [recruit, setRecruit] = useState(TBinfo.TB_finalNumber);
+  const [category, setCategory] = useState(TBinfo.CT_code);
+  const [finalDate,setFinalDate] = useState(TBinfo.TB_finalDate);
+  const [content, setContent] = useState(TBinfo.TB_content);
+  const history = useHistory();
 
   const logincheck = localStorage.login_check;
-
-
-  const history = useHistory();
+  console.log("test",TBinfo);
 
   const onTypeChange = (e) => {
     setContestOrProject(e.target.value);
@@ -153,7 +153,7 @@ export default function Teamboard() {
       setContent(value);
   }
 
-  
+ 
   async function onClickComplete() {
 
     if( logincheck === undefined || JSON.parse(logincheck) === false){
@@ -170,7 +170,6 @@ export default function Teamboard() {
     if( (new Date(finalDate).getTime() - new Date().getTime()) < 0 ) {
       alert('마감 날짜를 하루 이상으로 설정해주세요'); return;
     }
-    //console.log(contestOrProject, title,recruit,category, finalDate, content);
     const userInfo = JSON.parse(localStorage.user);
 
     const body = {
@@ -180,23 +179,24 @@ export default function Teamboard() {
       TB_finalNumber: recruit,
       TB_content: content,
       TB_finalDate: finalDate,
-      TB_contestOrProject: contestOrProject
+      TB_contestOrProject: contestOrProject,
+      TB_code: TBinfo.TB_code
     }
 
-    await axios.post('http://localhost:3001/teamboard', body)
+    await axios.post("http://localhost:3001/teamboard/update", body)
     .then(res => {
       console.log("res", res.data);
       history.push('/teammate');
     })
-
   }
+
   return (
     <React.Fragment>
       <CssBaseline />
       <main className={classes.layout}>
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h4" align="center">
-            팀 모집하기
+            수정하기
           </Typography>
           <React.Fragment>
             <FormControl component="fieldset">
@@ -214,8 +214,11 @@ export default function Teamboard() {
                   id="CB_title"
                   name="CB_title"
                   label="제목"
-                  placeholder="위더스 팀원 모집합니다" 
+                  value={title}
                   onChange={onTitleChange} 
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -256,6 +259,7 @@ export default function Teamboard() {
                   fullWidth
                   type="date"
                   variant="outlined"
+                  value={finalDate.slice(0,10)}
                   onChange ={onFinalDateChange}
                   InputLabelProps={{
                     shrink: true,
@@ -274,7 +278,6 @@ export default function Teamboard() {
                 ><strong>완료</strong></Button>
               </Grid>
             </Grid>
-  
             </React.Fragment>
         </Paper>
         <Copyright />

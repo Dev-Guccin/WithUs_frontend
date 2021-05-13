@@ -17,6 +17,8 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import {category, bookmarks,categoryImage } from '../../src/testDB';
 import axios from 'axios';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -62,12 +64,12 @@ const useStyles = makeStyles((theme) => ({
     display: 'none',
   },
 
-  test:{
-    
+  linkToDetail:{
+    textDecoration: 'none',
+    color: 'black'
   }
 
 }));
-
 
 
 let imgsrc = '';
@@ -165,14 +167,18 @@ export default function Teammate(props) {
               imgsrc = `https://source.unsplash.com/collection/${teamBoard.User_code}`,
               <Grid item key={teamBoard.TB_code} xs={12} sm={4} md={6}>
                 <Card >
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image= {categoryImage[teamBoard.CT_code]}
-                    title="Image title"
-                  />
+                  <Link to={"Teammatedetail/" + String(teamBoard.TB_code)} >
+                    <CardMedia
+                      className={classes.cardMedia}
+                      image= {categoryImage[teamBoard.CT_code]}
+                      title="Image title"
+                    />
+                  </Link>
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2" noWrap>
+                    <Link to={"Teammatedetail/" + String(teamBoard.TB_code)} className={classes.linkToDetail}>
                       {teamBoard.TB_title}
+                    </Link>
                     </Typography>
                     <CardActions className={classes.root} >
                       <Typography className={classes.writer} >
@@ -184,10 +190,10 @@ export default function Teammate(props) {
                       <Typography >
                         <ChatBubbleOutlineIcon style={{ fontSize: 18 }}/>&nbsp;10
                       </Typography>                      
-                    </CardActions>  
-
-                    <div dangerouslySetInnerHTML={{__html: teamBoard.TB_content} }>
-                    </div>        
+                    </CardActions>
+                    <Link to={"Teammatedetail/" + String(teamBoard.TB_code)} className={classes.linkToDetail}>
+                    <div dangerouslySetInnerHTML={{__html: teamBoard.TB_content} }></div> 
+                    </Link>        
                   </CardContent>
                   <CardContent>
                     <Typography>
