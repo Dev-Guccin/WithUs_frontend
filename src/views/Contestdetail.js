@@ -39,6 +39,7 @@ export default function Contestdetail( {match }) {
     }).then(response => {
       console.log(response.data);
       setsection(response.data[0]);
+      console.log(response.data[0]);
     })
   }, []);
   return (

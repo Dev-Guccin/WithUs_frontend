@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import IconButton from '@material-ui/core/IconButton';
 import Card from '@material-ui/core/Card';
@@ -15,7 +15,9 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import {red } from '@material-ui/core/colors';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
-import {category, bookmarks, cardsinfo } from '../../src/testDB';
+import {category, bookmarks,categoryImage } from '../../src/testDB';
+import axios from 'axios';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
 
 
@@ -62,25 +64,89 @@ const useStyles = makeStyles((theme) => ({
     display: 'none',
   },
 
+  linkToDetail:{
+    textDecoration: 'none',
+    color: 'black'
+  }
+
 }));
 
 
-
 let imgsrc = '';
+let userInfo
+let user
 
-export default function Album() {
+export default function Teammate(props) {
   const classes = useStyles();
 
-  const [bk, setBookmark] = useState(bookmarks[1]);
+  const [bk, setBookmark] = useState([]);
+  const [teamBoardLists, setTeamBoardLists] = useState([]);
+  const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
+
+
+  // DB에서 로그인유저 북마크 정보만 가져와서 담기
+  const getMyBookmarkTB = async () => {
+    await axios.get("http://localhost:3001/bookmarkTB/" + user)
+    .then( res => {
+      const bk_list = (res.data).map(item => item.TB_code);
+      setBookmark(bk_list);
+    })
+  };
+
+  const deleteBookmarkTB = async (tableID) => {
+    console.log("user:", user, "TB_code:", tableID);
+    await axios.post("http://localhost:3001/bookmarkTB/delete/" + user, {
+      User_code: user,
+      TB_code : tableID
+    }).then( res => {
+      console.log("res:", res.data);
+    })
+  }
+  const addBookmarkTB = async (tableID) => {
+    await axios.post("http://localhost:3001/bookmarkTB/add/" + user, {
+      User_code: user,
+      TB_code : tableID
+    }). then(res => {
+      console.log("res:", res.data);
+    })
+  }
+
+  const getTeamBoardLists = async () => {
+      await axios.get("http://localhost:3001/teamboard")
+      .then(res => {
+        console.log(res.data);
+        setTeamBoardLists(res.data);
+      })
+  }
+
+  // 팀 모집 게시판 출력
+  useEffect( () =>{
+    getTeamBoardLists();
+  }, []);
+
+  // 로그인 상태일 경우 실행
+  useEffect( () =>{
+    if(localStorage.user !== undefined){
+       userInfo = JSON.parse(localStorage.user);
+       user = userInfo["User_code"]
+      getMyBookmarkTB();
+    }
+  }, [])
+
+
 
 
   // 북마크 토글
   const toggleBookmark = (tableID) =>{
+
     if(bk.includes(tableID)){
       setBookmark(bk.filter((el) => el !== tableID));
+      if(user!==undefined) deleteBookmarkTB(tableID);
+
     }
     else{
       setBookmark([...bk, tableID]);
+      if(user!==undefined) addBookmarkTB(tableID);
     }
   };
 
@@ -98,23 +164,27 @@ export default function Album() {
       <CssBaseline />
       <main>
         <Container className={classes.cardGrid} maxWidth="lg">
-          <Grid container spacing={2}>
-            {cardsinfo.map((card) => (
-              imgsrc = `https://source.unsplash.com/collection/${card.User_code}`,
-              <Grid item key={card} xs={12} sm={6} md={6}>
-                <Card className={classes.card.User_code}>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image= {imgsrc}
-                    title="Image title"
-                  />
+          <Grid container spacing={3}>
+            {teamBoardLists.map((teamBoard) => (
+              imgsrc = `https://source.unsplash.com/collection/${teamBoard.User_code}`,
+              <Grid item key={teamBoard.TB_code} xs={12} sm={4} md={6}>
+                <Card >
+                  <Link to={"Teammatedetail/" + String(teamBoard.TB_code)} >
+                    <CardMedia
+                      className={classes.cardMedia}
+                      image= {categoryImage[teamBoard.CT_code]}
+                      title="Image title"
+                    />
+                  </Link>
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2" noWrap>
-                      {card.TB_title}
+                    <Link to={"Teammatedetail/" + String(teamBoard.TB_code)} className={classes.linkToDetail}>
+                      {teamBoard.TB_title}
+                    </Link>
                     </Typography>
                     <CardActions className={classes.root} >
                       <Typography className={classes.writer} >
-                      작성자: 테스트{card.User_code}
+                      작성자: {teamBoard.User_nickname}
                       </Typography>                     
                       <Typography >
                         <VisibilityIcon style={{ fontSize: 18 }}/>&nbsp;108
@@ -122,30 +192,32 @@ export default function Album() {
                       <Typography >
                         <ChatBubbleOutlineIcon style={{ fontSize: 18 }}/>&nbsp;10
                       </Typography>                      
-                    </CardActions>  
-
-                    <Typography>
-                      {card.TB_content}
-                    </Typography>        
+                    </CardActions>
+                    <Link to={"Teammatedetail/" + String(teamBoard.TB_code)} className={classes.linkToDetail}>
+                    <div dangerouslySetInnerHTML={{__html: teamBoard.TB_content} }></div> 
+                    </Link>        
                   </CardContent>
                   <CardContent>
-                  <Typography>
-                      카테고리 : {category[card.CT_code]}
+                    <Typography>
+                      종류 : {teamBoard.TB_contestOrProject === 'project' ? '프로젝트' : '공모전'}
                     </Typography>
                     <Typography>
-                      팀원 현황: {card.TB_recruitNumber}&nbsp;&nbsp;/&nbsp;&nbsp;{card.TB_finalNumber}
+                      카테고리 : {category[teamBoard.CT_code]}
+                    </Typography>
+                    <Typography>
+                      팀원 현황: {teamBoard.TB_recruitNumber}&nbsp;&nbsp;/&nbsp;&nbsp;{teamBoard.TB_finalNumber}
                     </Typography>     
                   </CardContent>                  
                   <CardActions disableSpacing>
                     <Typography variant="overline">
-                      {card.TB_createDate} ~&nbsp;
+                      {new Date(teamBoard.TB_createDate+KR_TIME_DIFF).toJSON().substring(0,10)} ~&nbsp;
                     </Typography>
                     <Typography variant="overline">
-                      {card.TB_finalDate}
+                      {new Date(teamBoard.TB_finalDate+KR_TIME_DIFF).toJSON().substring(0,10)}
                     </Typography>
-                      <IconButton size="small" style={{ color: red[800] }} className={classes.cardbookmark} onClick={() => {toggleBookmark(card.TB_code)}}>
-                        <FavoriteBorderIcon className={clsx(IsBookmarked(card.TB_code) && classes.menuButtonHidden)}/>
-                        <FavoriteIcon className={clsx(!IsBookmarked(card.TB_code) && classes.menuButtonHidden)} />
+                      <IconButton size="small" style={{ color: red[800] }} className={classes.cardbookmark} onClick={() => {toggleBookmark(teamBoard.TB_code)}}>
+                        <FavoriteBorderIcon className={clsx(IsBookmarked(teamBoard.TB_code) && classes.menuButtonHidden)}/>
+                        <FavoriteIcon className={clsx(!IsBookmarked(teamBoard.TB_code) && classes.menuButtonHidden )} />
                       </IconButton>
                   </CardActions>
                 </Card>
