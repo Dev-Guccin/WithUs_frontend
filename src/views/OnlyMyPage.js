@@ -156,7 +156,7 @@ export default function SignUp(props) {
                         >
                         <Typography className={classes.heading}>이름</Typography>
                         <Typography className={classes.secondaryHeading}>
-                            User_name
+                            {User_name}
                         </Typography>
                         </AccordionSummary>
                         <AccordionDetails>
@@ -182,7 +182,7 @@ export default function SignUp(props) {
                         >
                         <Typography className={classes.heading}>대학교</Typography>
                         <Typography className={classes.secondaryHeading}>
-                            User_university
+                            {User_university}
                         </Typography>
                         </AccordionSummary>
                         <AccordionDetails>
@@ -208,7 +208,7 @@ export default function SignUp(props) {
                         >
                         <Typography className={classes.heading}>닉네임</Typography>
                         <Typography className={classes.secondaryHeading}>
-                            User_nickname
+                            {User_nickname}
                         </Typography>
                         </AccordionSummary>
                         <AccordionDetails>
@@ -234,7 +234,7 @@ export default function SignUp(props) {
                         >
                         <Typography className={classes.heading}>전화번호</Typography>
                         <Typography className={classes.secondaryHeading}>
-                            User_phone
+                            {User_phone}
                         </Typography>
                         </AccordionSummary>
                         <AccordionDetails>
@@ -260,7 +260,7 @@ export default function SignUp(props) {
                         >
                         <Typography className={classes.heading}>전공</Typography>
                         <Typography className={classes.secondaryHeading}>
-                            User_major
+                            {User_major}
                         </Typography>
                         </AccordionSummary>
                         <AccordionDetails>
@@ -286,7 +286,7 @@ export default function SignUp(props) {
                         >
                         <Typography className={classes.heading}>사는지역</Typography>
                         <Typography className={classes.secondaryHeading}>
-                            User_area
+                            {User_area}
                         </Typography>
                         </AccordionSummary>
                         <AccordionDetails>
@@ -312,7 +312,7 @@ export default function SignUp(props) {
                         >
                         <Typography className={classes.heading}>자격증</Typography>
                         <Typography className={classes.secondaryHeading}>
-                            User_certificate
+                            {User_certificate}
                         </Typography>
                         </AccordionSummary>
                         <AccordionDetails>
@@ -338,7 +338,7 @@ export default function SignUp(props) {
                         >
                         <Typography className={classes.heading}>하고싶은말</Typography>
                         <Typography className={classes.secondaryHeading}>
-                            User_introduction
+                            {User_introduction}
                         </Typography>
                         </AccordionSummary>
                         <AccordionDetails>

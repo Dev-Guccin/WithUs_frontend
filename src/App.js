@@ -21,6 +21,7 @@ import Interest from './views/Interest';
 import createTeam from './views/Teamboard/createTeam';
 import Teammatedetail from './views/Teammatedetail';
 import updateTeam from './views/Teamboard/updateTeam';
+import Quit from './views/Quit';
 
 const headers = [
   { title: 'Home', url: '/home' },
@@ -100,6 +101,7 @@ function App() {
               <Route path='/MyPage' exact={true} render={() => 
                 <Sidebar field={field} setfield={setfield} target={target} settarget={settarget}/>} />
               <Route path='/Interest' component={MyPageSideBar} />
+              <Route path='/Quit' component={MyPageSideBar} />
             </Grid>
             <Grid item xs={10}>
               <main>
@@ -123,6 +125,7 @@ function App() {
                 <Route path="/MyPage" exact={true} component={Mypage} /> {/* 유저들 마이페이지 조회 */}
                 <Route path='/createTeam' component={createTeam}/>
                 <Route path='/updateTeam' component={updateTeam}/>
+                <Route path='/Quit' component={Quit}/>
               </main>
             </Grid>
           </Grid>
