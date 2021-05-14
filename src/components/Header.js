@@ -48,6 +48,7 @@ export default function Header(props) {
         localStorage.removeItem('user');
         console.log("login : ", LoginState)
         props.setlogincheck(JSON.stringify(LoginState))
+        document.location.href = "/";
       })
   }
 
