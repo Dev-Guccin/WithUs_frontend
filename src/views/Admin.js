@@ -63,15 +63,11 @@ export default function Admin({ match }) {
       var body = {
         User_test : User_test
       }
-      
+
     }
 
-    const onSubmitTestHandler = (event) => {
-      event.preventDefault();
-      var body = {
-        User_test : User_test
-      }
-      console.log(body);
+    const onSubmitTestHandler = (code) => {
+      console.log({code});
     }
 
   
@@ -85,20 +81,11 @@ export default function Admin({ match }) {
       console.log(body);
     }
 
-    const aaaTest = (event) => {
-      event.preventDefault();
-      const msg = event.target.getAttribute('value');
-      console.log(msg);
-      alert(msg);
-    }
-
     /* 회원정보 삭제 버튼을 눌렀을 때의 이벤트 핸들러 */
-    const onDeleteHandler = (event) => {
-      event.preventDefault();
-      const msg = event.target.getAttribute('value');
-      console.log(msg);
+    const onDeleteHandler = (code) => {
+      console.log({code});
 
-      axios.post('http://localhost:3001/admin/delete/user/' + msg)
+      axios.post('http://localhost:3001/admin/delete/user/' + code,{User_code: code} )
         .then(response => {
           if(response) {
             alert('해당 아이디가 삭제되었습니다!!!');
@@ -145,7 +132,6 @@ export default function Admin({ match }) {
       <React.Fragment>
         <Container maxWidth="lg">
           <h2>관리자 페이지</h2>
-          <button onClick={aaaTest} value="45">Action!</button>
           
           <Divider/>
           <Box className={classes.admin_user}>
@@ -198,7 +184,7 @@ export default function Admin({ match }) {
                         <Button variant="contained" color="primary" href={"Admin_modify/" + row.User_code}>수정</Button>
                       </TableCell>
                       <TableCell>
-                        <Button onClick={onSubmitTestHandler} variant="contained" color="secondary" value={row.User_code}>삭제{row.User_code}</Button>
+                        <Button onClick={()=>{onDeleteHandler(row.User_code)}} variant="contained" color="secondary" value={row.User_code}>삭제{row.User_code}</Button>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -248,7 +234,7 @@ export default function Admin({ match }) {
                           <Button variant="contained" color="primary" href={section === undefined ? "" : "Contestdetail/" + String(section.CB_code)}>보기</Button>
                       </TableCell>
                       <TableCell>
-                        <Button variant="contained" color="secondary" value={section.CB_code} onClick={aaaTest}>삭제</Button>
+                        <Button variant="contained" color="secondary" value={section.CB_code}>삭제</Button>
                       </TableCell>
                     </TableRow>
                   ))}
