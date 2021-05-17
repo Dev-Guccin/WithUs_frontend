@@ -52,6 +52,62 @@ export default function Admin({ match }) {
     const [section2, setsection2] = useState([]);
     const [section3, setsection3] = useState([]);
 
+    /* 회원정보 검색 이벤트 핸들러 변수 */
+    const [User_search, setUser_search] = useState("");
+    const onSearchHandler = (event) => {setUser_search(event.currentTarget.value);}
+
+    /* 테스트 */
+    const [User_test, setUser_test] = useState("");
+    const onTestHandler = (event) => {
+      setUser_test(event.currentTarget.value);
+      var body = {
+        User_test : User_test
+      }
+      
+    }
+
+    const onSubmitTestHandler = (event) => {
+      event.preventDefault();
+      var body = {
+        User_test : User_test
+      }
+      console.log(body);
+    }
+
+  
+
+    /* 회원정보 검색 버튼을 눌렀을 때의 이벤트 핸들러 */
+    const onSubmitSearchHandler = (event) => {
+      event.preventDefault();
+      var body = {
+        User_search : User_search
+      }
+      console.log(body);
+    }
+
+    const aaaTest = (event) => {
+      event.preventDefault();
+      const msg = event.target.getAttribute('value');
+      console.log(msg);
+      alert(msg);
+    }
+
+    /* 회원정보 삭제 버튼을 눌렀을 때의 이벤트 핸들러 */
+    const onDeleteHandler = (event) => {
+      event.preventDefault();
+      const msg = event.target.getAttribute('value');
+      console.log(msg);
+
+      axios.post('http://localhost:3001/admin/delete/user/' + msg)
+        .then(response => {
+          if(response) {
+            alert('해당 아이디가 삭제되었습니다!!!');
+          } else {
+            alert("Signup Error " + response.data.message);
+          }
+        });
+    }
+
     useEffect(() => {
       axios.get('http://localhost:3001/admin/admin', {//공모전 데이터 들고오기
         headers: {
@@ -89,6 +145,8 @@ export default function Admin({ match }) {
       <React.Fragment>
         <Container maxWidth="lg">
           <h2>관리자 페이지</h2>
+          <button onClick={aaaTest} value="45">Action!</button>
+          
           <Divider/>
           <Box className={classes.admin_user}>
             <h3>회원 관리</h3>
@@ -96,13 +154,14 @@ export default function Admin({ match }) {
             <Grid container>
               <Grid item xs={3} className={classes.total}>총 회원수: {section3.length}</Grid>
               <Grid item xs={8}>
-                <Paper component="form" className={classes.search}>
+                <Paper component="form" className={classes.search} onSubmit={onSubmitSearchHandler}>
                   <InputBase
                     className={classes.input}
                     placeholder="회원의 아이디를 입력하세요"
-                    inputProps={{ 'aria-label': 'search google maps' }}
+                    value={User_search}
+                    onChange={onSearchHandler}
                   />
-                  <IconButton type="submit" className={classes.iconButton} aria-label="search">
+                  <IconButton type="submit" className={classes.iconButton}>
                     <SearchIcon />
                   </IconButton>
                 </Paper>
@@ -136,10 +195,10 @@ export default function Admin({ match }) {
                       <TableCell>{row.User_major}</TableCell>
                       <TableCell>{row.User_area}</TableCell>
                       <TableCell>
-                        <Button variant="contained" color="primary">수정</Button>
+                        <Button variant="contained" color="primary" href={"Admin_modify/" + row.User_code}>수정</Button>
                       </TableCell>
                       <TableCell>
-                        <Button variant="contained" color="secondary">삭제</Button>
+                        <Button onClick={onSubmitTestHandler} variant="contained" color="secondary" value={row.User_code}>삭제{row.User_code}</Button>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -175,6 +234,7 @@ export default function Admin({ match }) {
                     <TableCell>분야</TableCell>
                     <TableCell>링크</TableCell>
                     <TableCell>바로보기</TableCell>
+                    <TableCell>삭제하기</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -186,6 +246,9 @@ export default function Admin({ match }) {
                       <TableCell>{section.CB_link}</TableCell>
                       <TableCell>
                           <Button variant="contained" color="primary" href={section === undefined ? "" : "Contestdetail/" + String(section.CB_code)}>보기</Button>
+                      </TableCell>
+                      <TableCell>
+                        <Button variant="contained" color="secondary" value={section.CB_code} onClick={aaaTest}>삭제</Button>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -224,6 +287,7 @@ export default function Admin({ match }) {
                     <TableCell>작성일</TableCell>
                     <TableCell>모집마감일</TableCell>
                     <TableCell>바로보기</TableCell>
+                    <TableCell>삭제하기</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -238,6 +302,9 @@ export default function Admin({ match }) {
                       <TableCell>{section.TB_finalDate}</TableCell>
                       <TableCell>
                         <Button variant="contained" color="primary" href={"Teammatedetail/" + String(section.TB_code)}>보기</Button>
+                      </TableCell>
+                      <TableCell>
+                        <Button variant="contained" color="secondary" value={section.TB_code}>삭제</Button>
                       </TableCell>
                     </TableRow>
                   ))}

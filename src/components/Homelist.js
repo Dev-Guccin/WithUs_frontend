@@ -23,7 +23,7 @@ export default function Homelist(props) {
         </Grid>
         <Grid item xs={2}>{section.CB_organization}</Grid>
         <Grid item xs={2}>{section.CB_finalDate}</Grid>
-        <Grid item xs={1}>조회수</Grid>
+        <Grid item xs={1}>{section.CB_count}</Grid>
       </Grid>
     </div>
   );
