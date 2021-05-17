@@ -22,6 +22,7 @@ import createTeam from './views/Teamboard/createTeam';
 import Teammatedetail from './views/Teammatedetail';
 import updateTeam from './views/Teamboard/updateTeam';
 import Quit from './views/Quit';
+import modifyPassword from './views/modifyPassword';
 
 const headers = [
   { title: 'Home', url: '/home' },
@@ -102,6 +103,7 @@ function App() {
                 <Sidebar field={field} setfield={setfield} target={target} settarget={settarget}/>} />
               <Route path='/Interest' component={MyPageSideBar} />
               <Route path='/Quit' component={MyPageSideBar} />
+              <Route path='/modifyPassword' component={MyPageSideBar} />
             </Grid>
             <Grid item xs={10}>
               <main>
@@ -126,6 +128,7 @@ function App() {
                 <Route path='/createTeam' component={createTeam}/>
                 <Route path='/updateTeam' component={updateTeam}/>
                 <Route path='/Quit' component={Quit}/>
+                <Route path='/modifyPassword' component={modifyPassword}/>
               </main>
             </Grid>
           </Grid>
