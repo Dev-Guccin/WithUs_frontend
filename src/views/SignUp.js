@@ -102,7 +102,7 @@ export default function SignUp(props) {
         alert("로그인 페이지로 이동합니다..");
         props.history.push('/Login');
       } else {
-        alert("Signup Error " + response.data.message);
+        alert(response.data.message);
       }
     })
   }

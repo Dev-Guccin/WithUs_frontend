@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Link from '@material-ui/core/Link';
@@ -65,6 +65,35 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp(props) {
     const classes = useStyles();
+
+    function getCurrentInterest(event) {
+
+      var body = {
+        CurrentUserCode : JSON.parse(localStorage.getItem('user')).User_code
+      }
+
+      axios.post('http://localhost:3001/users/getCurrentInterest', body, { header })
+      .then(response => {
+        
+        setScienceEnginnering(response.data.CurrentInterest.ScienceEnginnering);
+        setContentsWebtoon(response.data.CurrentInterest.ContentsWebtoon)
+        setEnvironmentEnergy(response.data.CurrentInterest.EnvironmentEnergy);
+        setEmployment(response.data.CurrentInterest.Employment);
+        setArt(response.data.CurrentInterest.Art);
+        setAcademic(response.data.CurrentInterest.Academic);
+        setIdea(response.data.CurrentInterest.Idea);
+        setUCC(response.data.CurrentInterest.UCC);
+        setculture(response.data.CurrentInterest.culture);
+        setDesign(response.data.CurrentInterest.Design);
+        setSlogan(response.data.CurrentInterest.Slogan);
+        setEconomy(response.data.CurrentInterest.Economy);
+      })
+    }
+
+    useEffect(()=>{
+      getCurrentInterest()
+    },[])
+
     const [ScienceEnginnering, setScienceEnginnering] = useState(false);
     const [ContentsWebtoon, setContentsWebtoon] = useState(false);
     const [EnvironmentEnergy, setEnvironmentEnergy] = useState(false);
@@ -78,6 +107,7 @@ export default function SignUp(props) {
     const [Slogan, setSlogan] = useState(false);
     const [Economy, setEconomy] = useState(false);
 
+
     const OnScienceEnginneringChange = (event) => {setScienceEnginnering(event.target.checked)};
     const OnsetContentsWebtoonChange = (event) => {setContentsWebtoon(event.target.checked);};
     const OnsetEnvironmentEnergyChange = (event) => {setEnvironmentEnergy(event.target.checked)};
@@ -90,6 +120,10 @@ export default function SignUp(props) {
     const OnsetDesignChange = (event) => {setDesign(event.target.checked)};
     const OnsetSloganChange = (event) => {setSlogan(event.target.checked)};
     const OnsetEconomyChange = (event) => {setEconomy(event.target.checked)};
+
+    const header = {
+      "Content-Type": "application/json"
+    }
 
     const onSubmitHandler = (event) => {
       event.preventDefault();
