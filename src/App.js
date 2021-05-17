@@ -22,6 +22,8 @@ import createTeam from './views/Teamboard/createTeam';
 import Teammatedetail from './views/Teammatedetail';
 import updateTeam from './views/Teamboard/updateTeam';
 import Quit from './views/Quit';
+import TeammateContest from './views/TeammateContest';
+import TeammateProject from './views/TeammateProject';
 
 const headers = [
   { title: 'Home', url: '/home' },
@@ -96,7 +98,9 @@ function App() {
                   <Sidebar field={field} setfield={setfield} target={target} settarget={settarget}/>} />
               <Route path='/SignUp' exact={true} render={() => 
                 <Sidebar field={field} setfield={setfield} target={target} settarget={settarget}/>} />
-              <Route path="/teammate" component={TmSidebar} />
+              <Route path="/teammate" component={TmSidebar}  />
+              <Route path='/team-contest' component={TmSidebar} />
+              <Route path='/team-project' component={TmSidebar} />
               <Route path="/OnlyMyPage" component={MyPageSideBar} /> {/* 본인 마이페이지 수정 */}
               <Route path='/MyPage' exact={true} render={() => 
                 <Sidebar field={field} setfield={setfield} target={target} settarget={settarget}/>} />
@@ -117,15 +121,16 @@ function App() {
                   bottompage={bottompage} setbottompage={setbottompage} setpage={setpage}/>} />
                 <Route path="/Contestdetail/:CB_code" exact={true} component={Contestdetail} />
                 <Route path="/Teammatedetail/:TB_code" exact = {true} component={Teammatedetail} />
-                <Route path="/teammate" exact={true} component={Teammate} />
+                <Route path="/teammate" exact={true} render={() => <Teammate randomKey={Math.random()}/>}/>
                 <Route path='/Login' exact={true} render={() => <SignIn logincheck={logincheck} />} />
                 <Route path="/SignUp" exact={true} component={SignUp} />
                 <Route path="/Interest" exact={true} component={Interest} /> {/* 관심사 추가 페이지 */}
                 <Route path="/OnlyMyPage" exact={true} component={OnlyMyPage} /> {/* 본인 마이페이지 수정 */}
                 <Route path="/MyPage" exact={true} component={Mypage} /> {/* 유저들 마이페이지 조회 */}
                 <Route path='/createTeam' component={createTeam}/>
-                <Route path='/updateTeam' component={updateTeam}/>
                 <Route path='/Quit' component={Quit}/>
+                <Route path='/team-contest' render={() => <TeammateContest randomKey={Math.random()}/>}/>
+                <Route path='/team-project' render={() => <TeammateProject randomKey={Math.random()}/>}/>
               </main>
             </Grid>
           </Grid>

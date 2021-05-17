@@ -35,9 +35,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const sections = [
-  { title: '전체', url: '#' },
-  { title: '공모전', url: '#' },
-  { title: '프로젝트', url: '#' },
+  { title: '전체', url: '/teammate' },
+  { title: '공모전', url: '/team-contest' },
+  { title: '프로젝트', url: '/team-project' },
   { title: '팀원 모집하기', url: '/createTeam'}
 ];
 
