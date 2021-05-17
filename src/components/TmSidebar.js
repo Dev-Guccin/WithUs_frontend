@@ -5,6 +5,7 @@ import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from "react-router-dom";
+import { Route, BrowserRouter as Router } from "react-router-dom";
 import axios from 'axios';
 import Typography from '@material-ui/core/Typography';
 import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
@@ -15,6 +16,7 @@ import Divider from '@material-ui/core/Divider';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import { Fragment } from 'react';
 import { grey } from '@material-ui/core/colors';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,14 +38,14 @@ const sections = [
   { title: '전체', url: '#' },
   { title: '공모전', url: '#' },
   { title: '프로젝트', url: '#' },
-  { title: '팀원 모집하기', url: '#'}
+  { title: '팀원 모집하기', url: '/createTeam'}
 ];
 
 export default function Sidebar(props) {
   const classes = useStyles();
 
   return (
-    <Fragment>
+    <Fragment>    
       <Paper className={classes.paper}>
         <MenuList>
             <Link

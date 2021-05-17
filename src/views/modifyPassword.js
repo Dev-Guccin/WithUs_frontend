@@ -3,8 +3,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import FormLabel from '@material-ui/core/FormLabel';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -55,48 +54,42 @@ export default function SignIn(props) {
   }
   const classes = useStyles();
 
-  const [User_id, setUser_id] = useState("");
   const [User_password, setUser_password] = useState("");
+  const [User_current_password, setUser_current_password] = useState("");
 
-  const onIdHandler = (event) => {
+  const onPasswordHandler = (event) => {setUser_password(event.currentTarget.value);}
+  const onCurrentPasswordHandler = (event) => {setUser_current_password(event.currentTarget.value);}
 
-    setUser_id(event.currentTarget.value);
-  }
-
-  const onPasswordHandler = (event) => {
-
-    setUser_password(event.currentTarget.value);
+  function logout() {
+    axios.get('http://localhost:3001/passport/logout', { header })
+      .then(response => {
+        localStorage.clear();
+        document.location.href = "/";
+      })
   }
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
 
     var body = {
-      User_id : User_id,
-      User_password : User_password
+        User_code : JSON.parse(localStorage.getItem('user')).User_code,
+        User_current_password : User_current_password,
+        User_password : User_password
+
     }
 
-    axios.post('http://localhost:3001/passport/', body, {header})
+    axios.post('http://localhost:3001/users/modifyPassword', body, {header})
     .then(response => {
-      if(response.data.loginSuccess) {
-        alert("Hello! " + response.data.user.User_id);
-        console.log(response.data.user);
-        console.log("ETSETSETSETST",props)
-        try {
-          localStorage.setItem('login_check', response.data.loginSuccess);
-          localStorage.setItem('user', JSON.stringify(response.data.user));
-          document.location.href = "/";
-          // props.history.push('/');
-          //props.setlogin_check(response.data.loginSuccess)
-        } catch (e) {
-          var str = 
-          console.log("localStorage is not working");
+        console.log(response.data);
+        if(response.data.modify) {
+            alert("비밀번호가 변경되었습니다. 다시 로그인 해주세요");
+            logout();
+        } else {
+            alert(response.data.message);
         }
-      } else{
-        alert(response.data.message.message);
-      }
+
     })
-  }
+}
 
   return (
     <Container component="main" maxWidth="xs">
@@ -106,39 +99,39 @@ export default function SignIn(props) {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          비밀번호 변경
         </Typography>
+        
         <form className={classes.form} noValidate onSubmit={onSubmitHandler}>
-          <TextField
+        <FormLabel component="legend">현재 비밀번호를 입력해주십시오</FormLabel>
+        <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            id="User_id"
-            label="User_id"
-            name="User_id"
-            autoComplete="User_id"
-            autoFocus
-            value = {User_id}
-            onChange = {onIdHandler}
+            name="User_current_password"
+            label="현재 비밀번호"
+            type="password"
+            id="User_current_password"
+            autoComplete="current-password"
+            value = {User_current_password}
+            onChange = {onCurrentPasswordHandler}
           />
+          <FormLabel component="legend">변경할 비밀번호를 입력해주십시오</FormLabel>
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
             name="User_password"
-            label="User_password"
+            label="변경할 비밀번호"
             type="password"
             id="User_password"
             autoComplete="current-password"
             value = {User_password}
             onChange = {onPasswordHandler}
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
+        
           <Button
             type="submit"
             fullWidth
@@ -146,21 +139,10 @@ export default function SignIn(props) {
             color="primary"
             className={classes.submit}
           >
-            Sign In
+              비밀번호 변경
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="SignUp" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
         </form>
+        
       </div>
       <Box mt={8}>
         <Copyright />

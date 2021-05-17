@@ -36,9 +36,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const sections = [
-  { title: '마이페이지', url: '#'},
-  { title: '비밀번호변경', url: '#'},
-  { title: '관심분야변경', url: '#'},
+  { title: '마이페이지', url: '/OnlyMyPage'},
+  { title: '비밀번호변경', url: '/modifyPassword'},
+  { title: '회원탈퇴', url: '/Quit'},
+  { title: '관심분야등록/변경', url: '/Interest'},
   { title: '내가 쓴 글', url: '#' },
   { title: '내가 쓴 댓글', url: '#' },
   { title: '즐겨찾기', url: '#' }
@@ -98,7 +99,7 @@ export default function Sidebar(props) {
               <Typography variant="inherit">{sections[2].title}</Typography>
             </MenuItem>
             </Link>
-            
+
             <Link
             className ={classes.textdc}
             color="inherit"
@@ -107,15 +108,14 @@ export default function Sidebar(props) {
             variant="body2"
             to={sections[3].url}
             >
-            <Divider/>
             <MenuItem>
               <ListItemIcon>
-                <PlaylistAddIcon fontSize="small" />
+                <CheckBoxIcon fontSize="small" />
               </ListItemIcon>
               <Typography variant="inherit">{sections[3].title}</Typography>
             </MenuItem>
             </Link>
-
+            
             <Link
             className ={classes.textdc}
             color="inherit"
@@ -124,15 +124,15 @@ export default function Sidebar(props) {
             variant="body2"
             to={sections[4].url}
             >
+            <Divider/>
             <MenuItem>
               <ListItemIcon>
-                <InsertCommentIcon fontSize="small" />
+                <PlaylistAddIcon fontSize="small" />
               </ListItemIcon>
               <Typography variant="inherit">{sections[4].title}</Typography>
             </MenuItem>
             </Link>
 
-            <Divider light={true}/>
             <Link
             className ={classes.textdc}
             color="inherit"
@@ -143,9 +143,26 @@ export default function Sidebar(props) {
             >
             <MenuItem>
               <ListItemIcon>
+                <InsertCommentIcon fontSize="small" />
+              </ListItemIcon>
+              <Typography variant="inherit">{sections[5].title}</Typography>
+            </MenuItem>
+            </Link>
+
+            <Divider light={true}/>
+            <Link
+            className ={classes.textdc}
+            color="inherit"
+            noWrap
+            key={sections[6].title}
+            variant="body2"
+            to={sections[6].url}
+            >
+            <MenuItem>
+              <ListItemIcon>
                 <GradeIcon style={{ fontSize: 30, color: grey[900] }}    />
               </ListItemIcon>
-              <Typography variant="button"><strong>{sections[5].title}</strong></Typography>
+              <Typography variant="button"><strong>{sections[6].title}</strong></Typography>
             </MenuItem>
             </Link>
 

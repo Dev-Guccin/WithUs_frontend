@@ -9,6 +9,14 @@ import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
 import Avatar from '@material-ui/core/Avatar';
 import axios from 'axios';
+<<<<<<< HEAD
+=======
+import clsx from 'clsx';
+import {useHistory} from 'react-router-dom'
+import { Route, BrowserRouter as Router } from "react-router-dom";
+import { Link } from '@material-ui/core';
+import UpdateTeam from './Teamboard/updateTeam';
+>>>>>>> 37a3880db56dfb1adf62c3cc198354b8782e8862
 
 
 const useStyles = makeStyles((theme) => ({
@@ -45,9 +53,15 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: 30
     },
     btn: {
+<<<<<<< HEAD
       height: 30,
       width: 100,
       fontSize: 15
+=======
+      height: 75,
+      width: 200,
+      fontSize: 30
+>>>>>>> 37a3880db56dfb1adf62c3cc198354b8782e8862
     },
     divider: {
       color: "black",
@@ -65,10 +79,19 @@ const useStyles = makeStyles((theme) => ({
       width: theme.spacing(3),
       height: theme.spacing(3),
     },
+<<<<<<< HEAD
     comment: {
       width: 500,
       height: 30
     }
+=======
+    updateDeleteBtn: {
+      float: 'right'
+    },
+    menuButtonHidden: {
+      display: 'none',
+    },
+>>>>>>> 37a3880db56dfb1adf62c3cc198354b8782e8862
 
 }));
 
@@ -76,6 +99,13 @@ export default function Teammatedetail({ match }) {
     const classes = useStyles();
     const [section, setsection] = useState([]);
     const [section2, setsection2] = useState([]);
+<<<<<<< HEAD
+=======
+    const [IsModify, setIsModify] = useState(false);
+
+    const userInfo = localStorage.user;
+    const history = useHistory();
+>>>>>>> 37a3880db56dfb1adf62c3cc198354b8782e8862
 
     useEffect(() => {
       axios.get('http://localhost:3001/team/detail/' + match.params.TB_code, {//공모전 데이터 들고오기
@@ -99,14 +129,58 @@ export default function Teammatedetail({ match }) {
       })
     }, []);
 
+<<<<<<< HEAD
     return (
       <React.Fragment>
+=======
+    // 작성자인지 확인
+    const IsWriter = (userCode) => {
+      if(userInfo === undefined || JSON.parse(userInfo).User_code !== userCode) { return false;}
+      else { return true; }
+      }
+
+    //삭제
+    async function onClickDelete() {
+      if(window.confirm("게시글을 삭제하시겠습니까?")){
+        await axios.post('http://localhost:3001/teamboard/delete/' + section.TB_code, 
+        {
+          TB_code: section.TB_code
+        }).then( res => {
+          console.log("res:",res.data);
+          history.push('/teammate');
+        })
+      }
+      else{
+          console.log("canceled");
+       }
+     }
+
+     const onClickUpdate = () =>{
+       setIsModify(true);
+     }
+
+
+
+  
+    return (
+      <React.Fragment>
+        {IsModify ? <UpdateTeam TBinfo={section}/> : 
+>>>>>>> 37a3880db56dfb1adf62c3cc198354b8782e8862
         <main>
           <Container maxWidth="lg">
             <h3>팀원모집 게시판</h3>
             <Divider/>
             <div className={classes.contain_div}>
               <div className={classes.title}>제목: {section.TB_title}</div>
+<<<<<<< HEAD
+=======
+              <nav className={classes.updateDeleteBtn}>
+                <Button variant="contained" color="grey" onClick={onClickDelete} className={clsx(!IsWriter(section.User_code) && classes.menuButtonHidden)}>삭제</Button>
+                
+                <Button variant="contained" color="grey" onClick={onClickUpdate} className={clsx(!IsWriter(section.User_code) && classes.menuButtonHidden)}>수정</Button>
+                
+              </nav>
+>>>>>>> 37a3880db56dfb1adf62c3cc198354b8782e8862
               <Divider/>
               <Grid container>
                 <Grid item xs={4} className={classes.boardinfo}>작성자: </Grid>
@@ -129,6 +203,7 @@ export default function Teammatedetail({ match }) {
                   </List>
                 </Grid>
               </Grid>
+<<<<<<< HEAD
               <Container>
                 <div dangerouslySetInnerHTML={{__html: section.TB_content} }></div>
               </Container>
@@ -140,11 +215,26 @@ export default function Teammatedetail({ match }) {
                   <input type="text" className={classes.comment} required></input>
                 </Grid>
                 <Grid item xs={2}>
+=======
+              <Grid container>
+                <Grid className={classes.button_div} item xs={6}>
+                  <Button className={classes.btn} variant="contained" color="secondary">
+                    쪽지보내기
+                  </Button>
+                </Grid>
+                <Grid className={classes.button_div} item xs={6}>
+>>>>>>> 37a3880db56dfb1adf62c3cc198354b8782e8862
                   <Button className={classes.btn} variant="contained" color="primary">
                     가입하기
                   </Button>
                 </Grid>
               </Grid>
+<<<<<<< HEAD
+=======
+              <Container>
+                <div dangerouslySetInnerHTML={{__html: section.TB_content} }></div>
+              </Container>
+>>>>>>> 37a3880db56dfb1adf62c3cc198354b8782e8862
               <Divider className={classes.divider} />
               {section2.map((section) => (
                 <Container className={classes.reply}>
@@ -167,6 +257,13 @@ export default function Teammatedetail({ match }) {
             </div>
           </Container>
         </main>
+<<<<<<< HEAD
       </React.Fragment>
     );
   }
+=======
+        }
+      </React.Fragment>
+    );
+  }
+>>>>>>> 37a3880db56dfb1adf62c3cc198354b8782e8862

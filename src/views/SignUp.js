@@ -62,6 +62,8 @@ export default function SignUp(props) {
   const [User_nickname, setUser_nickname] = useState("");
   const [User_area, setUser_area] = useState("");
   const [User_major, setUser_major] = useState("");
+  const [User_certificate, setUser_certificate] = useState("");
+  const [User_introduction, setUser_introduction] = useState("");
 
   // const handleChange = (event) => {setValue(event.target.value);};
 
@@ -74,6 +76,8 @@ export default function SignUp(props) {
   const onNicknameHandler = (event) => {setUser_nickname(event.currentTarget.value);}
   const onAreaHandler = (event) => {setUser_area(event.currentTarget.value);}
   const onMajorHandler = (event) => {setUser_major(event.currentTarget.value);}
+  const onCertificateHandler = (event) => {setUser_certificate(event.currentTarget.value);}
+  const onIntroductionHandler = (event) => {setUser_introduction(event.currentTarget.value);}
   
   const onSubmitHandler = (event) => {
     event.preventDefault();
@@ -87,16 +91,18 @@ export default function SignUp(props) {
       User_university : User_university,
       User_nickname : User_nickname,
       User_area : User_area,
-      User_major : User_major
+      User_major : User_major,
+      User_certificate : User_certificate,
+      User_introduction : User_introduction
     }
 
     axios.post('http://localhost:3001/users/join', body)
     .then(response => {
       if(response.data.SignUp) {
-        alert("SignUp finished");
+        alert("로그인 페이지로 이동합니다..");
         props.history.push('/Login');
       } else {
-        alert("Signup Error " + response.data.message);
+        alert(response.data.message);
       }
     })
   }
@@ -232,11 +238,38 @@ export default function SignUp(props) {
                 fullWidth
                 name="User_password"
                 label="User_password"
-                type="password"
                 id="User_password"
+                type="password"
                 autoComplete="current-password"
                 value = {User_password}
                 onChange = {onPasswordHandler}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="User_certificate"
+                label="User_certificate"
+                id="User_certificate"
+                autoComplete="User_certificate"
+                value = {User_certificate}
+                onChange = {onCertificateHandler}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="User_introduction"
+                label="User_introduction"
+                id="User_introduction"
+                autoComplete="User_introduction"
+                multiline
+                value = {User_introduction}
+                onChange = {onIntroductionHandler}
               />
             </Grid>
           </Grid>

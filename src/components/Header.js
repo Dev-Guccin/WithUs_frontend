@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -32,22 +31,27 @@ export default function Header(props) {
   const { sections, title } = props;
 
   axios.defaults.withCredentials = true;
+
   const header = {
     "Content-Type": "application/json"
   }
   useEffect(() => {
     console.log("check is changed to :", props.logincheck)
   }, [props.logincheck])
+  
   function logout() {
     axios.get('http://localhost:3001/passport/logout', { header })
       .then(response => {
-        var LoginState = response.data.LoginState
+        alert('logout success');
+        var LoginState = response.data.LoginState;
         localStorage.setItem('login_check', JSON.stringify(LoginState));
         localStorage.removeItem('user');
         console.log("login : ", LoginState)
         props.setlogincheck(JSON.stringify(LoginState))
+        document.location.href = "/";
       })
   }
+
   return (
     <React.Fragment>
       <Toolbar className={classes.toolbar}>
@@ -81,7 +85,7 @@ export default function Header(props) {
               Sign in
           </Link>
           </Button>
-        </div>
+          </div>
           : <div>
             <Button variant="outlined" size="small">
               <Link to='/MyPage'>

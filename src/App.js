@@ -20,6 +20,12 @@ import OnlyMyPage from './views/OnlyMyPage';
 import Mypage from './views/MyPage';
 import MyPageSideBar from './components/MyPageSideBar';
 import Admin_modify from './views/Admin_modify';
+import Interest from './views/Interest';
+import createTeam from './views/Teamboard/createTeam';
+import Teammatedetail from './views/Teammatedetail';
+import updateTeam from './views/Teamboard/updateTeam';
+import Quit from './views/Quit';
+import modifyPassword from './views/modifyPassword';
 
 const headers = [
   { title: 'Home', url: '/home' },
@@ -98,6 +104,9 @@ function App() {
               <Route path="/OnlyMyPage" component={MyPageSideBar} /> {/* 본인 마이페이지 수정 */}
               <Route path='/MyPage' exact={true} render={() => 
                 <Sidebar field={field} setfield={setfield} target={target} settarget={settarget}/>} />
+              <Route path='/Interest' component={MyPageSideBar} />
+              <Route path='/Quit' component={MyPageSideBar} />
+              <Route path='/modifyPassword' component={MyPageSideBar} />
             </Grid>
             <Grid item xs={10}>
               <main>
@@ -112,15 +121,20 @@ function App() {
                   optionSearch={optionSearch} setsort={setsort}
                   bottompage={bottompage} setbottompage={setbottompage} setpage={setpage}/>} />
                 <Route path="/Contestdetail/:CB_code" exact={true} component={Contestdetail} />
-                <Route path="/teammate" component={Teammate} />
+                <Route path="/Teammatedetail/:TB_code" exact = {true} component={Teammatedetail} />
                 <Route path="/teammate" exact={true} component={Teammate} />
                 <Route path='/Login' exact={true} render={() => <SignIn logincheck={logincheck} />} />
                 <Route path="/SignUp" exact={true} component={SignUp} />
+                <Route path="/Interest" exact={true} component={Interest} /> {/* 관심사 추가 페이지 */}
                 <Route path="/OnlyMyPage" exact={true} component={OnlyMyPage} /> {/* 본인 마이페이지 수정 */}
                 <Route path="/MyPage" exact={true} component={Mypage} /> {/* 유저들 마이페이지 조회 */}
                 <Route path="/Admin" exact={true} component={Admin} />
                 <Route path="/Teammatedetail/:TB_code" exact = {true} component={Teammatedetail} />
                 <Route path="/Admin_modify/:User_code" exact = {true} component={Admin_modify} />
+                <Route path='/createTeam' component={createTeam}/>
+                <Route path='/updateTeam' component={updateTeam}/>
+                <Route path='/Quit' component={Quit}/>
+                <Route path='/modifyPassword' component={modifyPassword}/>
               </main>
             </Grid>
           </Grid>

@@ -39,6 +39,7 @@ export default function Contestdetail( {match }) {
     }).then(response => {
       console.log(response.data);
       setsection(response.data[0]);
+      console.log(response.data[0]);
     })
   }, []);
   return (
@@ -68,9 +69,7 @@ export default function Contestdetail( {match }) {
           </tr>
         </table>
       </div>
-      <div>
-        {section.CB_content}
-      </div>
+      <div dangerouslySetInnerHTML={ {__html: section.CB_content} }/>
     </div>
   );
 }
