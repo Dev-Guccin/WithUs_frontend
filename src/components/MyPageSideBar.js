@@ -36,8 +36,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const sections = [
-  { title: '마이페이지', url: '#'},
-  { title: '비밀번호변경', url: '#'},
+  { title: '마이페이지', url: '/OnlyMyPage'},
+  { title: '비밀번호변경', url: '/modifyPassword'},
   { title: '회원탈퇴', url: '/Quit'},
   { title: '관심분야등록/변경', url: '/Interest'},
   { title: '내가 쓴 글', url: '#' },
