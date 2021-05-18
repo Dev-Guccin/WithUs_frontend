@@ -27,10 +27,7 @@ import Quit from './views/Quit';
 import TeammateContest from './views/TeammateContest';
 import TeammateProject from './views/TeammateProject';
 import modifyPassword from './views/modifyPassword';
-<<<<<<< HEAD
-=======
 import MyTeamBoard from './views/MyTeamBoard';
->>>>>>> main
 
 const headers = [
   { title: 'Home', url: '/home' },
@@ -141,10 +138,7 @@ function App() {
                 <Route path='/createTeam' component={createTeam}/>
                 <Route path='/Quit' component={Quit}/>
                 <Route path='/modifyPassword' component={modifyPassword}/>
-<<<<<<< HEAD
-=======
                 <Route path='/MyTeamBoard' component={MyTeamBoard}/>
->>>>>>> main
                 <Route path='/team-contest' render={() => <TeammateContest randomKey={Math.random()}/>}/>
                 <Route path='/team-project' render={() => <TeammateProject randomKey={Math.random()}/>}/>
               </main>
