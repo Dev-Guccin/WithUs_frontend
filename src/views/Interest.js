@@ -74,19 +74,24 @@ export default function SignUp(props) {
 
       axios.post('http://localhost:3001/users/getCurrentInterest', body, { header })
       .then(response => {
-        
-        setScienceEnginnering(response.data.CurrentInterest.ScienceEnginnering);
-        setContentsWebtoon(response.data.CurrentInterest.ContentsWebtoon)
-        setEnvironmentEnergy(response.data.CurrentInterest.EnvironmentEnergy);
-        setEmployment(response.data.CurrentInterest.Employment);
-        setArt(response.data.CurrentInterest.Art);
-        setAcademic(response.data.CurrentInterest.Academic);
-        setIdea(response.data.CurrentInterest.Idea);
-        setUCC(response.data.CurrentInterest.UCC);
-        setculture(response.data.CurrentInterest.culture);
-        setDesign(response.data.CurrentInterest.Design);
-        setSlogan(response.data.CurrentInterest.Slogan);
-        setEconomy(response.data.CurrentInterest.Economy);
+
+        //if문추가
+        if(response.data.CurrentInterest) {
+          setScienceEnginnering(response.data.CurrentInterest.ScienceEnginnering);
+          setContentsWebtoon(response.data.CurrentInterest.ContentsWebtoon)
+          setEnvironmentEnergy(response.data.CurrentInterest.EnvironmentEnergy);
+          setEmployment(response.data.CurrentInterest.Employment);
+          setArt(response.data.CurrentInterest.Art);
+          setAcademic(response.data.CurrentInterest.Academic);
+          setIdea(response.data.CurrentInterest.Idea);
+          setUCC(response.data.CurrentInterest.UCC);
+          setculture(response.data.CurrentInterest.culture);
+          setDesign(response.data.CurrentInterest.Design);
+          setSlogan(response.data.CurrentInterest.Slogan);
+          setEconomy(response.data.CurrentInterest.Economy);
+        } else {
+          alert("관심사가 없습니다. 관심사를 등록해보세요!");
+        }
       })
     }
 

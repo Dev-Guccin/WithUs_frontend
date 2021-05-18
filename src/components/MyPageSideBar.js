@@ -40,9 +40,9 @@ const sections = [
   { title: '비밀번호변경', url: '/modifyPassword'},
   { title: '회원탈퇴', url: '/Quit'},
   { title: '관심분야등록/변경', url: '/Interest'},
-  { title: '내가 쓴 글', url: '#' },
-  { title: '내가 쓴 댓글', url: '#' },
-  { title: '즐겨찾기', url: '#' }
+  { title: '내가 쓴 글', url: '/MyTeamBoard' },
+  { title: '공모전즐겨찾기', url: '#' },
+  { title: '게시판즐겨찾기', url: '#' }
 ];
 
 export default function Sidebar(props) {
@@ -133,6 +133,7 @@ export default function Sidebar(props) {
             </MenuItem>
             </Link>
 
+            <Divider light={true}/>
             <Link
             className ={classes.textdc}
             color="inherit"
@@ -143,13 +144,12 @@ export default function Sidebar(props) {
             >
             <MenuItem>
               <ListItemIcon>
-                <InsertCommentIcon fontSize="small" />
+                <GradeIcon style={{ fontSize: 30, color: grey[900] }}    />
               </ListItemIcon>
-              <Typography variant="inherit">{sections[5].title}</Typography>
+              <Typography variant="button"><strong>{sections[5].title}</strong></Typography>
             </MenuItem>
             </Link>
 
-            <Divider light={true}/>
             <Link
             className ={classes.textdc}
             color="inherit"

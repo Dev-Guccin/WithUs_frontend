@@ -85,13 +85,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-// let userInfo
-// let user
 
 export default function Teammate(props) {
   const classes = useStyles();
 
-  // const [bk, setBookmark] = useState([]);
   const [teamBoardLists, setTeamBoardLists] = useState([]);
   const [userInput, setUserInput] = useState("");
   const [filteredLists, setFilteredList] = useState([]);
@@ -143,11 +140,6 @@ export default function Teammate(props) {
     console.log({props});
   }, [props.randomKey]);
 
-  // useEffect( () => {
-  //   const list = testfunc();
-  //   setFilteredList(list);
-  //   console.log({filteredLists, list, userInput});
-  // },[])
 
   return (
     <React.Fragment>
