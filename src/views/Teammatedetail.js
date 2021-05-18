@@ -50,7 +50,9 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: 30
     },
     btn: {
-      height: 75,
+      height: 30,
+      width: 100,
+      fontSize: 15,
       width: 200,
       fontSize: 30
     },
@@ -69,6 +71,10 @@ const useStyles = makeStyles((theme) => ({
     avar: {
       width: theme.spacing(3),
       height: theme.spacing(3),
+    },
+    comment: {
+      width: 500,
+      height: 30
     },
     updateDeleteBtn: {
       float: 'right'
@@ -176,13 +182,17 @@ export default function Teammatedetail({ match }) {
                   </List>
                 </Grid>
               </Grid>
+              <Container>
+                <div dangerouslySetInnerHTML={{__html: section.TB_content} }></div>
+              </Container>
               <Grid container>
-                <Grid className={classes.button_div} item xs={6}>
-                  <Button className={classes.btn} variant="contained" color="secondary">
-                    쪽지보내기
-                  </Button>
+                <Grid item xs={2}>
+                  <span>코멘트: </span>
                 </Grid>
-                <Grid className={classes.button_div} item xs={6}>
+                <Grid item xs={8}>
+                  <input type="text" className={classes.comment} required></input>
+                </Grid>
+                <Grid className={classes.button_div} item xs={2}>
                   <Button className={classes.btn} variant="contained" color="primary">
                     가입하기
                   </Button>
