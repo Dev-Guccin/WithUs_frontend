@@ -17,6 +17,8 @@ import SignIn from './views/SignIn';
 import SignUp from './views/SignUp';
 import TmSidebar from './components/TmSidebar';
 import OnlyMyPage from './views/OnlyMyPage';
+import ApplicationList from './views/ApplicationList';
+import ApplicantsCheck from './views/ApplicantsCheck';
 import Mypage from './views/MyPage';
 import MyPageSideBar from './components/MyPageSideBar';
 import Admin_modify from './views/Admin_modify';
@@ -106,6 +108,8 @@ function App() {
               <Route path='/team-contest' component={TmSidebar} />
               <Route path='/team-project' component={TmSidebar} />
               <Route path="/OnlyMyPage" component={MyPageSideBar} /> {/* 본인 마이페이지 수정 */}
+              <Route path="/ApplicationList" component={MyPageSideBar} />
+              <Route path="/ApplicantsCheck" component={MyPageSideBar} /> 
               <Route path='/MyPage' exact={true} render={() => 
                 <Sidebar field={field} setfield={setfield} target={target} settarget={settarget}/>} />
               <Route path='/Interest' component={MyPageSideBar} />
@@ -132,6 +136,8 @@ function App() {
                 <Route path="/SignUp" exact={true} component={SignUp} />
                 <Route path="/Interest" exact={true} component={Interest} /> {/* 관심사 추가 페이지 */}
                 <Route path="/OnlyMyPage" exact={true} component={OnlyMyPage} /> {/* 본인 마이페이지 수정 */}
+                <Route path="/ApplicationList" exact={true} component={ApplicationList} /> {/* 본인 마이페이지 수정 */}
+                <Route path="/ApplicantsCheck" exact={true} component={ApplicantsCheck} /> {/* 본인 마이페이지 수정 */}
                 <Route path="/MyPage" exact={true} component={Mypage} /> {/* 유저들 마이페이지 조회 */}
                 <Route path="/Admin" exact={true} component={Admin} />
                 <Route path="/Admin_modify/:User_code" exact = {true} component={Admin_modify} />

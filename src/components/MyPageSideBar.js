@@ -41,6 +41,8 @@ const sections = [
   { title: '회원탈퇴', url: '/Quit'},
   { title: '관심분야등록/변경', url: '/Interest'},
   { title: '내가 쓴 글', url: '/MyTeamBoard' },
+  { title: '신청 목록', url: '/ApplicationList' },
+  { title: '신청자 목록', url: '/ApplicantsCheck' },
   { title: '공모전즐겨찾기', url: '#' },
   { title: '게시판즐겨찾기', url: '#' }
 ];
@@ -144,12 +146,14 @@ export default function Sidebar(props) {
             >
             <MenuItem>
               <ListItemIcon>
-                <GradeIcon style={{ fontSize: 30, color: grey[900] }}    />
+                <PlaylistAddIcon fontSize="small"/>
               </ListItemIcon>
-              <Typography variant="button"><strong>{sections[5].title}</strong></Typography>
+              <Typography variant="button">{sections[5].title}</Typography>
             </MenuItem>
             </Link>
 
+
+            <Divider light={true}/>
             <Link
             className ={classes.textdc}
             color="inherit"
@@ -160,12 +164,44 @@ export default function Sidebar(props) {
             >
             <MenuItem>
               <ListItemIcon>
-                <GradeIcon style={{ fontSize: 30, color: grey[900] }}    />
+                <PlaylistAddIcon fontSize="small"/>
               </ListItemIcon>
-              <Typography variant="button"><strong>{sections[6].title}</strong></Typography>
+              <Typography variant="button">{sections[6].title}</Typography>
             </MenuItem>
             </Link>
 
+            <Link
+            className ={classes.textdc}
+            color="inherit"
+            noWrap
+            key={sections[7].title}
+            variant="body2"
+            to={sections[7].url}
+            >
+            <MenuItem>
+              <ListItemIcon>
+                <GradeIcon style={{ fontSize: 30, color: grey[900] }}    />
+              </ListItemIcon>
+              <Typography variant="button"><strong>{sections[7].title}</strong></Typography>
+            </MenuItem>
+            </Link>
+
+
+            <Link
+            className ={classes.textdc}
+            color="inherit"
+            noWrap
+            key={sections[8].title}
+            variant="body2"
+            to={sections[8].url}
+            >
+            <MenuItem>
+              <ListItemIcon>
+                <GradeIcon style={{ fontSize: 30, color: grey[900] }}    />
+              </ListItemIcon>
+              <Typography variant="button"><strong>{sections[8].title}</strong></Typography>
+            </MenuItem>
+            </Link>
         </MenuList>
       </Paper>
     </Fragment>
