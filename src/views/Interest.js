@@ -75,6 +75,7 @@ export default function SignUp(props) {
       axios.post('http://localhost:3001/users/getCurrentInterest', body, { header })
       .then(response => {
 
+        //if문추가
         if(response.data.CurrentInterest) {
           setScienceEnginnering(response.data.CurrentInterest.ScienceEnginnering);
           setContentsWebtoon(response.data.CurrentInterest.ContentsWebtoon)
