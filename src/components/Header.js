@@ -43,11 +43,15 @@ export default function Header(props) {
     axios.get('http://localhost:3001/passport/logout', { header })
       .then(response => {
         alert('logout success');
+        // var LoginState = response.data.LoginState;
+        // localStorage.setItem('login_check', JSON.stringify(LoginState));
+        // localStorage.removeItem('user');
+        // console.log("login : ", LoginState);
+        // props.setlogincheck(JSON.stringify(LoginState));
+        localStorage.clear();
         var LoginState = response.data.LoginState;
         localStorage.setItem('login_check', JSON.stringify(LoginState));
-        localStorage.removeItem('user');
-        console.log("login : ", LoginState)
-        props.setlogincheck(JSON.stringify(LoginState))
+        props.setlogincheck(JSON.stringify(LoginState));
         document.location.href = "/";
       })
   }

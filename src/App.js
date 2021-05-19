@@ -30,6 +30,7 @@ import TeammateContest from './views/TeammateContest';
 import TeammateProject from './views/TeammateProject';
 import modifyPassword from './views/modifyPassword';
 import MyTeamBoard from './views/MyTeamBoard';
+import ContestBookmark from './views/ContestBookmark';
 
 const headers = [
   { title: 'Home', url: '/home' },
@@ -116,6 +117,7 @@ function App() {
               <Route path='/Quit' component={MyPageSideBar} />
               <Route path='/MyTeamBoard' component={MyPageSideBar} />
               <Route path='/modifyPassword' component={MyPageSideBar} />
+              <Route path='/ContestBookmark' component={MyPageSideBar} />
             </Grid>
             <Grid item xs={10}>
               <main>
@@ -145,6 +147,7 @@ function App() {
                 <Route path='/Quit' component={Quit}/>
                 <Route path='/modifyPassword' component={modifyPassword}/>
                 <Route path='/MyTeamBoard' component={MyTeamBoard}/>
+                <Route path='/ContestBookmark' component={ContestBookmark}/>
                 <Route path='/team-contest' render={() => <TeammateContest randomKey={Math.random()}/>}/>
                 <Route path='/team-project' render={() => <TeammateProject randomKey={Math.random()}/>}/>
               </main>
