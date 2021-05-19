@@ -48,20 +48,22 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function ApplicationCheck(props) {
+export default function ApplicantsCheck(props) {
     axios.defaults.withCredentials = true;
     const header = {
         "Content-Type": "application/json"
     }
     const classes = useStyles();
     const [Applicants, setApplicants] = useState([])
+    const [status, setstatus] = useState(0)
+
     useEffect(() => {
         getApplicantsList()
-    }, [])
+    }, [status])
     function getApplicantsList() {
         console.log("start !!!!!")
         var user_id = JSON.parse(localStorage.getItem("user")).User_code;
-        axios.get('http://localhost:3001/users/ApplicationCheck/' + user_id, {//
+        axios.get('http://localhost:3001/users/ApplicantsCheck/' + user_id, {//
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -72,14 +74,14 @@ export default function ApplicationCheck(props) {
     }
     function updateWaiter(data) {
         console.log("start !!!!!")
-        axios.post('http://localhost:3001/users/ApplicationCheck/', {
+        axios.post('http://localhost:3001/users/ApplicantsCheck/', {
             headers: {
                 'Content-Type': 'application/json'
             },
             data,
         }).then(response => {
             console.log(response.data);
-            setApplicants(response.data)
+            setstatus(!status)
         })
     }
     function btnclick(json) {
@@ -116,13 +118,13 @@ export default function ApplicationCheck(props) {
                                         <TableRow>현재팀현황: {row.TB_recruitNumber}/{row.TB_finalNumber}</TableRow>
                                     </TableCell>
                                     <TableCell align="right">
-                                        {row.waiter_enter === 0 ?
+                                        {row.waiter_enter === 0 && row.TB_recruitNumber<row.TB_finalNumber?
                                             <div>
                                                 <Button variant="contained" color="primary" onClick={() =>
                                                     btnclick({ state: 1, TB_code: row.TB_code, waiter_code: row.waiter_code })}>가입허가</Button>
                                                 <Button variant="contained" color="secondary" onClick={() =>
                                                     btnclick({ state: 2, TB_code: row.TB_code, waiter_code: row.waiter_code })}>가입거부</Button>
-                                            </div> : <Button variant="contained" color="secondary">종료</Button>}
+                                            </div> : <Button variant="contained" color="default">종료</Button>}
                                     </TableCell>
                                 </TableRow>
                             ))}
