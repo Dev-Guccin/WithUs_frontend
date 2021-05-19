@@ -43,7 +43,7 @@ const sections = [
   { title: '내가 쓴 글', url: '/MyTeamBoard' },
   { title: '신청 목록', url: '/ApplicationList' },
   { title: '신청자 목록', url: '/ApplicantsCheck' },
-  { title: '공모전즐겨찾기', url: '#' },
+  { title: '공모전즐겨찾기', url: '/ContestBookmark' },
   { title: '게시판즐겨찾기', url: '#' }
 ];
 
