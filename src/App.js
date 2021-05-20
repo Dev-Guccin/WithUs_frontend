@@ -17,6 +17,8 @@ import SignIn from './views/SignIn';
 import SignUp from './views/SignUp';
 import TmSidebar from './components/TmSidebar';
 import OnlyMyPage from './views/OnlyMyPage';
+import ApplicationList from './views/ApplicationList';
+import ApplicantsCheck from './views/ApplicantsCheck';
 import Mypage from './views/MyPage';
 import MyPageSideBar from './components/MyPageSideBar';
 import Admin_modify from './views/Admin_modify';
@@ -24,7 +26,12 @@ import Interest from './views/Interest';
 import createTeam from './views/Teamboard/createTeam';
 import updateTeam from './views/Teamboard/updateTeam';
 import Quit from './views/Quit';
+import TeammateContest from './views/TeammateContest';
+import TeammateProject from './views/TeammateProject';
 import modifyPassword from './views/modifyPassword';
+import MyTeamBoard from './views/MyTeamBoard';
+import ContestBookmark from './views/ContestBookmark';
+import TeamBookmark from './views/TeamBookmark';
 
 const headers = [
   { title: 'Home', url: '/home' },
@@ -32,10 +39,6 @@ const headers = [
   { title: 'Teammate', url: '/teammate' },
   { title: 'Business', url: '#' },
 ];
-
-const fieldname = ["환경/에너지", "콘텐츠/웹툰", "취업/창업", "음악/예술", "연구/학술/논문", "아이디어/기획",
-  "사진/영상/UCC", "문화/영화/문학", "디자인/미술", "네이밍/슬로건", "금융/경제/경영", "과학/공학/IT"]
-const targetname = ["누구나지원", "청소년", "대학(원)생", "취준생", "직장인"]
 
 function App() {
   const [logincheck, setlogincheck] = useState(localStorage.login_check)
@@ -49,9 +52,6 @@ function App() {
   const [page, setpage] = useState(1);//실제 보여질 페이지
   const [sort, setsort] = useState(1);
 
-  useEffect(()=>{
-    optionSearch()
-  },[])
   useEffect(() => {
     optionSearch()
   }, [page]);
@@ -99,13 +99,20 @@ function App() {
                   <Sidebar field={field} setfield={setfield} target={target} settarget={settarget}/>} />
               <Route path='/SignUp' exact={true} render={() => 
                 <Sidebar field={field} setfield={setfield} target={target} settarget={settarget}/>} />
-              <Route path="/teammate" component={TmSidebar} />
+              <Route path="/teammate" component={TmSidebar}  />
+              <Route path='/team-contest' component={TmSidebar} />
+              <Route path='/team-project' component={TmSidebar} />
               <Route path="/OnlyMyPage" component={MyPageSideBar} /> {/* 본인 마이페이지 수정 */}
+              <Route path="/ApplicationList" component={MyPageSideBar} />
+              <Route path="/ApplicantsCheck" component={MyPageSideBar} /> 
               <Route path='/MyPage' exact={true} render={() => 
                 <Sidebar field={field} setfield={setfield} target={target} settarget={settarget}/>} />
               <Route path='/Interest' component={MyPageSideBar} />
               <Route path='/Quit' component={MyPageSideBar} />
+              <Route path='/MyTeamBoard' component={MyPageSideBar} />
               <Route path='/modifyPassword' component={MyPageSideBar} />
+              <Route path='/ContestBookmark' component={MyPageSideBar} />
+              <Route path='/TeamBookmark' component={MyPageSideBar} />
             </Grid>
             <Grid item xs={10}>
               <main>
@@ -121,18 +128,24 @@ function App() {
                   bottompage={bottompage} setbottompage={setbottompage} setpage={setpage}/>} />
                 <Route path="/Contestdetail/:CB_code" exact={true} component={Contestdetail} />
                 <Route path="/Teammatedetail/:TB_code" exact = {true} component={Teammatedetail} />
-                <Route path="/teammate" exact={true} component={Teammate} />
+                <Route path="/teammate" exact={true} render={() => <Teammate randomKey={Math.random()}/>}/>
                 <Route path='/Login' exact={true} render={() => <SignIn logincheck={logincheck} />} />
                 <Route path="/SignUp" exact={true} component={SignUp} />
                 <Route path="/Interest" exact={true} component={Interest} /> {/* 관심사 추가 페이지 */}
                 <Route path="/OnlyMyPage" exact={true} component={OnlyMyPage} /> {/* 본인 마이페이지 수정 */}
+                <Route path="/ApplicationList" exact={true} component={ApplicationList} /> {/* 본인 마이페이지 수정 */}
+                <Route path="/ApplicantsCheck" exact={true} component={ApplicantsCheck} /> {/* 본인 마이페이지 수정 */}
                 <Route path="/MyPage" exact={true} component={Mypage} /> {/* 유저들 마이페이지 조회 */}
                 <Route path="/Admin" exact={true} component={Admin} />
                 <Route path="/Admin_modify/:User_code" exact = {true} component={Admin_modify} />
                 <Route path='/createTeam' component={createTeam}/>
-                <Route path='/updateTeam' component={updateTeam}/>
                 <Route path='/Quit' component={Quit}/>
                 <Route path='/modifyPassword' component={modifyPassword}/>
+                <Route path='/MyTeamBoard' component={MyTeamBoard}/>
+                <Route path='/ContestBookmark' component={ContestBookmark}/>
+                <Route path='/TeamBookmark' component={TeamBookmark}/>
+                <Route path='/team-contest' render={() => <TeammateContest randomKey={Math.random()}/>}/>
+                <Route path='/team-project' render={() => <TeammateProject randomKey={Math.random()}/>}/>
               </main>
             </Grid>
           </Grid>

@@ -11,8 +11,7 @@ import Avatar from '@material-ui/core/Avatar';
 import axios from 'axios';
 import clsx from 'clsx';
 import {useHistory} from 'react-router-dom'
-import { Route, BrowserRouter as Router } from "react-router-dom";
-import { Link } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import UpdateTeam from './Teamboard/updateTeam';
 
 
@@ -51,8 +50,6 @@ const useStyles = makeStyles((theme) => ({
     },
     btn: {
       height: 30,
-      width: 100,
-      fontSize: 15,
       width: 200,
       fontSize: 30
     },
@@ -90,9 +87,29 @@ export default function Teammatedetail({ match }) {
     const [section, setsection] = useState([]);
     const [section2, setsection2] = useState([]);
     const [IsModify, setIsModify] = useState(false);
+    const [comment, setComment] = useState("");
+    const [applyInfo, setApplyInfo] = useState([]);
+    
 
     const userInfo = localStorage.user;
     const history = useHistory();
+    const tableCode = match.params.TB_code;
+
+    const getApplyInfo = async () =>{
+      await axios.get('http://localhost:3001/teamboard/applyinfo',{
+        params:{
+          TB_code: tableCode,
+          waiter_code: (userInfo === undefined ? 0 : JSON.parse(userInfo).User_code)
+        }
+      }
+     ).then(res => {
+        res.data.map((item) =>{
+
+        })
+        console.log("res.data:",res.data);
+        setApplyInfo(res.data);
+      })
+    }
 
     useEffect(() => {
       axios.get('http://localhost:3001/team/detail/' + match.params.TB_code, {//공모전 데이터 들고오기
@@ -115,6 +132,10 @@ export default function Teammatedetail({ match }) {
         setsection2(response.data);
       })
     }, []);
+
+    useEffect(() => {
+      getApplyInfo();
+    },[]);
 
     // 작성자인지 확인
     const IsWriter = (userCode) => {
@@ -141,6 +162,45 @@ export default function Teammatedetail({ match }) {
      const onClickUpdate = () =>{
        setIsModify(true);
      }
+     // 로그인 확인
+     const IsLogin = (userCode) => {
+      if(userInfo === undefined) { return false;}
+      else { return true; }
+      }
+
+     // 가입신청
+     async function onClickApply() {
+       if(window.confirm("가입신청 하시겠습니까?")){
+         if(!applyInfo.length){ //빈배열(최초 가입)경우 !applyInfo.lengh: 빈배열 true, 값o false
+            await axios.post('http://localhost:3001/teamboard/apply',
+          {
+            waiter_code: JSON.parse(userInfo).User_code,
+            TB_code: section.TB_code,
+            User_code: section.User_code,
+            CT_code: section.CT_code,
+            waiter_content: comment,
+            waiter_nickname: JSON.parse(userInfo).User_nickname,
+            reApply: false  // 재가입 유무 false:최초가입, true: 재가입
+          }).then( res => {
+            console.log("res:",res.data);
+            history.push('/teammate');
+          })}
+          else{ // 재가입 경우
+            await axios.post('http://localhost:3001/teamboard/apply',
+          {
+            waiter_code: JSON.parse(userInfo).User_code,
+            TB_code: section.TB_code,
+            User_code: section.User_code,
+            CT_code: section.CT_code,
+            waiter_content: comment,
+            waiter_nickname: JSON.parse(userInfo).User_nickname,
+            reApply: true
+          }).then( res => {
+            console.log("res:",res.data);
+            history.push('/teammate');
+          })} 
+      }
+    }
 
 
 
@@ -182,22 +242,25 @@ export default function Teammatedetail({ match }) {
                   </List>
                 </Grid>
               </Grid>
-              <Container>
-                <div dangerouslySetInnerHTML={{__html: section.TB_content} }></div>
-              </Container>
-              <Grid container>
+              {(!applyInfo.length || applyInfo[0].waiter_enter === 2)?
+              <Grid container className={clsx((IsWriter(section.User_code) || !IsLogin(section.User_code)) && classes.menuButtonHidden)}>
                 <Grid item xs={2}>
                   <span>코멘트: </span>
                 </Grid>
                 <Grid item xs={8}>
-                  <input type="text" className={classes.comment} required></input>
+                  <input type="text" className={classes.comment} onChange={(e)=>setComment(e.target.value)} required></input>
                 </Grid>
                 <Grid className={classes.button_div} item xs={2}>
-                  <Button className={classes.btn} variant="contained" color="primary">
+                  <Button className={classes.btn} variant="contained" color="primary" onClick={onClickApply}>
                     가입하기
                   </Button>
                 </Grid>
               </Grid>
+              :(applyInfo[0].waiter_enter === 1 ? "" :
+              <Paper>
+              <Typography>가입 심사 중입니다 기다려주세요</Typography>
+              </Paper> 
+              )}
               <Container>
                 <div dangerouslySetInnerHTML={{__html: section.TB_content} }></div>
               </Container>

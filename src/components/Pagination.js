@@ -35,7 +35,7 @@ export default function Pagination(props) {
     <div className="">
       <button onClick={()=>changebottomPage(0)}>{"<"}</button>
       {pagearray.map((page) => (
-          <button onClick={()=>changePage(page)}>{page}</button>
+          <button key={page} onClick={()=>changePage(page)}>{page}</button>
         ))}
       <button onClick={()=>changebottomPage(1)}>{">"}</button>
     </div>

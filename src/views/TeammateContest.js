@@ -1,23 +1,74 @@
 import React, { useState, useEffect } from 'react';
+import clsx from 'clsx';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import SearchBox from '../components/SearchBox';
 import TeamboardList from './TeamboardList';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
 
 
+
+
 const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+  },
+  icon: {
+    marginRight: theme.spacing(2),
+  },
+  heroContent: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(8, 0, 6),
+  },
+  heroButtons: {
+    marginTop: theme.spacing(4),
+  },
   cardGrid: {
     paddingTop: theme.spacing(8),
     paddingBottom: theme.spacing(8),
   },
+  card: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  cardMedia: {
+    paddingTop: '56.25%', // 16:9
+  },
+  cardContent: {
+    flexGrow: 1,
+  },
+  footer: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(6),
+  },
+  cardbookmark: {
+    marginLeft: 'auto'
+  },
+  writer:{
+    flexGrow: "1"
+  },
+  menuButtonHidden: {
+    display: 'none',
+  },
+
+  linkToDetail:{
+    textDecoration: 'none',
+    color: 'black'
+  },
   formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
-  }
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+
 }));
 
 
@@ -33,11 +84,15 @@ export default function Teammate(props) {
   
 
   const getTeamBoardLists = async () => {
+      let listOfContest = []
       await axios.get("http://localhost:3001/teamboard")
       .then(res => {
-        console.log({res_data: res.data});
-        setTeamBoardLists(res.data);
-        setFilteredList(res.data);
+          res.data.map((teamObject) => {
+              if(teamObject.TB_contestOrProject === "contest") listOfContest.push(teamObject);       
+          })
+        console.log(listOfContest);
+        setTeamBoardLists(listOfContest);
+        setFilteredList(listOfContest);
       })
   }
   const testfunc = () => {
@@ -67,6 +122,9 @@ export default function Teammate(props) {
   // 팀 모집 게시판 출력
   useEffect( () =>{
     getTeamBoardLists();
+    console.log({filteredLists, teamBoardLists});
+    console.log({propskey: props.randomKey});
+    console.log({props});
   }, [props.randomKey]);
 
 
