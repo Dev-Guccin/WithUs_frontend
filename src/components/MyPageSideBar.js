@@ -44,7 +44,7 @@ const sections = [
   { title: '신청 목록', url: '/ApplicationList' },
   { title: '신청자 목록', url: '/ApplicantsCheck' },
   { title: '공모전즐겨찾기', url: '/ContestBookmark' },
-  { title: '게시판즐겨찾기', url: '#' }
+  { title: '게시판즐겨찾기', url: '/TeamBookmark' }
 ];
 
 export default function Sidebar(props) {
