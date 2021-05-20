@@ -52,20 +52,9 @@ const useStyles = makeStyles((theme) => ({
     btn: {
       lineHeight: 222,
       height: 30,
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-      width: 200,
-      fontSize: 30
-=======
       width: 'auto',
       fontSize: 30,
       margin: 0,
->>>>>>> Stashed changes
-=======
-      width: 'auto',
-      fontSize: 30,
-      margin: 0,
->>>>>>> Stashed changes
     },
     divider: {
       color: "black",
@@ -114,7 +103,6 @@ export default function Teammatedetail({ match }) {
     const userInfo = localStorage.user;
     const history = useHistory();
     const tableCode = match.params.TB_code;
-    const timezoneOffset = new Date().getTimezoneOffset() * 60000;
 
     const getApplyInfo = async () =>{
       await axios.get('http://localhost:3001/teamboard/applyinfo',{

@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from 'react';
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 import clsx from 'clsx';
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
