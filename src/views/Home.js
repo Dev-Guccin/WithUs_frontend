@@ -48,21 +48,23 @@ export default function Home(props) {
           <Grid item xs={12}></Grid>
           <Grid container>
             <table>
-              <tr>
-                <td>검색 키워드</td>
-                <td>
-                  <input type="search" size={70} placeholder="원하는 키워드를 입력하세요. ex)#과학#통신" value={props.keyword}
-                    onChange={(event) => handleKeywordChange(event)}></input>
-                  <button onClick={() => props.optionSearch()}>조회</button>
-                </td>
-                <td>
-                  <select name="sort" onChange={(event) => sortchange(event)}>
-                    <option value="1">최신순</option>
-                    <option value="2">조회순</option>
-                    <option value="3">마감일자순</option>
-                  </select>
-                </td>
-              </tr>
+              <tbody>
+                <tr>
+                  <td>검색 키워드</td>
+                  <td>
+                    <input type="search" size={70} placeholder="원하는 키워드를 입력하세요. ex)#과학#통신" value={props.keyword}
+                      onChange={(event) => handleKeywordChange(event)}></input>
+                    <button onClick={() => props.optionSearch()}>조회</button>
+                  </td>
+                  <td>
+                    <select name="sort" onChange={(event) => sortchange(event)}>
+                      <option value="1">최신순</option>
+                      <option value="2">조회순</option>
+                      <option value="3">마감일자순</option>
+                    </select>
+                  </td>
+                </tr>
+              </tbody>
             </table>
           </Grid>
           <Grid item xs={4}>
@@ -96,9 +98,9 @@ export default function Home(props) {
       <Grid item xs={1}><strong>북마크</strong></Grid>
       <Grid item xs={12}>
         {props.sections.map((section) => (
-          <Paper>
+          <Paper key={section.CB_code}>
             {/* <Link to={section === undefined ? "" : "Contestdetail/" + String(section.CB_code)}> */}
-              <Homelist section={section}></Homelist>
+            <Homelist section={section}></Homelist>
             {/* </Link> */}
           </Paper>
         ))}
