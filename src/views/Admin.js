@@ -54,41 +54,109 @@ export default function Admin({ match }) {
 
     /* 회원정보 검색 이벤트 핸들러 변수 */
     const [User_search, setUser_search] = useState("");
-    const onSearchHandler = (event) => {setUser_search(event.currentTarget.value);}
+    const onSearchUserHandler = (event) => {setUser_search(event.currentTarget.value);}
 
-    /* 테스트 */
-    const [User_test, setUser_test] = useState("");
-    const onTestHandler = (event) => {
-      setUser_test(event.currentTarget.value);
-      var body = {
-        User_test : User_test
-      }
+    /* 공모전 검색 이벤트 핸들러 변수 */
+    const [Compete_search, setCompete_search] = useState("");
+    const onSearchCompeteHandler = (event) => {setCompete_search(event.currentTarget.value);}
 
-    }
-
-    const onSubmitTestHandler = (code) => {
-      console.log({code});
-    }
-
-  
-
+    /* 팀원모집 게시판 검색 이벤트 핸들러 변수 */
+    const [Teammate_search, setTeammate_search] = useState("");
+    const onSearchTeammateHandler = (event) => {setTeammate_search(event.currentTarget.value);}
+    
     /* 회원정보 검색 버튼을 눌렀을 때의 이벤트 핸들러 */
-    const onSubmitSearchHandler = (event) => {
+    const onSubmitSearchUserHandler = (event) => {
       event.preventDefault();
       var body = {
         User_search : User_search
       }
       console.log(body);
+      axios.post('http://localhost:3001/admin/search/user/', body)
+      .then(response => {
+        if(response) {
+          alert('검색완료!!!');
+          console.log(response.data);
+          setsection3(response.data);
+        } else {
+          alert("Signup Error " + response.data.message);
+        }
+      });
     }
 
-    /* 회원정보 삭제 버튼을 눌렀을 때의 이벤트 핸들러 */
-    const onDeleteHandler = (code) => {
-      console.log({code});
+    /* 공모전 검색 버튼을 눌렀을 때의 이벤트 핸들러 */
+    const onSubmitSearchCompeteHandler = (event) => {
+      event.preventDefault();
+      var body = {
+        Compete_search : Compete_search
+      }
+      console.log(body);
+      axios.post('http://localhost:3001/admin/search/compete/', body)
+      .then(response => {
+        if(response) {
+          alert('검색완료!!!');
+          console.log(response.data);
+          setsection(response.data);
+        } else {
+          alert("Signup Error " + response.data.message);
+        }
+      });
+    }
 
+    /* 팀원모집 게시판 검색 버튼을 눌렀을 때의 이벤트 핸들러 */
+    const onSubmitSearchTeammateHandler = (event) => {
+      event.preventDefault();
+      var body = {
+        Teammate_search : Teammate_search
+      }
+      console.log(body);
+      axios.post('http://localhost:3001/admin/search/teammate/', body)
+      .then(response => {
+        if(response) {
+          alert('검색완료!!!');
+          console.log(response.data);
+          setsection2(response.data);
+        } else {
+          alert("Signup Error " + response.data.message);
+        }
+      });
+    }
+
+    /* 회원 삭제 버튼을 눌렀을 때의 이벤트 핸들러 */
+    const onDeleteUserHandler = (code) => {
+      console.log({code});
       axios.post('http://localhost:3001/admin/delete/user/' + code,{User_code: code} )
         .then(response => {
           if(response) {
             alert('해당 아이디가 삭제되었습니다!!!');
+            window.location.reload();
+          } else {
+            alert("Signup Error " + response.data.message);
+          }
+        });
+    }
+
+    /* 공모전 삭제 버튼을 눌렀을 때의 이벤트 핸들러 */
+    const onDeleteCompeteHandler = (code) => {
+      console.log({code});
+      axios.post('http://localhost:3001/admin/delete/compete/' + code,{CB_code: code} )
+        .then(response => {
+          if(response) {
+            alert('해당 공모전이 삭제되었습니다!!!');
+            window.location.reload();
+          } else {
+            alert("Signup Error " + response.data.message);
+          }
+        });
+    }
+
+    /* 팀원모집 게시글 삭제 버튼을 눌렀을 때의 이벤트 핸들러 */
+    const onDeleteTeammateHandler = (code) => {
+      console.log({code});
+      axios.post('http://localhost:3001/admin/delete/teammate/' + code,{TB_code: code} )
+        .then(response => {
+          if(response) {
+            alert('해당 게시글이 삭제되었습니다!!!');
+            window.location.reload();
           } else {
             alert("Signup Error " + response.data.message);
           }
@@ -140,12 +208,11 @@ export default function Admin({ match }) {
             <Grid container>
               <Grid item xs={3} className={classes.total}>총 회원수: {section3.length}</Grid>
               <Grid item xs={8}>
-                <Paper component="form" className={classes.search} onSubmit={onSubmitSearchHandler}>
+                <Paper component="form" className={classes.search} onSubmit={onSubmitSearchUserHandler}>
                   <InputBase
                     className={classes.input}
                     placeholder="회원의 아이디를 입력하세요"
-                    value={User_search}
-                    onChange={onSearchHandler}
+                    onChange={onSearchUserHandler}
                   />
                   <IconButton type="submit" className={classes.iconButton}>
                     <SearchIcon />
@@ -184,12 +251,13 @@ export default function Admin({ match }) {
                         <Button variant="contained" color="primary" href={"Admin_modify/" + row.User_code}>수정</Button>
                       </TableCell>
                       <TableCell>
-                        <Button onClick={()=>{onDeleteHandler(row.User_code)}} variant="contained" color="secondary" value={row.User_code}>삭제{row.User_code}</Button>
+                        <Button onClick={()=>{onDeleteUserHandler(row.User_code)}} variant="contained" color="secondary" value={row.User_code}>삭제</Button>
                       </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
+              {setUser_search}
             </TableContainer>
           </Box>
 
@@ -199,11 +267,11 @@ export default function Admin({ match }) {
             <Grid container>
               <Grid item xs={3} className={classes.total}>총 공모전수: {section.length}</Grid>
               <Grid item xs={8}>
-                <Paper component="form" className={classes.search}>
+                <Paper component="form" className={classes.search} onSubmit={onSubmitSearchCompeteHandler}>
                   <InputBase
                     className={classes.input}
                     placeholder="공모전 키워드를 입력하세요"
-                    inputProps={{ 'aria-label': 'search google maps' }}
+                    onChange={onSearchCompeteHandler}
                   />
                   <IconButton type="submit" className={classes.iconButton} aria-label="search">
                     <SearchIcon />
@@ -234,7 +302,7 @@ export default function Admin({ match }) {
                           <Button variant="contained" color="primary" href={section === undefined ? "" : "Contestdetail/" + String(section.CB_code)}>보기</Button>
                       </TableCell>
                       <TableCell>
-                        <Button variant="contained" color="secondary" value={section.CB_code}>삭제</Button>
+                        <Button onClick={()=>{onDeleteCompeteHandler(section.CB_code)}} variant="contained" color="secondary" value={section.CB_code}>삭제</Button>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -249,11 +317,11 @@ export default function Admin({ match }) {
             <Grid container>
               <Grid item xs={3} className={classes.total}>총 게시글수: {section2.length}</Grid>
               <Grid item xs={8}>
-                <Paper component="form" className={classes.search}>
+                <Paper component="form" className={classes.search} onSubmit={onSubmitSearchTeammateHandler}>
                   <InputBase
                     className={classes.input}
                     placeholder="게시글 키워드를 입력하세요"
-                    inputProps={{ 'aria-label': 'search google maps' }}
+                    onChange={onSearchTeammateHandler}
                   />
                   <IconButton type="submit" className={classes.iconButton} aria-label="search">
                     <SearchIcon />
@@ -290,7 +358,7 @@ export default function Admin({ match }) {
                         <Button variant="contained" color="primary" href={"Teammatedetail/" + String(section.TB_code)}>보기</Button>
                       </TableCell>
                       <TableCell>
-                        <Button variant="contained" color="secondary" value={section.TB_code}>삭제</Button>
+                        <Button onClick={()=>{onDeleteTeammateHandler(section.TB_code)}} variant="contained" color="secondary" value={section.TB_code}>삭제</Button>
                       </TableCell>
                     </TableRow>
                   ))}
