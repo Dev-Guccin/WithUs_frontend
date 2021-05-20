@@ -81,7 +81,6 @@ export default function SignIn(props) {
       if(response.data.loginSuccess) {
         alert("Hello! " + response.data.user.User_id);
         console.log(response.data.user);
-        console.log("ETSETSETSETST",props)
         try {
           localStorage.setItem('login_check', response.data.loginSuccess);
           localStorage.setItem('user', JSON.stringify(response.data.user));
@@ -89,7 +88,6 @@ export default function SignIn(props) {
           // props.history.push('/');
           //props.setlogin_check(response.data.loginSuccess)
         } catch (e) {
-          var str = 
           console.log("localStorage is not working");
         }
       } else{
