@@ -11,8 +11,7 @@ import Avatar from '@material-ui/core/Avatar';
 import axios from 'axios';
 import clsx from 'clsx';
 import {useHistory} from 'react-router-dom'
-import { Route, BrowserRouter as Router } from "react-router-dom";
-import { Link, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import UpdateTeam from './Teamboard/updateTeam';
 
 
@@ -51,8 +50,6 @@ const useStyles = makeStyles((theme) => ({
     },
     btn: {
       height: 30,
-      width: 100,
-      fontSize: 15,
       width: 200,
       fontSize: 30
     },

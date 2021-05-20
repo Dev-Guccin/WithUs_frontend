@@ -43,7 +43,7 @@ export default function Homelist(props) {
           <Grid container>
             <Grid item xs={12}>
             <Link to={section === undefined ? "" : "Contestdetail/" + String(section.CB_code)}>
-              <Typography variant="body2" color="primary">
+              <Typography component="span" color="primary">
                 <Grid item xs={12}><strong>{section.CB_title}</strong></Grid>
               </Typography>
             </Link>
