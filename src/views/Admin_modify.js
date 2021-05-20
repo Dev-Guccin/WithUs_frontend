@@ -61,7 +61,8 @@ export default function Admin_modify({ match, props }) {
       axios.post('http://localhost:3001/admin/modify_test/'+ match.params.User_code, body)
         .then(response => {
           if(response) {
-            alert(`변경된 아이디: ${User_id}`);
+            alert("정보가 수정되었습니다");
+            window.location.href = "http://localhost:3000/admin/";
           } else {
             alert("Signup Error " + response.data.message);
           }
