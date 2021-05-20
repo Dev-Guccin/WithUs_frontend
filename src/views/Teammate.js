@@ -7,6 +7,10 @@ import TeamboardList from './TeamboardList';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
+import SearchIcon from '@material-ui/icons/Search';
+import { Fragment } from 'react';
+
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -15,8 +19,9 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(8),
   },
   formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
+    marginRight: '10px' ,
+    marginBottom: '20px',
+    minWidth: 100,
   }
 }));
 
@@ -29,6 +34,7 @@ export default function Teammate(props) {
   const [userInput, setUserInput] = useState("");
   const [filteredLists, setFilteredList] = useState([]);
   const [searchType, setSearchType] = useState("1");
+  const [placeholder, setPlaceholder] = useState("제목+내용 검색")
 
   
 
@@ -40,7 +46,7 @@ export default function Teammate(props) {
         setFilteredList(res.data);
       })
   }
-  const testfunc = () => {
+  const search = () => {
     console.log({userInput, searchType});
     setFilteredList(teamBoardLists.filter((teamboard) => {
       switch (searchType) {
@@ -62,6 +68,7 @@ export default function Teammate(props) {
   }
   const handleChange = (e) => {
     setSearchType(e.target.value);
+    setPlaceholder(e.target[e.target.value-1].innerText + " 검색");
   };
 
   // 팀 모집 게시판 출력
@@ -83,17 +90,19 @@ export default function Teammate(props) {
               <option value={1}>제목+내용</option>
               <option value={2}>제목</option>
               <option value={3}>내용</option>
-              <option value={4}>글쓴이</option>
+              <option value={4}>작성자</option>
             </NativeSelect>
           </FormControl>
-          <input
-          type="search"
-          placeholder="제목+내용 검색"
-          onChange={handleInput}
-          />
-          <Button color="primary" component="span" onClick={() => {testfunc()}} >
-            검색
-          </Button>
+          <Fragment style={{marginBottom: 20}}>
+            <input
+            type="search"
+            placeholder= {placeholder}
+            onChange={handleInput}
+            />
+            <Button style={{ padding : 5, minWidth: 22}} color="primary" component="span" onClick={() => {search()}} >
+              <SearchIcon/>
+            </Button>
+          </Fragment>
           <TeamboardList tbList={filteredLists}/>  
         </Container>
       </main>

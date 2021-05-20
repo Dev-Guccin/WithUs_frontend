@@ -16,6 +16,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
+import {category, categoryImage } from '../../src/testDB';
 
 function Copyright() {
     return (
@@ -88,11 +89,11 @@ export default function ApplicationList(props) {
                                 <TableRow key={row.name}>
                                     <TableCell>
                                         <TableRow>제목:{row.TB_title}</TableRow>
-                                        <TableRow>종류:{row.TB_contestOrProject}</TableRow>
+                                        <TableRow>종류:{row.TB_contestOrProject === 'project' ? '프로젝트' : '공모전'}</TableRow>
                                     </TableCell>
                                     <TableCell>
                                         <TableRow>신청시간:{row.waiter_time}</TableRow>
-                                        <TableRow>카테고리:{row.CT_code}</TableRow>
+                                        <TableRow>카테고리:{category[row.CT_code]}</TableRow>
                                     </TableCell>
                                     <TableCell align="right">
                                         {row.waiter_enter===0?<Button variant="contained" color="primary">대기중</Button>:''}

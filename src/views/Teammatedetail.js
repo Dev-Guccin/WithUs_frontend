@@ -13,6 +13,7 @@ import clsx from 'clsx';
 import {useHistory} from 'react-router-dom'
 import { Typography } from '@material-ui/core';
 import UpdateTeam from './Teamboard/updateTeam';
+import {category, bookmarks,categoryImage } from '../../src/testDB';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -49,9 +50,22 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: 30
     },
     btn: {
+      lineHeight: 222,
       height: 30,
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
       width: 200,
       fontSize: 30
+=======
+      width: 'auto',
+      fontSize: 30,
+      margin: 0,
+>>>>>>> Stashed changes
+=======
+      width: 'auto',
+      fontSize: 30,
+      margin: 0,
+>>>>>>> Stashed changes
     },
     divider: {
       color: "black",
@@ -70,8 +84,9 @@ const useStyles = makeStyles((theme) => ({
       height: theme.spacing(3),
     },
     comment: {
-      width: 500,
-      height: 30
+      width: 570,
+      height: 30,
+      marginTop: 30
     },
     updateDeleteBtn: {
       float: 'right'
@@ -79,6 +94,11 @@ const useStyles = makeStyles((theme) => ({
     menuButtonHidden: {
       display: 'none',
     },
+    comment_title: {
+      height: 30,
+      marginTop: 30,
+      backgroundColor: '#dcdcde'
+    }
 
 }));
 
@@ -94,6 +114,7 @@ export default function Teammatedetail({ match }) {
     const userInfo = localStorage.user;
     const history = useHistory();
     const tableCode = match.params.TB_code;
+    const timezoneOffset = new Date().getTimezoneOffset() * 60000;
 
     const getApplyInfo = async () =>{
       await axios.get('http://localhost:3001/teamboard/applyinfo',{
@@ -111,13 +132,13 @@ export default function Teammatedetail({ match }) {
       })
     }
 
-    useEffect(() => {
-      axios.get('http://localhost:3001/team/detail/' + match.params.TB_code, {//공모전 데이터 들고오기
+    useEffect(async() => {
+      await axios.get('http://localhost:3001/team/detail/' + match.params.TB_code, {//공모전 데이터 들고오기
         headers: {
           'Content-Type': 'application/json'
         }
       }).then(response => {
-        console.log(response.data);
+        console.log("sdf",response.data);
         setsection(response.data[0]);
       })
     }, []);
@@ -150,7 +171,7 @@ export default function Teammatedetail({ match }) {
         {
           TB_code: section.TB_code
         }).then( res => {
-          console.log("res:",res.data);
+          console.log(res.data);
           history.push('/teammate');
         })
       }
@@ -163,13 +184,15 @@ export default function Teammatedetail({ match }) {
        setIsModify(true);
      }
      // 로그인 확인
-     const IsLogin = (userCode) => {
+     const IsLogin = () => {
       if(userInfo === undefined) { return false;}
       else { return true; }
       }
 
      // 가입신청
      async function onClickApply() {
+       if(!IsLogin()){ alert("가입신청을 하시려면 로그인을 해주세요"); return;}
+
        if(window.confirm("가입신청 하시겠습니까?")){
          if(!applyInfo.length){ //빈배열(최초 가입)경우 !applyInfo.lengh: 빈배열 true, 값o false
             await axios.post('http://localhost:3001/teamboard/apply',
@@ -222,32 +245,30 @@ export default function Teammatedetail({ match }) {
               </nav>
               <Divider/>
               <Grid container>
-                <Grid item xs={4} className={classes.boardinfo}>작성자: </Grid>
+                <Grid item xs={4} className={classes.boardinfo}>작성자: {section.User_nickname} </Grid>
                 <Grid item xs={4} className={classes.boardinfo}>작성일: {section.TB_createDate}</Grid>
-                <Grid item xs={2} className={classes.boardinfo}>조회수: </Grid>
-                <Grid item xs={2} className={classes.boardinfo}>댓글: </Grid>
+                {/* <Grid item xs={2} className={classes.boardinfo}>조회수: </Grid>
+                <Grid item xs={2} className={classes.boardinfo}>댓글: </Grid> */}
               </Grid>
               <Grid container>
                 <Grid item xs={6}>
-                  <img className={classes.imgtest} src="https://source.unsplash.com/collection/1"></img>
+                  <img className={classes.imgtest} src={categoryImage[section.CT_code]}></img>
                 </Grid>
                 <Grid item xs={6}>
                   <List>
-                    <ListItem className={classes.list}>종류: {section.TB_contestOrProject}</ListItem>
-                    <ListItem className={classes.list}>카테고리: {section.CT_code}</ListItem>
-                    <ListItem className={classes.list}>모집기간: {section.TB_createDate} / {section.TB_finalDate}</ListItem>
-                    <ListItem className={classes.list}>공모전링크: </ListItem>
-                    <ListItem className={classes.list}>게시판링크: </ListItem>
+                    <ListItem className={classes.list}>종류: {section.TB_contestOrProject === 'project' ? '프로젝트' : '공모전'}</ListItem>
+                    <ListItem className={classes.list}>카테고리: {category[section.CT_code]}</ListItem>
+                    <ListItem className={classes.list}>모집기간: {section.TB_createDate} ~&nbsp;{section.TB_finalDate}</ListItem>
                     <ListItem className={classes.list}>팀원현황: {section.TB_recruitNumber} / {section.TB_finalNumber}</ListItem>
                   </List>
                 </Grid>
               </Grid>
-              {(!applyInfo.length || applyInfo[0].waiter_enter === 2)?
-              <Grid container className={clsx((IsWriter(section.User_code) || !IsLogin(section.User_code)) && classes.menuButtonHidden)}>
-                <Grid item xs={2}>
-                  <span>코멘트: </span>
+              {(!applyInfo.length || applyInfo[0].waiter_enter === 2)? (!(section.TB_recruitNumber === section.TB_finalNumber) ?
+              <Grid container className={clsx(IsWriter(section.User_code) && classes.menuButtonHidden)}>
+                <Grid item xs={1} >
+                  <Paper className={classes.comment_title}><Typography style={{textAlign:'center'}}><strong>코멘트: </strong></Typography></Paper>
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xs={7}>
                   <input type="text" className={classes.comment} onChange={(e)=>setComment(e.target.value)} required></input>
                 </Grid>
                 <Grid className={classes.button_div} item xs={2}>
@@ -255,8 +276,8 @@ export default function Teammatedetail({ match }) {
                     가입하기
                   </Button>
                 </Grid>
-              </Grid>
-              :(applyInfo[0].waiter_enter === 1 ? "" :
+              </Grid> : "")
+              :(applyInfo[0].waiter_enter === 1 || section.TB_recruitNumber === section.TB_finalNumber ? "" :
               <Paper>
               <Typography>가입 심사 중입니다 기다려주세요</Typography>
               </Paper> 

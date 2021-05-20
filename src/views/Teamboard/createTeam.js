@@ -40,9 +40,8 @@ const useStyles = makeStyles((theme) => ({
     width: 600,
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
-    [theme.breakpoints.up(1280)]: {
-      width: 720,   // 게시글 작성 width
-      marginLeft: 'auto',
+    [theme.breakpoints.up(960)]: {
+      width: 800,   // 게시글 작성 width
       marginRight: 'auto',
     },
   },
@@ -159,6 +158,7 @@ export default function Teamboard() {
     if( logincheck === undefined || JSON.parse(logincheck) === false){
       alert("로그인한 사용자만 팀원 모집글을 작성할수 있습니다.");
       history.push('/teammate');
+      return;
     }
 
     if(title.trim() === '') {
@@ -196,7 +196,7 @@ export default function Teamboard() {
       <main className={classes.layout}>
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h4" align="center">
-            팀 모집하기
+            팀원 모집 게시글 작성
           </Typography>
           <React.Fragment>
             <FormControl component="fieldset">

@@ -96,14 +96,14 @@ export default function TeamboardList(props){
                     </Typography>
                     <CardActions className={classes.root} >
                       <Typography className={classes.writer} >
-                      작성자: {teamBoard.User_nickname}
+                      작성자: {JSON.parse(localStorage.user).User_nickname}
                       </Typography>                     
-                      <Typography >
+                      {/* <Typography >
                         <VisibilityIcon style={{ fontSize: 18 }}/>&nbsp;108
                       </Typography>
                       <Typography >
                         <ChatBubbleOutlineIcon style={{ fontSize: 18 }}/>&nbsp;10
-                      </Typography>                      
+                      </Typography>                       */}
                     </CardActions>
                     <Link to={"Teammatedetail/" + String(teamBoard.TB_code)} className={classes.linkToDetail}>
                     <div dangerouslySetInnerHTML={{__html: teamBoard.TB_content} }></div> 
@@ -114,7 +114,7 @@ export default function TeamboardList(props){
                       종류 : {teamBoard.TB_contestOrProject === 'project' ? '프로젝트' : '공모전'}
                     </Typography>
                     <Typography>
-                      카테고리 : {teamBoard.CT_name}
+                      카테고리 : {category[teamBoard.CT_code]}
                     </Typography>
                     <Typography>
                       팀원 현황: {teamBoard.TB_recruitnumber}&nbsp;&nbsp;/&nbsp;&nbsp;{teamBoard.TB_finalNumber}

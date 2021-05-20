@@ -13,7 +13,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import {red } from '@material-ui/core/colors';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
-import {category, bookmarks,categoryImage } from '../../src/testDB';
+import {category, categoryImage } from '../../src/testDB';
 import axios from 'axios';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
     },
     cardContent: {
       flexGrow: 1,
+      height: '160px'
     },
     cardbookmark: {
       marginLeft: 'auto'
@@ -42,12 +43,13 @@ const useStyles = makeStyles((theme) => ({
   
     linkToDetail:{
       textDecoration: 'none',
-      color: 'black'
-    }
+      color: 'black',
+    },
+
   
   }));
 
-let imgsrc = '';
+
 let userInfo
 let user
 
@@ -56,7 +58,7 @@ export default function TeamboardList(props){
     const classes = useStyles();
     const [bk, setBookmark] = useState([]);
 
-    const timezoneOffset = new Date().getTimezoneOffset() * 60000;
+    
 
     // DB에서 로그인유저 북마크 정보만 가져와서 담기
     const getMyBookmarkTB = async () => {
@@ -120,8 +122,7 @@ export default function TeamboardList(props){
     return(
         <Grid container spacing={3}>
             {props.tbList.map((teamBoard) => (
-              imgsrc = `https://source.unsplash.com/collection/${teamBoard.User_code}`,
-              <Grid item key={teamBoard.TB_code} xs={12} sm={4} md={6}>
+              <Grid item key={teamBoard.TB_code} xs={12} sm={6} md={6}>
                 <Card >
                   <Link to={"Teammatedetail/" + String(teamBoard.TB_code)} >
                     <CardMedia
@@ -140,12 +141,12 @@ export default function TeamboardList(props){
                       <Typography className={classes.writer} >
                       작성자: {teamBoard.User_nickname}
                       </Typography>                     
-                      <Typography >
+                      {/* <Typography >
                         <VisibilityIcon style={{ fontSize: 18 }}/>&nbsp;108
                       </Typography>
                       <Typography >
                         <ChatBubbleOutlineIcon style={{ fontSize: 18 }}/>&nbsp;10
-                      </Typography>                      
+                      </Typography>                       */}
                     </CardActions>
                     <Link to={"Teammatedetail/" + String(teamBoard.TB_code)} className={classes.linkToDetail}>
                     <div dangerouslySetInnerHTML={{__html: teamBoard.TB_content} }></div> 
@@ -164,10 +165,10 @@ export default function TeamboardList(props){
                   </CardContent>                  
                   <CardActions disableSpacing>
                     <Typography variant="overline">
-                      {new Date(new Date(teamBoard.TB_createDate) - timezoneOffset).toJSON().substring(0,10)} ~&nbsp;
+                      {teamBoard.TB_createDate} ~&nbsp;
                     </Typography>
                     <Typography variant="overline">
-                      {new Date(new Date(teamBoard.TB_finalDate) - timezoneOffset).toJSON().substring(0,10)}
+                      {teamBoard.TB_finalDate}
                     </Typography>
                       <IconButton size="small" style={{ color: red[800] }} className={classes.cardbookmark} onClick={() => {toggleBookmark(teamBoard.TB_code)}}>
                         <FavoriteBorderIcon className={clsx(IsBookmarked(teamBoard.TB_code) && classes.menuButtonHidden)}/>
