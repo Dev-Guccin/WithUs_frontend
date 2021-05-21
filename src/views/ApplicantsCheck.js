@@ -9,14 +9,16 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
-import {category, categoryImage } from '../../src/testDB';
+import { category, categoryImage } from '../../src/testDB';
+
+import { Link } from 'react-router-dom';
+
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
@@ -63,7 +65,7 @@ export default function ApplicantsCheck(props) {
     function getApplicantsList() {
         console.log("start !!!!!")
         var user_id = JSON.parse(localStorage.getItem("user")).User_code;
-        axios.get('http://'+localStorage.getItem("backend")+':3001/users/ApplicantsCheck/' + user_id, {//
+        axios.get('http://' + localStorage.getItem("backend") + ':3001/users/ApplicantsCheck/' + user_id, {//
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -74,7 +76,7 @@ export default function ApplicantsCheck(props) {
     }
     function updateWaiter(data) {
         console.log("start !!!!!")
-        axios.post('http://'+localStorage.getItem("backend")+':3001/users/ApplicantsCheck/', {
+        axios.post('http://' + localStorage.getItem("backend") + ':3001/users/ApplicantsCheck/', {
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -104,7 +106,7 @@ export default function ApplicantsCheck(props) {
                     <Table className={classes.table} aria-label="simple table">
                         <TableBody>
                             {Applicants.map((row) => (
-                                <TableRow key={row.user_name}>
+                                <TableRow key={row.user_name} >
                                     <TableCell>
                                         <TableRow>제목: {row.TB_title}</TableRow>
                                         <TableRow>종류: {row.TB_contestOrProject === 'project' ? '프로젝트' : '공모전'}</TableRow>
@@ -114,11 +116,20 @@ export default function ApplicantsCheck(props) {
                                         <TableRow>카테고리: {category[row.CT_code]}</TableRow>
                                     </TableCell>
                                     <TableCell>
-                                        <TableRow>신청자: {row.user_name}</TableRow>
+                                        <TableRow>
+                                            <Link to={{
+                                                pathname:'/MyPage',
+                                                user:{
+                                                    user_name:row.user_name
+                                                },
+                                            }}>
+                                                신청자: {row.user_name}
+                                            </Link>
+                                        </TableRow>
                                         <TableRow>현재팀현황: {row.TB_recruitNumber}/{row.TB_finalNumber}</TableRow>
                                     </TableCell>
                                     <TableCell align="right">
-                                        {row.waiter_enter === 0 && row.TB_recruitNumber<row.TB_finalNumber?
+                                        {row.waiter_enter === 0 && row.TB_recruitNumber < row.TB_finalNumber ?
                                             <div>
                                                 <Button variant="contained" color="primary" onClick={() =>
                                                     btnclick({ state: 1, TB_code: row.TB_code, waiter_code: row.waiter_code })}>가입허가</Button>
@@ -130,9 +141,9 @@ export default function ApplicantsCheck(props) {
                             ))}
                         </TableBody>
                     </Table>
-                </TableContainer>
-            </div>
-            <Box mt={8}>
+                    </TableContainer>
+                    </div>
+                    <Box mt={8}>
                 <Copyright />
             </Box>
         </Container>

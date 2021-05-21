@@ -19,7 +19,7 @@ import TmSidebar from './components/TmSidebar';
 import OnlyMyPage from './views/OnlyMyPage';
 import ApplicationList from './views/ApplicationList';
 import ApplicantsCheck from './views/ApplicantsCheck';
-import Mypage from './views/MyPage';
+import MyPage from './views/MyPage';
 import MyPageSideBar from './components/MyPageSideBar';
 import Admin_modify from './views/Admin_modify';
 import Interest from './views/Interest';
@@ -135,7 +135,7 @@ function App() {
                 <Route path="/OnlyMyPage" exact={true} component={OnlyMyPage} /> {/* 본인 마이페이지 수정 */}
                 <Route path="/ApplicationList" exact={true} component={ApplicationList} /> {/* 본인 마이페이지 수정 */}
                 <Route path="/ApplicantsCheck" exact={true} component={ApplicantsCheck} /> {/* 본인 마이페이지 수정 */}
-                <Route path="/MyPage" exact={true} component={Mypage} /> {/* 유저들 마이페이지 조회 */}
+                <Route path="/MyPage" exact={true} component={MyPage} /> {/* 본인 마이페이지 수정 */}
                 <Route path="/Admin" exact={true} component={Admin} />
                 <Route path="/Admin_modify/:User_code" exact = {true} component={Admin_modify} />
                 <Route path='/createTeam' component={createTeam}/>
