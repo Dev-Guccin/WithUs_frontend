@@ -66,7 +66,7 @@ export default function ApplicationList(props) {
             User_code : JSON.parse(localStorage.getItem('user')).User_code
             // CB_code : section.CB_code
         }
-        axios.post('http://localhost:3001/users/getBookMark', body, {header})
+        axios.post('http://'+localStorage.getItem("backend")+':3001/users/getBookMark', body, {header})
         .then(response => {
             setContestBookMark(response.data.BookMarkList);
         })
@@ -78,7 +78,7 @@ export default function ApplicationList(props) {
             CB_code : CB_code
         }
 
-        axios.post('http://localhost:3001/users/DeleteBookMark', body, {header})
+        axios.post('http://'+localStorage.getItem("backend")+':3001/users/DeleteBookMark', body, {header})
         .then(response => {
             if(response.data.DeleteBookMark) {
                 alert(response.data.message);

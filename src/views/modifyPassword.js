@@ -60,7 +60,7 @@ export default function SignIn(props) {
   const onCurrentPasswordHandler = (event) => {setUser_current_password(event.currentTarget.value);}
 
   function logout() {
-    axios.get('http://localhost:3001/passport/logout', { header })
+    axios.get('http://'+localStorage.getItem("backend")+':3001/passport/logout', { header })
       .then(response => {
         localStorage.clear();
         document.location.href = "/";
@@ -77,7 +77,7 @@ export default function SignIn(props) {
 
     }
 
-    axios.post('http://localhost:3001/users/modifyPassword', body, {header})
+    axios.post('http://'+localStorage.getItem("backend")+':3001/users/modifyPassword', body, {header})
     .then(response => {
         console.log(response.data);
         if(response.data.modify) {

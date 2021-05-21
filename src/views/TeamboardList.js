@@ -62,7 +62,7 @@ export default function TeamboardList(props){
 
     // DB에서 로그인유저 북마크 정보만 가져와서 담기
     const getMyBookmarkTB = async () => {
-        await axios.get("http://localhost:3001/bookmarkTB/" + user)
+        await axios.get('http://'+localStorage.getItem("backend")+':3001/bookmarkTB/' + user)
         .then( res => {
         const bk_list = (res.data).map(item => item.TB_code);
         setBookmark(bk_list);
@@ -71,7 +71,7 @@ export default function TeamboardList(props){
 
     const deleteBookmarkTB = async (tableID) => {
         console.log("user:", user, "TB_code:", tableID);
-        await axios.post("http://localhost:3001/bookmarkTB/delete/" + user, {
+        await axios.post('http://'+localStorage.getItem("backend")+':3001/bookmarkTB/delete/' + user, {
         User_code: user,
         TB_code : tableID
         }).then( res => {
@@ -79,7 +79,7 @@ export default function TeamboardList(props){
         })
     }
     const addBookmarkTB = async (tableID) => {
-        await axios.post("http://localhost:3001/bookmarkTB/add/" + user, {
+        await axios.post('http://'+localStorage.getItem("backend")+':3001/bookmarkTB/add/' + user, {
         User_code: user,
         TB_code : tableID
         }). then(res => {

@@ -66,7 +66,7 @@ function App() {
   //옵션에 따라 공모전 데이터 가져오기
   function optionSearch(event) {
     console.log("option search")
-    axios.post('http://localhost:3001/contest/options/' + page, {//공모전 데이터 들고오기
+    axios.post('http://'+localStorage.getItem("backend")+':3001/contest/options/' + page, {//공모전 데이터 들고오기
       headers: {
         'Content-Type': 'application/json'
       },

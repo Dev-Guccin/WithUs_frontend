@@ -105,7 +105,7 @@ export default function Teammatedetail({ match }) {
     const tableCode = match.params.TB_code;
 
     const getApplyInfo = async () =>{
-      await axios.get('http://localhost:3001/teamboard/applyinfo',{
+      await axios.get('http://'+localStorage.getItem("backend")+':3001/teamboard/applyinfo',{
         params:{
           TB_code: tableCode,
           waiter_code: (userInfo === undefined ? 0 : JSON.parse(userInfo).User_code)
@@ -121,7 +121,7 @@ export default function Teammatedetail({ match }) {
     }
 
     useEffect(async() => {
-      await axios.get('http://localhost:3001/team/detail/' + match.params.TB_code, {//공모전 데이터 들고오기
+      await axios.get('http://'+localStorage.getItem("backend")+':3001/team/detail/' + match.params.TB_code, {//공모전 데이터 들고오기
         headers: {
           'Content-Type': 'application/json'
         }
@@ -132,7 +132,7 @@ export default function Teammatedetail({ match }) {
     }, []);
 
     useEffect(() => {
-      axios.get('http://localhost:3001/team/reply/' + match.params.TB_code, {//공모전 데이터 들고오기
+      axios.get('http://'+localStorage.getItem("backend")+':3001/team/reply/' + match.params.TB_code, {//공모전 데이터 들고오기
         headers: {
           'Content-Type': 'application/json'
         }
@@ -155,7 +155,7 @@ export default function Teammatedetail({ match }) {
     //삭제
     async function onClickDelete() {
       if(window.confirm("게시글을 삭제하시겠습니까?")){
-        await axios.post('http://localhost:3001/teamboard/delete/' + section.TB_code, 
+        await axios.post('http://'+localStorage.getItem("backend")+':3001/teamboard/delete/' + section.TB_code, 
         {
           TB_code: section.TB_code
         }).then( res => {
@@ -183,7 +183,7 @@ export default function Teammatedetail({ match }) {
 
        if(window.confirm("가입신청 하시겠습니까?")){
          if(!applyInfo.length){ //빈배열(최초 가입)경우 !applyInfo.lengh: 빈배열 true, 값o false
-            await axios.post('http://localhost:3001/teamboard/apply',
+            await axios.post('http://'+localStorage.getItem("backend")+':3001/teamboard/apply',
           {
             waiter_code: JSON.parse(userInfo).User_code,
             TB_code: section.TB_code,
@@ -197,7 +197,7 @@ export default function Teammatedetail({ match }) {
             history.push('/teammate');
           })}
           else{ // 재가입 경우
-            await axios.post('http://localhost:3001/teamboard/apply',
+            await axios.post('http://'+localStorage.getItem("backend")+':3001/teamboard/apply',
           {
             waiter_code: JSON.parse(userInfo).User_code,
             TB_code: section.TB_code,
