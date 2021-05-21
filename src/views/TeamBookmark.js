@@ -66,7 +66,7 @@ export default function ApplicationList(props) {
             User_code : JSON.parse(localStorage.getItem('user')).User_code
             // CB_code : section.CB_code
         }
-        axios.post('http://localhost:3001/users/getTeamBookMark', body, {header})
+        axios.post('http://'+localStorage.getItem("backend")+':3001/users/getTeamBookMark', body, {header})
         .then(response => {
             console.log(response.data.BookMarkList);
             setTeamBookMark(response.data.BookMarkList);
@@ -79,7 +79,7 @@ export default function ApplicationList(props) {
             BTB_code : BTB_code
         }
 
-        axios.post('http://localhost:3001/users/DeleteTeamBookMark', body, {header})
+        axios.post('http://'+localStorage.getItem("backend")+':3001/users/DeleteTeamBookMark', body, {header})
         .then(response => {
             if(response.data.DeleteTeamBookMark) {
                 alert(response.data.message);

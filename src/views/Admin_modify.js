@@ -58,7 +58,7 @@ export default function Admin_modify({ match, props }) {
         User_area : User_area
       }
       console.log(body);
-      axios.post('http://localhost:3001/admin/modify_test/'+ match.params.User_code, body)
+      axios.post('http://'+localStorage.getItem("backend")+':3001/admin/modify_test/'+ match.params.User_code, body)
         .then(response => {
           if(response) {
             alert("정보가 수정되었습니다");
@@ -71,7 +71,7 @@ export default function Admin_modify({ match, props }) {
 
     /* 회원정보 데이터(SELECT) 가져와서 수정페이지의 placeholder에 뿌려준다 */
     useEffect(() => {
-      axios.get('http://localhost:3001/admin/modify/' + match.params.User_code, { // 회원 정보 데이터 들고오기
+      axios.get('http://'+localStorage.getItem("backend")+':3001/admin/modify/' + match.params.User_code, { // 회원 정보 데이터 들고오기
         headers: {
           'Content-Type': 'application/json'
         }

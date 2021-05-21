@@ -62,7 +62,7 @@ export default function ApplicationList(props) {
     function getApplicationList() {
         console.log("start !!!!!")
         var user_id = JSON.parse(localStorage.getItem("user")).User_code;
-        axios.get('http://localhost:3001/users/ApplicationList/'+user_id, {//
+        axios.get('http://'+localStorage.getItem("backend")+':3001/users/ApplicationList/'+user_id, {//
             headers: {
                 'Content-Type': 'application/json'
             }

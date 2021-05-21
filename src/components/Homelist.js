@@ -19,7 +19,7 @@ export default function Homelist(props) {
         CB_code : section.CB_code
       }
 
-      axios.post('http://localhost:3001/users/addBookMark', body, {header})
+      axios.post('http://'+localStorage.getItem("backend")+':3001/users/addBookMark', body, {header})
       .then(response => {
         if(response.data.addBookMark) {
           alert(response.data.message);

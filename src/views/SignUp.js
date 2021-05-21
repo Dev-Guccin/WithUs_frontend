@@ -96,7 +96,7 @@ export default function SignUp(props) {
       User_introduction : User_introduction
     }
 
-    axios.post('http://localhost:3001/users/join', body)
+    axios.post('http://'+localStorage.getItem("backend")+':3001/users/join', body)
     .then(response => {
       if(response.data.SignUp) {
         alert("로그인 페이지로 이동합니다..");

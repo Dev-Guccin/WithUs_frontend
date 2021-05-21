@@ -63,7 +63,7 @@ export default function ApplicantsCheck(props) {
     function getApplicantsList() {
         console.log("start !!!!!")
         var user_id = JSON.parse(localStorage.getItem("user")).User_code;
-        axios.get('http://localhost:3001/users/ApplicantsCheck/' + user_id, {//
+        axios.get('http://'+localStorage.getItem("backend")+':3001/users/ApplicantsCheck/' + user_id, {//
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -74,7 +74,7 @@ export default function ApplicantsCheck(props) {
     }
     function updateWaiter(data) {
         console.log("start !!!!!")
-        axios.post('http://localhost:3001/users/ApplicantsCheck/', {
+        axios.post('http://'+localStorage.getItem("backend")+':3001/users/ApplicantsCheck/', {
             headers: {
                 'Content-Type': 'application/json'
             },

@@ -62,7 +62,7 @@ export default function SignIn(props) {
   }
 
   function logout() {
-    axios.get('http://localhost:3001/passport/logout', { header })
+    axios.get('http://'+localStorage.getItem("backend")+':3001/passport/logout', { header })
       .then(response => {
         localStorage.clear();
         document.location.href = "/";
@@ -77,7 +77,7 @@ export default function SignIn(props) {
         User_password : User_password
     }
 
-    axios.post('http://localhost:3001/users/Quit', body, {header})
+    axios.post('http://'+localStorage.getItem("backend")+':3001/users/Quit', body, {header})
     .then(response => {
       console.log("response : ",response)
       if(response.data.quit) {

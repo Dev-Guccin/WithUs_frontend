@@ -109,7 +109,7 @@ export default function SignUp(props) {
       User_introduction : User_introduction
     }
 
-    axios.post('http://localhost:3001/users/modify', body, {header})
+    axios.post('http://'+localStorage.getItem("backend")+':3001/users/modify', body, {header})
     .then(response => {
 
       if(response.data.modify) {

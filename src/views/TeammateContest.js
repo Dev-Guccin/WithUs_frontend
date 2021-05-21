@@ -40,7 +40,7 @@ export default function Teammate(props) {
 
   const getTeamBoardLists = async () => {
       let listOfContest = []
-      await axios.get("http://localhost:3001/teamboard")
+      await axios.get('http://'+localStorage.getItem("backend")+':3001/teamboard')
       .then(res => {
           res.data.map((teamObject) => {
               if(teamObject.TB_contestOrProject === "contest") listOfContest.push(teamObject);       

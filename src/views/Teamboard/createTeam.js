@@ -183,7 +183,7 @@ export default function Teamboard() {
       TB_contestOrProject: contestOrProject
     }
 
-    await axios.post('http://localhost:3001/teamboard', body)
+    await axios.post('http://'+localStorage.getItem("backend")+':3001/teamboard', body)
     .then(res => {
       console.log("res", res.data);
       history.push('/teammate');
