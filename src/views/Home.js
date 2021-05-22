@@ -92,9 +92,10 @@ export default function Home(props) {
         </Grid>
       </Grid>
       <Grid item xs={12}></Grid>
-      <Grid item xs={7}><strong>공모전이름</strong></Grid>
+      <Grid item xs={5}><strong>공모전이름</strong></Grid>
       <Grid item xs={2}><strong>주최사</strong></Grid>
-      <Grid item xs={2}><strong>기한</strong></Grid>
+      <Grid item xs={2}><strong>시작날짜</strong></Grid>
+      <Grid item xs={2}><strong>마감날짜</strong></Grid>
       <Grid item xs={1}><strong>북마크</strong></Grid>
       <Grid item xs={12}>
         {props.sections.map((section) => (
