@@ -59,7 +59,9 @@ export default function Home(props) {
                   <td>
                     <select name="sort" onChange={(event) => sortchange(event)}>
                       <option value="1">최신순</option>
-                      <option value="2">마감일자순</option>
+                      <option value="2">시작 가까운순</option>
+                      <option value="3">마감일자순</option>
+                      <option value="4">마감가까운순</option>
                     </select>
                   </td>
                 </tr>
