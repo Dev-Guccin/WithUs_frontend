@@ -4,8 +4,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-//localStorage.setItem("backend","34.71.226.15");
-localStorage.setItem("backend","localhost");
+localStorage.setItem("backend","34.71.226.15");
+//localStorage.setItem("backend","localhost");
 
 ReactDOM.render(
   <React.StrictMode>
