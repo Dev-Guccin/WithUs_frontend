@@ -52,6 +52,7 @@ export default function Homelist(props) {
           </Grid>
         </Grid>
         <Grid item xs={2}>{section.CB_organization}</Grid>
+        <Grid item xs={2}>{section.CB_startDate}</Grid>
         <Grid item xs={2}>{section.CB_finalDate}</Grid>
         {/* <Grid item xs={1}>{section.CB_count}</Grid> */}
         <Grid item xs={1}>
