@@ -122,7 +122,7 @@ export default function ApplicantsCheck(props) {
                                             <Link to={{
                                                 pathname:'/MyPage',
                                                 user:{
-                                                    user_name:row.user_nickname
+                                                    user_name:row.user_name
                                                 },
                                             }}>
                                                 신청자: {row.user_name}
