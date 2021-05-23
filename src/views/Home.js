@@ -59,8 +59,9 @@ export default function Home(props) {
                   <td>
                     <select name="sort" onChange={(event) => sortchange(event)}>
                       <option value="1">최신순</option>
-                      <option value="2">조회순</option>
+                      <option value="2">시작 가까운순</option>
                       <option value="3">마감일자순</option>
+                      <option value="4">마감가까운순</option>
                     </select>
                   </td>
                 </tr>
@@ -92,9 +93,10 @@ export default function Home(props) {
         </Grid>
       </Grid>
       <Grid item xs={12}></Grid>
-      <Grid item xs={7}><strong>공모전이름</strong></Grid>
+      <Grid item xs={5}><strong>공모전이름</strong></Grid>
       <Grid item xs={2}><strong>주최사</strong></Grid>
-      <Grid item xs={2}><strong>기한</strong></Grid>
+      <Grid item xs={2}><strong>시작날짜</strong></Grid>
+      <Grid item xs={2}><strong>마감날짜</strong></Grid>
       <Grid item xs={1}><strong>북마크</strong></Grid>
       <Grid item xs={12}>
         {props.sections.map((section) => (
