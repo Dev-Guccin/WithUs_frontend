@@ -72,7 +72,7 @@ export default function SignUp(props) {
         CurrentUserCode : JSON.parse(localStorage.getItem('user')).User_code
       }
 
-      axios.post('http://localhost:3001/users/getCurrentInterest', body, { header })
+      axios.post('http://'+localStorage.getItem("backend")+':3001/users/getCurrentInterest', body, { header })
       .then(response => {
 
         //if문추가
@@ -149,7 +149,7 @@ export default function SignUp(props) {
         Economy : Economy
       }
   
-      axios.post('http://localhost:3001/users/Interest', body)
+      axios.post('http://'+localStorage.getItem("backend")+':3001/users/Interest', body)
       .then(response => {
         if(response.data.Interest) {
           alert("관심사 추가가 완료되었습니다.");

@@ -9,8 +9,17 @@ export default function Homelist(props) {
   const section = props.section
   const header = {"Content-Type": "application/json"}
 
+  function IsoToString(date, flag){
+    var date = new Date(date);
+    if(flag == 0){//start DATE인 경우 시간이 비어있음
+      var tmp = date.getFullYear()+"년"+(date.getMonth()+1)+"월"+date.getDate()+"일"
+    }
+    else{
+      var tmp = date.getFullYear()+"년"+(date.getMonth()+1)+"월"+date.getDate()+"일 "+date.getHours()+"시"+date.getMinutes()+"분";
+    }
+    return tmp
+  }
   function AddBookMark() {
-
     if(JSON.parse(localStorage.getItem('login_check'))) {
       // console.log(section.CB_code);
 
@@ -19,7 +28,7 @@ export default function Homelist(props) {
         CB_code : section.CB_code
       }
 
-      axios.post('http://localhost:3001/users/addBookMark', body, {header})
+      axios.post('http://'+localStorage.getItem("backend")+':3001/users/addBookMark', body, {header})
       .then(response => {
         if(response.data.addBookMark) {
           alert(response.data.message);
@@ -34,12 +43,12 @@ export default function Homelist(props) {
   }
 
   useEffect(() => {
-    // console.log(section);
+    console.log(section);
   }, []);
   return (
     <div className="">
       <Grid container>
-        <Grid item xs={7}>
+        <Grid item xs={5}>
           <Grid container>
             <Grid item xs={12}>
             <Link to={section === undefined ? "" : "Contestdetail/" + String(section.CB_code)}>
@@ -52,7 +61,8 @@ export default function Homelist(props) {
           </Grid>
         </Grid>
         <Grid item xs={2}>{section.CB_organization}</Grid>
-        <Grid item xs={2}>{section.CB_finalDate}</Grid>
+        <Grid item xs={2}>{IsoToString(section.CB_startDate,0)}</Grid>
+        <Grid item xs={2}>{IsoToString(section.CB_finalDate,1)}</Grid>
         {/* <Grid item xs={1}>{section.CB_count}</Grid> */}
         <Grid item xs={1}>
           <Button

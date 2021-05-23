@@ -237,7 +237,7 @@ export default function Teamboard() {
       TB_CBcode: (contestOrProject === "project" ? 0 : contestInfo.CB_code)
     }
 
-    await axios.post('http://localhost:3001/teamboard', body)
+    await axios.post('http://'+localStorage.getItem("backend")+':3001/teamboard', body)
     .then(res => {
       
       history.push('/teammate');

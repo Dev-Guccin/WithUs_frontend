@@ -234,7 +234,7 @@ export default function UpdateTeamboard(props) {
     }
 
 
-    await axios.post("http://localhost:3001/teamboard/update", body)
+    await axios.post("http://"+localStorage.getItem("backend")+":3001/teamboard/update", body)
     .then(res => {
       
       history.push('/teammate');

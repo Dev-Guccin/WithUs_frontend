@@ -9,14 +9,14 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
-import {category, categoryImage } from '../../src/testDB';
+import { category, categoryImage } from '../../src/testDB';
+import { Link } from 'react-router-dom';
 
 function Copyright() {
     return (
@@ -44,8 +44,7 @@ const useStyles = makeStyles((theme) => ({
     table: {
         minWidth: 650,
     },
-    
-    margin:{
+    margin: {
 
     },
     linkToDetail:{
@@ -61,13 +60,13 @@ export default function ApplicationList(props) {
     }
     const classes = useStyles();
     const [Applicants, setApplicants] = useState([])
-    useEffect(()=>{
+    useEffect(() => {
         getApplicationList()
-    },[])
+    }, [])
     function getApplicationList() {
         console.log("start !!!!!")
         var user_id = JSON.parse(localStorage.getItem("user")).User_code;
-        axios.get('http://localhost:3001/users/ApplicationList/'+user_id, {//
+        axios.get('http://' + localStorage.getItem("backend") + ':3001/users/ApplicationList/' + user_id, {//
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -92,10 +91,13 @@ export default function ApplicationList(props) {
                     <Link to={"Teammatedetail/" + row.TB_code} className={classes.linkToDetail}>    
                     <Table className={classes.table} aria-label="simple table">
                         <TableBody>
-                            
                                 <TableRow key={row.name}>
                                     <TableCell width="50%">
-                                        <TableRow>제목:{row.TB_title}</TableRow>
+                                        <Link to={{
+                                            pathname: '/Teammatedetail/'+row.TB_code,
+                                        }}>
+                                            <TableRow>제목:{row.TB_title}</TableRow>
+                                        </Link>                              
                                         <TableRow>종류:{row.TB_contestOrProject === 'project' ? '프로젝트' : '공모전'}</TableRow>
                                     </TableCell>
                                     <TableCell width="30%">
@@ -103,10 +105,9 @@ export default function ApplicationList(props) {
                                         <TableRow>카테고리:{category[row.CT_code]}</TableRow>
                                     </TableCell>
                                     <TableCell width="20%" align="right">
-                                        {row.waiter_enter===0?<Button variant="contained" color="primary">대기중</Button>:''}
-                                        {row.waiter_enter===1?<Button variant="contained" color="default">가입허가</Button>:''}
-                                        {row.waiter_enter===2?<Button variant="contained" color="secondary">가입거부</Button>:''}
-                                        
+                                        {row.waiter_enter === 0 ? <Button variant="contained" color="primary">대기중</Button> : ''}
+                                        {row.waiter_enter === 1 ? <Button variant="contained" color="default">가입허가 처리됨</Button> : ''}
+                                        {row.waiter_enter === 2 ? <Button variant="contained" color="secondary">가입거부 처리됨</Button> : ''}
                                     </TableCell>
                                 </TableRow>
                                 <TableRow><TableCell colSpan={4}><strong style={{fontSize:18}}>하고싶은 말:&nbsp;&nbsp;</strong>{row.waiter_content}</TableCell></TableRow>

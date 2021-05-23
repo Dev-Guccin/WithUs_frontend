@@ -71,7 +71,7 @@ export default function Admin({ match }) {
         User_search : User_search
       }
       console.log(body);
-      axios.post('http://localhost:3001/admin/search/user/', body)
+      axios.post('http://'+localStorage.getItem("backend")+':3001/admin/search/user/', body)
       .then(response => {
         if(response) {
           alert('검색완료!!!');
@@ -90,7 +90,7 @@ export default function Admin({ match }) {
         Compete_search : Compete_search
       }
       console.log(body);
-      axios.post('http://localhost:3001/admin/search/compete/', body)
+      axios.post('http://'+localStorage.getItem("backend")+':3001/admin/search/compete/', body)
       .then(response => {
         if(response) {
           alert('검색완료!!!');
@@ -109,7 +109,7 @@ export default function Admin({ match }) {
         Teammate_search : Teammate_search
       }
       console.log(body);
-      axios.post('http://localhost:3001/admin/search/teammate/', body)
+      axios.post('http://'+localStorage.getItem("backend")+':3001/admin/search/teammate/', body)
       .then(response => {
         if(response) {
           alert('검색완료!!!');
@@ -124,7 +124,7 @@ export default function Admin({ match }) {
     /* 회원 삭제 버튼을 눌렀을 때의 이벤트 핸들러 */
     const onDeleteUserHandler = (code) => {
       console.log({code});
-      axios.post('http://localhost:3001/admin/delete/user/' + code,{User_code: code} )
+      axios.post('http://'+localStorage.getItem("backend")+':3001/admin/delete/user/' + code,{User_code: code} )
         .then(response => {
           if(response) {
             alert('해당 아이디가 삭제되었습니다!!!');
@@ -138,7 +138,7 @@ export default function Admin({ match }) {
     /* 공모전 삭제 버튼을 눌렀을 때의 이벤트 핸들러 */
     const onDeleteCompeteHandler = (code) => {
       console.log({code});
-      axios.post('http://localhost:3001/admin/delete/compete/' + code,{CB_code: code} )
+      axios.post('http://'+localStorage.getItem("backend")+':3001/admin/delete/compete/' + code,{CB_code: code} )
         .then(response => {
           if(response) {
             alert('해당 공모전이 삭제되었습니다!!!');
@@ -152,7 +152,7 @@ export default function Admin({ match }) {
     /* 팀원모집 게시글 삭제 버튼을 눌렀을 때의 이벤트 핸들러 */
     const onDeleteTeammateHandler = (code) => {
       console.log({code});
-      axios.post('http://localhost:3001/admin/delete/teammate/' + code,{TB_code: code} )
+      axios.post('http://'+localStorage.getItem("backend")+':3001/admin/delete/teammate/' + code,{TB_code: code} )
         .then(response => {
           if(response) {
             alert('해당 게시글이 삭제되었습니다!!!');
@@ -164,7 +164,7 @@ export default function Admin({ match }) {
     }
 
     useEffect(() => {
-      axios.get('http://localhost:3001/admin/admin', {//공모전 데이터 들고오기
+      axios.get('http://'+localStorage.getItem("backend")+':3001/admin/admin', {//공모전 데이터 들고오기
         headers: {
           'Content-Type': 'application/json'
         }
@@ -175,7 +175,7 @@ export default function Admin({ match }) {
     }, []);
 
     useEffect(() => {
-      axios.get('http://localhost:3001/admin/board', {// 팀원모집 게시판 데이터 들고오기
+      axios.get('http://'+localStorage.getItem("backend")+':3001/admin/board', {// 팀원모집 게시판 데이터 들고오기
         headers: {
           'Content-Type': 'application/json'
         }
@@ -186,7 +186,7 @@ export default function Admin({ match }) {
     }, []);
 
     useEffect(() => {
-      axios.get('http://localhost:3001/admin/user', {// 팀원모집 게시판 데이터 들고오기
+      axios.get('http://'+localStorage.getItem("backend")+':3001/admin/user', {// 팀원모집 게시판 데이터 들고오기
         headers: {
           'Content-Type': 'application/json'
         }

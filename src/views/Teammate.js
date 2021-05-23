@@ -39,7 +39,7 @@ export default function Teammate(props) {
   
 
   const getTeamBoardLists = async () => {
-      await axios.get("http://localhost:3001/teamboard")
+      await axios.get('http://'+localStorage.getItem("backend")+':3001/teamboard')
       .then(res => {
         console.log({res_data: res.data});
         setTeamBoardLists(res.data);

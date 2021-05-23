@@ -32,7 +32,7 @@ export default function Contestdetail( {match }) {
   const [section, setsection] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:3001/contest/detail/' + match.params.CB_code, {//공모전 데이터 들고오기
+    axios.get('http://'+localStorage.getItem("backend")+':3001/contest/detail/' + match.params.CB_code, {//공모전 데이터 들고오기
       headers: {
         'Content-Type': 'application/json'
       }

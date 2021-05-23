@@ -64,7 +64,7 @@ export default function TeamboardList(props){
 
       var body = {User_code : JSON.parse(localStorage.getItem('user')).User_code}
 
-      axios.post('http://localhost:3001/users/MyTeamBoard', body, {header})
+      axios.post('http://'+localStorage.getItem("backend")+':3001/users/MyTeamBoard', body, {header})
       .then(response => {
         console.log(response.data.MyTeamBoard);
         setTB(response.data.MyTeamBoard);

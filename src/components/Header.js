@@ -42,7 +42,7 @@ export default function Header(props) {
   }, [props.logincheck])
   
   function logout() {
-    axios.get('http://localhost:3001/passport/logout', { header })
+    axios.get('http://'+localStorage.getItem("backend")+':3001/passport/logout', { header })
       .then(response => {
         alert('logout success');
         // var LoginState = response.data.LoginState;
@@ -88,7 +88,7 @@ export default function Header(props) {
           <Button variant="outlined" size="small">
             <Link to='/Login' className={classes.linkBtn}>
               Sign in
-          </Link>
+            </Link>
           </Button>
           </div>
           : <div>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -71,12 +71,30 @@ export default function SignUp(props) {
   const [expanded, setExpanded] = React.useState(false);
   // const [value, setValue] = React.useState('female');
   // const handleChange = (event) => {setValue(event.target.value);};
-  
+  const [user, setuser] = useState({});
+  useEffect(()=>{
+    onUserInfoHandler()
+  },[])
+
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
   const onUserInfoHandler = (event) => {
     // 유저의 아이디로 정보를 조회해 변수로 받아서 뿌린다.
+    if(props.location.user === undefined){
+      console.log("data undefined");
+      return
+    }
+    axios.post('http://'+localStorage.getItem("backend")+':3001/users/userDetail/', {//공모전 데이터 들고오기
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data:{
+        user_name: props.location.user.user_name
+      }
+    }).then(response => {
+      setuser(response.data[0])
+    })
   }
 
   return (
@@ -101,7 +119,7 @@ export default function SignUp(props) {
                         </AccordionSummary>
                         <AccordionDetails>
                             <Typography>
-                                조회하려고 하는 유저의 이름
+                                {user.User_name}
                             </Typography>
                         </AccordionDetails>
                     </Accordion>
@@ -115,7 +133,7 @@ export default function SignUp(props) {
                         </AccordionSummary>
                         <AccordionDetails>
                             <Typography>
-                                조회하려고 하는 유저의 대학교
+                                {user.User_university}
                             </Typography>
                         </AccordionDetails>
                     </Accordion>
@@ -129,7 +147,7 @@ export default function SignUp(props) {
                         </AccordionSummary>
                         <AccordionDetails>
                             <Typography>
-                                조회하려고 하는 유저의 닉네임
+                                {user.User_nickname}
                             </Typography>
                         </AccordionDetails>
                     </Accordion>
@@ -143,7 +161,7 @@ export default function SignUp(props) {
                         </AccordionSummary>
                         <AccordionDetails>
                             <Typography>
-                                조회하려고 하는 유저의 전공
+                                {user.User_major}
                             </Typography>
                         </AccordionDetails>
                     </Accordion>
@@ -157,7 +175,7 @@ export default function SignUp(props) {
                         </AccordionSummary>
                         <AccordionDetails>
                             <Typography>
-                                조회하려고 하는 유저의 사는지역
+                                {user.User_area}
                             </Typography>
                         </AccordionDetails>
                     </Accordion>
@@ -167,11 +185,11 @@ export default function SignUp(props) {
                         aria-controls="panel3bh-content"
                         id="panel3bh-header"
                         >
-                        <Typography className={classes.heading}>자격증</Typography>
+                        <Typography className={classes.heading}>연락처</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
                             <Typography>
-                                조회하려고 하는 유저의 자격증
+                              {user.User_phone}
                             </Typography>
                         </AccordionDetails>
                     </Accordion>
@@ -185,7 +203,7 @@ export default function SignUp(props) {
                         </AccordionSummary>
                         <AccordionDetails>
                         <Typography>
-                                조회하려고 하는 유저의 하고싶은말
+                                {user.User_introduction}
                             </Typography>
                         </AccordionDetails>
                     </Accordion>
