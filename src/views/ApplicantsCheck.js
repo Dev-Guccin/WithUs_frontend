@@ -17,6 +17,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
 import {category, categoryImage } from '../../src/testDB';
+import { Fragment } from 'react';
+import Divider from '@material-ui/core/Divider';
+
+
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
@@ -44,7 +48,10 @@ const useStyles = makeStyles((theme) => ({
         minWidth: 650,
     },
     margin: {
-
+        // borderWidth: 1,
+        // borderColor: 'black',
+        // borderBottomWidth: 2,
+        // borderStyle: 'solid'
     }
 }));
 
@@ -100,24 +107,24 @@ export default function ApplicantsCheck(props) {
                 <Typography component="h1" variant="h5">
                     신청자 목록
                 </Typography>
+                {Applicants.map((row) => (
                 <TableContainer component={Paper}>
                     <Table className={classes.table} aria-label="simple table">
-                        <TableBody>
-                            {Applicants.map((row) => (
+                        <TableBody className={classes.margin}>
                                 <TableRow key={row.user_name}>
-                                    <TableCell>
+                                    <TableCell width="30%" >
                                         <TableRow>제목: {row.TB_title}</TableRow>
-                                        <TableRow>종류: {row.TB_contestOrProject === 'project' ? '프로젝트' : '공모전'}</TableRow>
+                                        <TableRow>종류: {row.TB_contestOrProject === 'project' ? '프로젝트' : '공모전'}</TableRow>       
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell width="25%">
                                         <TableRow>신청시간: {row.waiter_time}</TableRow>
                                         <TableRow>카테고리: {category[row.CT_code]}</TableRow>
                                     </TableCell>
-                                    <TableCell>
-                                        <TableRow>신청자: {row.user_name}</TableRow>
+                                    <TableCell width="20%">
+                                        <TableRow>신청자: {row.user_nickname}</TableRow>
                                         <TableRow>현재팀현황: {row.TB_recruitNumber}/{row.TB_finalNumber}</TableRow>
                                     </TableCell>
-                                    <TableCell align="right">
+                                    <TableCell align="right" width="25%">
                                         {row.waiter_enter === 0 && row.TB_recruitNumber<row.TB_finalNumber?
                                             <div>
                                                 <Button variant="contained" color="primary" onClick={() =>
@@ -127,10 +134,13 @@ export default function ApplicantsCheck(props) {
                                             </div> : <Button variant="contained" color="default">종료</Button>}
                                     </TableCell>
                                 </TableRow>
-                            ))}
+                                <TableRow > 
+                                    <TableCell colSpan={4}><strong style={{fontSize:18}}>하고싶은 말:&nbsp;&nbsp;</strong>{row.waiter_content}</TableCell>
+                                </TableRow>                          
                         </TableBody>
                     </Table>
                 </TableContainer>
+                ))}
             </div>
             <Box mt={8}>
                 <Copyright />

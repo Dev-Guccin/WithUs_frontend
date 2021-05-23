@@ -14,6 +14,7 @@ import {useHistory} from 'react-router-dom'
 import { Typography } from '@material-ui/core';
 import UpdateTeam from './Teamboard/updateTeam';
 import {category, bookmarks,categoryImage } from '../../src/testDB';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -248,6 +249,7 @@ export default function Teammatedetail({ match }) {
                     <ListItem className={classes.list}>카테고리: {category[section.CT_code]}</ListItem>
                     <ListItem className={classes.list}>모집기간: {section.TB_createDate} ~&nbsp;{section.TB_finalDate}</ListItem>
                     <ListItem className={classes.list}>팀원현황: {section.TB_recruitNumber} / {section.TB_finalNumber}</ListItem>
+                    {section.TB_CBcode!==0 ? (<ListItem className={classes.list}><Link to={"../Contestdetail/" + section.TB_CBcode} >공모전 바로가기</Link></ListItem>): null}
                   </List>
                 </Grid>
               </Grid>

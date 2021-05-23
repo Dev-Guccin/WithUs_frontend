@@ -9,7 +9,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -44,9 +44,14 @@ const useStyles = makeStyles((theme) => ({
     table: {
         minWidth: 650,
     },
+    
     margin:{
 
-    }
+    },
+    linkToDetail:{
+        textDecoration: 'none',
+        color: 'black',
+      },
 }));
 
 export default function ApplicationList(props) {
@@ -82,29 +87,34 @@ export default function ApplicationList(props) {
                 <Typography component="h1" variant="h5">
                     신청 목록
                 </Typography>
+                {Applicants.map((row) => (   
                 <TableContainer component={Paper}>
+                    <Link to={"Teammatedetail/" + row.TB_code} className={classes.linkToDetail}>    
                     <Table className={classes.table} aria-label="simple table">
                         <TableBody>
-                            {Applicants.map((row) => (
+                            
                                 <TableRow key={row.name}>
-                                    <TableCell>
+                                    <TableCell width="50%">
                                         <TableRow>제목:{row.TB_title}</TableRow>
                                         <TableRow>종류:{row.TB_contestOrProject === 'project' ? '프로젝트' : '공모전'}</TableRow>
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell width="30%">
                                         <TableRow>신청시간:{row.waiter_time}</TableRow>
                                         <TableRow>카테고리:{category[row.CT_code]}</TableRow>
                                     </TableCell>
-                                    <TableCell align="right">
+                                    <TableCell width="20%" align="right">
                                         {row.waiter_enter===0?<Button variant="contained" color="primary">대기중</Button>:''}
                                         {row.waiter_enter===1?<Button variant="contained" color="default">가입허가</Button>:''}
                                         {row.waiter_enter===2?<Button variant="contained" color="secondary">가입거부</Button>:''}
+                                        
                                     </TableCell>
                                 </TableRow>
-                            ))}
+                                <TableRow><TableCell colSpan={4}><strong style={{fontSize:18}}>하고싶은 말:&nbsp;&nbsp;</strong>{row.waiter_content}</TableCell></TableRow>
                         </TableBody>
                     </Table>
+                    </Link>
                 </TableContainer>
+                ))}
             </div>
             <Box mt={8}>
                 <Copyright />

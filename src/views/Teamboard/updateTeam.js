@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
@@ -16,6 +16,7 @@ import FormLabel from '@material-ui/core/FormLabel';
 import Editor from './teamboardEditor';
 import axios from 'axios';
 import {useHistory} from 'react-router-dom'
+import SearchBar from './searchBarContest';
 
 
 function Copyright() {
@@ -67,6 +68,10 @@ const useStyles = makeStyles((theme) => ({
     float: 'right',
     marginLeft: theme.spacing(1),
   },
+  header:{
+    display: 'flex',
+    paddingTop:'25px'
+  }
 }));
 
 const categories = [
@@ -130,10 +135,11 @@ export default function UpdateTeamboard(props) {
   const [category, setCategory] = useState(TBinfo.CT_code);
   const [finalDate,setFinalDate] = useState(new Date(new Date(TBinfo.TB_finalDate) - timezoneOffset).toJSON().substring(0,10));
   const [content, setContent] = useState(TBinfo.TB_content);
+  const [contestInfo, setContestInfo] = useState({data: [], keyword: (TBinfo.CB_title !== null ? TBinfo.CB_title: ""), results: [], CB_code: TBinfo.TB_CBcode});
   const history = useHistory();
 
   const logincheck = localStorage.login_check;
-  console.log("test",TBinfo);
+  
 
   const onTypeChange = (e) => {
     setContestOrProject(e.target.value);
@@ -153,6 +159,45 @@ export default function UpdateTeamboard(props) {
   function onEditorChange(value) {
       setContent(value);
   }
+  const updateField = (value,code, update = true) => {
+    if(update){
+      onSearch(value);
+    }else{
+      setContestInfo({
+        ...contestInfo,
+        ["results"]: [],
+        ["keyword"]: value,
+        ["CB_code"]: code
+      });
+    }
+    
+  }
+
+  const IsMatch = (info, keyword) => {
+    info = info.toLowerCase()
+    if (keyword === "") return false;
+    return info.includes(keyword.toLowerCase());
+  };
+
+  const onSearch = (text) =>{
+    const searchResults = (contestInfo.data).filter((item) => true === IsMatch(item.CB_title, text))
+    setContestInfo({
+      ...contestInfo,
+      ["results"]: searchResults.slice(0,6),
+      ["keyword"]: text,
+      ["CB_code"]: -1
+    });
+
+  }
+  async function getContestInfo() {
+    await axios.get("http://localhost:3001/teamboard/contestinfo")
+    .then(res =>{
+      setContestInfo({
+        ...contestInfo,
+        ["data"]: res.data
+      });
+    });
+  }
 
  
   async function onClickComplete() {
@@ -160,6 +205,9 @@ export default function UpdateTeamboard(props) {
     if( logincheck === undefined || JSON.parse(logincheck) === false){
       alert("로그인한 사용자만 팀원 모집글을 작성할수 있습니다.");
       history.push('/teammate');
+    }
+    if(contestOrProject === "contest" && contestInfo.CB_code === -1) {
+      alert("공모전을 정확히 선택해주세요"); return;
     }
 
     if(title.trim() === '') {
@@ -181,16 +229,20 @@ export default function UpdateTeamboard(props) {
       TB_content: content,
       TB_finalDate: finalDate,
       TB_contestOrProject: contestOrProject,
-      TB_code: TBinfo.TB_code
+      TB_code: TBinfo.TB_code,
+      TB_CBcode: (contestOrProject === "project" ? 0 : contestInfo.CB_code)
     }
 
 
     await axios.post("http://localhost:3001/teamboard/update", body)
     .then(res => {
-      console.log("res", res.data);
+      
       history.push('/teammate');
     })
   }
+  useEffect( () =>{
+    getContestInfo();
+  }, []);
 
   return (
     <React.Fragment>
@@ -201,13 +253,17 @@ export default function UpdateTeamboard(props) {
             수정하기
           </Typography>
           <React.Fragment>
-            <FormControl component="fieldset">
-              <FormLabel component="legend">팀원 모집 분류</FormLabel>
-              <RadioGroup aria-label="contestOrProject" name="contestOrProject" value={contestOrProject} onChange={onTypeChange}>
-                <FormControlLabel value="contest" control={<Radio />} label="공모전" />
-                <FormControlLabel value="project" control={<Radio />} label="프로젝트" />
-              </RadioGroup>
-            </FormControl>
+            <header className={classes.header}>
+              <FormControl component="fieldset">
+                <FormLabel component="legend">팀원 모집 분류</FormLabel>
+                <RadioGroup aria-label="contestOrProject" name="contestOrProject" value={contestOrProject} onChange={onTypeChange}>
+                  <FormControlLabel value="contest" control={<Radio />} label="공모전" />
+                  <FormControlLabel value="project" control={<Radio />} label="프로젝트" />
+                </RadioGroup>
+              </FormControl>
+              {contestOrProject === 'contest' ? <SearchBar keyword={contestInfo.keyword} results={contestInfo.results} code={contestInfo.CB_code} updateField={updateField}/>
+              : null}
+            </header>
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <TextField
