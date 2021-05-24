@@ -234,7 +234,12 @@ export default function Teammatedetail({ match }) {
               </nav>
               <Divider/>
               <Grid container>
-                <Grid item xs={4} className={classes.boardinfo}>작성자: {section.User_nickname} </Grid>
+                <Grid item xs={4} className={classes.boardinfo}>
+                  작성자: <Link to={{
+                            pathname:'/MyPage',
+                            user:{
+                                user_name:section.User_name
+                            }}}>{section.User_nickname}</Link></Grid>
                 <Grid item xs={4} className={classes.boardinfo}>작성일: {section.TB_createDate}</Grid>
                 {/* <Grid item xs={2} className={classes.boardinfo}>조회수: </Grid>
                 <Grid item xs={2} className={classes.boardinfo}>댓글: </Grid> */}
@@ -259,7 +264,7 @@ export default function Teammatedetail({ match }) {
                   <Paper className={classes.comment_title}><Typography style={{textAlign:'center'}}><strong>코멘트: </strong></Typography></Paper>
                 </Grid>
                 <Grid item xs={7}>
-                  <input type="text" className={classes.comment} onChange={(e)=>setComment(e.target.value)} required></input>
+                  <input type="text" maxLength = '50' placeholder='하고싶은 말(최대 50글자)' className={classes.comment} onChange={(e)=>setComment(e.target.value)} required></input>
                 </Grid>
                 <Grid className={classes.button_div} item xs={2}>
                   <Button className={classes.btn} variant="contained" color="primary" onClick={onClickApply}>

@@ -109,15 +109,15 @@ export default function ApplicantsCheck(props) {
                     <Table className={classes.table} aria-label="simple table">
                         <TableBody className={classes.margin}>
                                 <TableRow key={row.user_name}>
-                                    <TableCell width="30%" >
+                                    <TableCell width="38%" >
                                         <TableRow>제목: {row.TB_title}</TableRow>
                                         <TableRow>종류: {row.TB_contestOrProject === 'project' ? '프로젝트' : '공모전'}</TableRow>       
                                     </TableCell>
-                                    <TableCell width="25%">
+                                    <TableCell width="22%">
                                         <TableRow>신청시간: {row.waiter_time}</TableRow>
                                         <TableRow>카테고리: {category[row.CT_code]}</TableRow>
                                     </TableCell>
-                                    <TableCell width="20%">
+                                    <TableCell width="18%">
                                         <TableRow>
                                             <Link to={{
                                                 pathname:'/MyPage',
@@ -130,7 +130,7 @@ export default function ApplicantsCheck(props) {
                                         </TableRow>
                                         <TableRow>현재팀현황: {row.TB_recruitNumber}/{row.TB_finalNumber}</TableRow>
                                     </TableCell>
-                                    <TableCell align="right" width="25%">
+                                    <TableCell align="right" width="22%">
                                         {row.waiter_enter === 0 && row.TB_recruitNumber < row.TB_finalNumber?
                                             <div>
                                                 <Button variant="contained" color="primary" onClick={() =>
