@@ -92,11 +92,6 @@ export default function Header(props) {
           </Button>
           </div>
           : <div>
-            <Button variant="outlined" size="small">
-              <Link to='/MyPage' className={classes.linkBtn}>
-                UserMyPage
-              </Link>
-            </Button>
             <Button variant="outlined" size="small" onClick={() => logout()}>
               Log out
           </Button>
