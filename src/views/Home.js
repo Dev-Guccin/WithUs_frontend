@@ -40,6 +40,10 @@ export default function Home(props) {
     //1->최신순, 2->조회순 3->마감날짜순
     props.setsort(JSON.parse(event.target.value))
   }
+  function searchButton(event){
+    props.setpage(1)
+    props.optionSearch()
+  }
   //적용  
   return (
     <Grid container justify="center" alignItems="flex-start">
@@ -54,7 +58,7 @@ export default function Home(props) {
                   <td>
                     <input type="search" size={70} placeholder="원하는 키워드를 입력하세요. ex)#과학#통신" value={props.keyword}
                       onChange={(event) => handleKeywordChange(event)}></input>
-                    <button onClick={() => props.optionSearch()}>조회</button>
+                    <button onClick={() => searchButton()}>조회</button>
                   </td>
                   <td>
                     <select name="sort" onChange={(event) => sortchange(event)}>
