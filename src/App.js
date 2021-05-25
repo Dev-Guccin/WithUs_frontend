@@ -32,6 +32,7 @@ import modifyPassword from './views/modifyPassword';
 import MyTeamBoard from './views/MyTeamBoard';
 import ContestBookmark from './views/ContestBookmark';
 import TeamBookmark from './views/TeamBookmark';
+import PrivateRoute from './private/privateRoute';
 
 const headers = [
   { title: 'Home', url: '/home' },
@@ -131,19 +132,19 @@ function App() {
                 <Route path="/teammate" exact={true} render={() => <Teammate randomKey={Math.random()}/>}/>
                 <Route path='/Login' exact={true} render={() => <SignIn logincheck={logincheck} />} />
                 <Route path="/SignUp" exact={true} component={SignUp} />
-                <Route path="/Interest" exact={true} component={Interest} /> {/* 관심사 추가 페이지 */}
-                <Route path="/OnlyMyPage" exact={true} component={OnlyMyPage} /> {/* 본인 마이페이지 수정 */}
-                <Route path="/ApplicationList" exact={true} component={ApplicationList} /> {/* 본인 마이페이지 수정 */}
-                <Route path="/ApplicantsCheck" exact={true} component={ApplicantsCheck} /> {/* 본인 마이페이지 수정 */}
+                <PrivateRoute restricted path="/Interest" exact={true} component={Interest} /> {/* 관심사 추가 페이지 */}
+                <PrivateRoute restricted path="/OnlyMyPage" exact={true} component={OnlyMyPage} /> {/* 본인 마이페이지 수정 */}
+                <PrivateRoute restricted path="/ApplicationList" exact={true} component={ApplicationList} /> {/* 본인 마이페이지 수정 */}
+                <PrivateRoute restricted path="/ApplicantsCheck" exact={true} component={ApplicantsCheck} /> {/* 본인 마이페이지 수정 */}
                 <Route path="/MyPage" exact={true} component={MyPage} /> {/* 본인 마이페이지 수정 */}
                 <Route path="/Admin" exact={true} component={Admin} />
                 <Route path="/Admin_modify/:User_code" exact = {true} component={Admin_modify} />
                 <Route path='/createTeam' component={createTeam}/>
-                <Route path='/Quit' component={Quit}/>
-                <Route path='/modifyPassword' component={modifyPassword}/>
-                <Route path='/MyTeamBoard' component={MyTeamBoard}/>
-                <Route path='/ContestBookmark' component={ContestBookmark}/>
-                <Route path='/TeamBookmark' component={TeamBookmark}/>
+                <PrivateRoute restricted path='/Quit' component={Quit}/>
+                <PrivateRoute restricted path='/modifyPassword' component={modifyPassword}/>
+                <PrivateRoute restricted path='/MyTeamBoard' component={MyTeamBoard}/>
+                <PrivateRoute restricted path='/ContestBookmark' component={ContestBookmark}/>
+                <PrivateRoute restricted path='/TeamBookmark' component={TeamBookmark}/>
                 <Route path='/team-contest' render={() => <TeammateContest randomKey={Math.random()}/>}/>
                 <Route path='/team-project' render={() => <TeammateProject randomKey={Math.random()}/>}/>
               </main>

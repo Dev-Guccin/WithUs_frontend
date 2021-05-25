@@ -95,6 +95,19 @@ export default function SignUp(props) {
       })
     }
 
+    // function checkUser() {
+    //   if(JSON.parse(localStorage.getItem('logincheck'))) {
+    //     return true;
+    //   } else {
+    //     alert('로그인이 필요합니다.');
+    //     document.location.href = '/Login';
+    //   }
+    // }
+
+    // useEffect(() => {
+    //   checkUser()
+    // },[])
+
     useEffect(()=>{
       getCurrentInterest()
     },[])
