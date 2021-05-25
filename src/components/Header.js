@@ -76,8 +76,10 @@ export default function Header(props) {
           align="center"
           noWrap
           className={classes.toolbarTitle}
-        >
-          {title}
+        >            
+          <Link to='/home' className={classes.linkBtn}>
+            {title}
+          </Link>
         </Typography>
         {props.logincheck === undefined || JSON.parse(props.logincheck) === false ? <div>
           <Button variant="outlined" size="small">
