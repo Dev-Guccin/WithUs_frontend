@@ -35,10 +35,8 @@ import TeamBookmark from './views/TeamBookmark';
 import PrivateRoute from './private/privateRoute';
 
 const headers = [
-  { title: '', url: '' },
   { title: 'Contest', url: '/home' },
   { title: 'Teammate', url: '/teammate' },
-  { title: '', url: '' },
 ];
 
 function App() {

@@ -51,6 +51,8 @@ export default function Contestdetail( {match }) {
       <hr/>
       <div className={classes.contest_main}>
         <table align="center">
+          <tbody>
+
           <tr>
             <td><div>
               <img className={classes.img} src={section === undefined ? "" : section.CB_photo} />
@@ -67,6 +69,7 @@ export default function Contestdetail( {match }) {
                 </ul>
               </div></td>
           </tr>
+          </tbody>
         </table>
       </div>
       <div dangerouslySetInnerHTML={ {__html: section.CB_content} }/>
