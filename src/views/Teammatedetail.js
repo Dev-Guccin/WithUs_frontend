@@ -51,7 +51,6 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: 30
     },
     btn: {
-      lineHeight: 222,
       height: 30,
       width: 'auto',
       fontSize: 30,
@@ -88,7 +87,11 @@ const useStyles = makeStyles((theme) => ({
       height: 30,
       marginTop: 30,
       backgroundColor: '#dcdcde'
-    }
+    },
+    linkToDetail:{
+      textDecoration: 'none',
+      color: 'black',
+  },
 
 }));
 
@@ -235,7 +238,7 @@ export default function Teammatedetail({ match }) {
               <Divider/>
               <Grid container>
                 <Grid item xs={4} className={classes.boardinfo}>
-                  작성자: <Link to={{
+                  작성자: <Link className={classes.linkToDetail} to={{
                             pathname:'/MyPage',
                             user:{
                                 user_name:section.User_name
@@ -254,7 +257,7 @@ export default function Teammatedetail({ match }) {
                     <ListItem className={classes.list}>카테고리: {category[section.CT_code]}</ListItem>
                     <ListItem className={classes.list}>모집기간: {section.TB_createDate} ~&nbsp;{section.TB_finalDate}</ListItem>
                     <ListItem className={classes.list}>팀원현황: {section.TB_recruitNumber} / {section.TB_finalNumber}</ListItem>
-                    {section.TB_CBcode!==0 ? (<ListItem className={classes.list}><Link to={"../Contestdetail/" + section.TB_CBcode} >공모전 바로가기</Link></ListItem>): null}
+                    {section.TB_CBcode!==0 ? (<ListItem className={classes.list}><Link className={classes.linkToDetail} to={"../Contestdetail/" + section.TB_CBcode} >공모전 바로가기</Link></ListItem>): null}
                   </List>
                 </Grid>
               </Grid>

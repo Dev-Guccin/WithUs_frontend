@@ -141,7 +141,7 @@ export default function SearchBar({ keyword, results, code, updateField }){
             </button>
             <input
             className={classes.searchBar}
-            placeholder="공모전 검색"
+            placeholder="공모전 검색후 반드시 선택해주세요"
             value={keyword}
             onChange={e => updateField(e.target.value, -1)}
             />

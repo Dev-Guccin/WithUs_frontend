@@ -122,7 +122,7 @@ export default function TeamboardList(props){
     return(
         <Grid container spacing={3}>
             {props.tbList.map((teamBoard) => (
-              <Grid item key={teamBoard.TB_code} xs={12} sm={6} md={6}>
+              <Grid item key={teamBoard.TB_code} xs={12} sm={4} md={4}>
                 <Card >
                   <Link to={"Teammatedetail/" + String(teamBoard.TB_code)} >
                     <CardMedia

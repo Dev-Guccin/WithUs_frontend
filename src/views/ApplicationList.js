@@ -93,7 +93,7 @@ export default function ApplicationList(props) {
                         <TableBody>
                                 <TableRow key={row.name}>
                                     <TableCell width="50%">
-                                        <Link to={{
+                                        <Link className={classes.linkToDetail} to={{
                                             pathname: '/Teammatedetail/'+row.TB_code,
                                         }}>
                                             <TableRow>제목:{row.TB_title}</TableRow>

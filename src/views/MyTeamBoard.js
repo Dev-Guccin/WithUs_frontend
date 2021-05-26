@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
     },
     cardContent: {
       flexGrow: 1,
+      height: '160px'
     },
     cardbookmark: {
       marginLeft: 'auto'
@@ -79,7 +80,7 @@ export default function TeamboardList(props){
         <Grid container spacing={3}>
             {TB.map(teamBoard => (
               imgsrc = `https://source.unsplash.com/collection/${teamBoard.User_code}`,
-              <Grid item key={teamBoard.TB_code} xs={12} sm={4} md={6}>
+              <Grid item key={teamBoard.TB_code} xs={12} sm={4} md={4}>
                 <Card >
                   <Link to={"Teammatedetail/" + String(teamBoard.TB_code)} >
                     <CardMedia

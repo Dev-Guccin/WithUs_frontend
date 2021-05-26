@@ -44,6 +44,10 @@ const useStyles = makeStyles((theme) => ({
     table: {
         minWidth: 650,
     },
+    linkToDetail:{
+        textDecoration: 'none',
+        color: 'black',
+    },
     margin: {
         // borderWidth: 1,
         // borderColor: 'black',
@@ -119,7 +123,7 @@ export default function ApplicantsCheck(props) {
                                     </TableCell>
                                     <TableCell width="18%">
                                         <TableRow>
-                                            <Link to={{
+                                            <Link className={classes.linkToDetail} to={{
                                                 pathname:'/MyPage',
                                                 user:{
                                                     user_name:row.user_name
