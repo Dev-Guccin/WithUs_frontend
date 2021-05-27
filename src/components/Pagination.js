@@ -4,13 +4,15 @@ export default function Pagination(props) {
   const [pagearray, setpagearray] = useState([]);//실제 보여질 페이지
   useEffect(() => {
     setArray()
-  }, [props.bottompage]);
+  }, [props.bottompage, props.lastpage]);
   function setArray(){
     console.log("pagenum",props.bottompage);
     var array = [];
     for (var i = 1 + (props.bottompage - 1) * 10; i <= 10 * props.bottompage; i++) {
       //어레이에 번호 넣어줌
-      array.push(i)
+      if(i <= props.lastpage){
+        array.push(i)
+      }
     }
     setpagearray(array)
   }
@@ -27,8 +29,10 @@ export default function Pagination(props) {
         setArray();
       }
     }else{//다음
-      props.setbottompage(props.bottompage+1);
-      setArray();
+      if(props.bottompage+1 <= Math.ceil(props.lastpage/10)){//페이지의 범위를 넘어가는경우 동작 없음
+        props.setbottompage(props.bottompage+1);
+        setArray();
+      }
     }
   }
   return (
