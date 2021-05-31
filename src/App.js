@@ -44,7 +44,7 @@ function App() {
   useEffect(() => {
     console.log("####logint state changed: ", logincheck);
   }, [logincheck])
-  
+  const [lastpage, setlastpage] = useState(10);
   const [bottompage, setbottompage] = useState(1);//페이지네이션의 페이지 순서 1=> 1~10, 2=> 11~20
   const [represent_sections, setrepresent_sections] = useState([]);
   const [sections, setsections] = useState([]);
@@ -78,7 +78,11 @@ function App() {
     }).then(response => {
       console.log(response);
       setrepresent_sections(response.data.slice(0, 3));
-      setsections(response.data.slice(3));
+      setsections(response.data.slice(3,-1));
+      var count = response.data.slice(-1)[0].count
+      var tpage = Math.ceil(parseInt(count)/20)
+      console.log("count:",count, " tpage:",tpage)
+      setlastpage(tpage)
     })
   }
   return (
@@ -119,11 +123,13 @@ function App() {
                   <Home keyword={keyword} setkeyword={setkeyword}
                   represent_sections={represent_sections} sections={sections}
                   optionSearch={optionSearch} setsort={setsort}
+                  lastpage={lastpage}
                   bottompage={bottompage} setbottompage={setbottompage} setpage={setpage}/>} />
                 <Route path='/home' exact={true} render={() => 
                   <Home keyword={keyword} setkeyword={setkeyword}
                   represent_sections={represent_sections} sections={sections}
                   optionSearch={optionSearch} setsort={setsort}
+                  lastpage={lastpage}
                   bottompage={bottompage} setbottompage={setbottompage} setpage={setpage}/>} />
                 <Route path="/Contestdetail/:CB_code" exact={true} component={Contestdetail} />
                 <Route path="/Teammatedetail/:TB_code" exact = {true} component={Teammatedetail} />

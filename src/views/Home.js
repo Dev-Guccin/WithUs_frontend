@@ -115,7 +115,9 @@ export default function Home(props) {
         <Pagination
           bottompage={props.bottompage}
           setbottompage={props.setbottompage}
-          setpage={props.setpage} />
+          setpage={props.setpage}
+          lastpage={props.lastpage}
+          />
       </Grid>
     </Grid>
   );
