@@ -26,8 +26,11 @@ const useStyles = makeStyles((theme) => ({
     },
     contain_div: {
       marginTop: 30,
-      background: 'gray',
-      borderRadius: 20
+      background: 'white',
+      borderRadius: 20,
+      borderStyle: 'solid',
+      borderWidth: 'thin',
+      borderColor: '#cccccc'
     },
     imgtest: {
       height: 300,
@@ -89,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: '#dcdcde'
     },
     linkToDetail:{
-      textDecoration: 'none',
+      textDecoration: 'underline',
       color: 'black',
   },
 
@@ -228,7 +231,7 @@ export default function Teammatedetail({ match }) {
             <h3>팀원모집 게시판</h3>
             <Divider/>
             <div className={classes.contain_div}>
-              <div className={classes.title}>제목: {section.TB_title}</div>
+              <div className={classes.title}> {section.TB_title}</div>
               <nav className={classes.updateDeleteBtn}>
                 <Button variant="contained" color="grey" onClick={onClickDelete} className={clsx(!IsWriter(section.User_code) && classes.menuButtonHidden)}>삭제</Button>
                 
@@ -238,7 +241,7 @@ export default function Teammatedetail({ match }) {
               <Divider/>
               <Grid container>
                 <Grid item xs={4} className={classes.boardinfo}>
-                  작성자: <Link className={classes.linkToDetail} to={{
+                  &nbsp;&nbsp;&nbsp;작성자: <Link className={classes.linkToDetail} to={{
                             pathname:'/MyPage',
                             user:{
                                 user_name:section.User_name
@@ -277,9 +280,10 @@ export default function Teammatedetail({ match }) {
               </Grid> : "")
               :(applyInfo[0].waiter_enter === 1 || section.TB_recruitNumber === section.TB_finalNumber ? "" :
               <Paper>
-              <Typography>가입 심사 중입니다 기다려주세요</Typography>
+              <Typography align='center' variant='h5' color='secondary'>가입 심사 중입니다. 잠시만 기다려주세요</Typography>
               </Paper> 
               )}
+              <Divider/>
               <Container>
                 <div dangerouslySetInnerHTML={{__html: section.TB_content} }></div>
               </Container>
