@@ -127,7 +127,7 @@ export default function SignUp(props) {
                 required
                 fullWidth
                 id="User_id"
-                label="User_id"
+                label="사용자 아이디"
                 autoFocus
                 value = {User_id}
                 onChange = {onIdHandler}
@@ -139,7 +139,7 @@ export default function SignUp(props) {
                 required
                 fullWidth
                 id="User_name"
-                label="User_name"
+                label="사용자 이름"
                 name="User_name"
                 autoComplete="User_name"
                 value = {User_name}
@@ -155,7 +155,7 @@ export default function SignUp(props) {
                   onChange={onGenderHandler}
                   row
                 >
-                    {["Female", "male"].map((value) => (
+                    {["여성", "남성"].map((value) => (
                       <FormControlLabel
                       key={value}
                       value={value.toString()}
@@ -172,7 +172,7 @@ export default function SignUp(props) {
                 required
                 fullWidth
                 id="User_phone"
-                label="User_phone"
+                label="사용자 번호"
                 name="User_phone"
                 autoComplete="User_phone"
                 value = {User_phone}
@@ -185,7 +185,7 @@ export default function SignUp(props) {
                 required
                 fullWidth
                 id="User_university"
-                label="User_university"
+                label="소속 대학"
                 name="User_university"
                 autoComplete="User_university"
                 value = {User_university}
@@ -198,7 +198,7 @@ export default function SignUp(props) {
                 required
                 fullWidth
                 id="User_nickname"
-                label="User_nickname"
+                label="닉네임"
                 name="User_nickname"
                 autoComplete="User_nickname"
                 value = {User_nickname}
@@ -211,7 +211,7 @@ export default function SignUp(props) {
                 required
                 fullWidth
                 id="User_major"
-                label="User_major"
+                label="전공"
                 name="User_major"
                 autoComplete="User_major"
                 value = {User_major}
@@ -224,7 +224,7 @@ export default function SignUp(props) {
                 required
                 fullWidth
                 id="User_area"
-                label="User_area"
+                label="지역"
                 name="User_area"
                 autoComplete="User_area"
                 value = {User_area}
@@ -237,7 +237,7 @@ export default function SignUp(props) {
                 required
                 fullWidth
                 name="User_password"
-                label="User_password"
+                label="패스워드"
                 id="User_password"
                 type="password"
                 autoComplete="current-password"
@@ -251,7 +251,7 @@ export default function SignUp(props) {
                 required
                 fullWidth
                 name="User_certificate"
-                label="User_certificate"
+                label="자격증"
                 id="User_certificate"
                 autoComplete="User_certificate"
                 value = {User_certificate}
@@ -264,7 +264,7 @@ export default function SignUp(props) {
                 required
                 fullWidth
                 name="User_introduction"
-                label="User_introduction"
+                label="소개"
                 id="User_introduction"
                 autoComplete="User_introduction"
                 multiline
