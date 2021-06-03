@@ -190,7 +190,8 @@ export default function UpdateTeamboard(props) {
 
   }
   async function getContestInfo() {
-    await axios.get("http://localhost:3001/teamboard/contestinfo")
+    http://'+localStorage.getItem("backend")+':3001
+    await axios.get('http://'+localStorage.getItem("backend")+':3001/teamboard/contestinfo')
     .then(res =>{
       setContestInfo({
         ...contestInfo,
