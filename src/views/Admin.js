@@ -197,6 +197,7 @@ export default function Admin({ match }) {
     }, []);
 
     return (
+      JSON.parse(localStorage.user).User_id === "admin" ? 
       <React.Fragment>
         <Container maxWidth="lg">
           <h2>관리자 페이지</h2>
@@ -368,5 +369,6 @@ export default function Admin({ match }) {
           </Box>
         </Container>
       </React.Fragment>
+      :""
     );
   }

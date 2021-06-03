@@ -94,6 +94,12 @@ export default function Header(props) {
           </Button>
           </div>
           : <div>
+            {JSON.parse(localStorage.user).User_id === "admin" ? 
+              <Button variant="outlined" size="small">
+              <Link to='/admin' className={classes.linkBtn}>
+                Admin
+              </Link>
+              </Button> : ""}
             <Button variant="outlined" size="small" onClick={() => logout()}>
               Log out
           </Button>
