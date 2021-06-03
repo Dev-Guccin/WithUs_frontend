@@ -113,7 +113,7 @@ export default function SignIn(props) {
             required
             fullWidth
             id="User_id"
-            label="User_id"
+            label="아이디"
             name="User_id"
             autoComplete="User_id"
             autoFocus
@@ -126,7 +126,7 @@ export default function SignIn(props) {
             required
             fullWidth
             name="User_password"
-            label="User_password"
+            label="패스워드"
             type="password"
             id="User_password"
             autoComplete="current-password"
